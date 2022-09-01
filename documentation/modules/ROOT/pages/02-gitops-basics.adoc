@@ -3,17 +3,17 @@ include::_attributes.adoc[]
 :profile: gitops
 
 An Argo CD instance dedicated for you has been deployed into the OpenShift
-Project `userX-argocd`. This is one of the benefits of the Operator-based
-mechanism that OpenShift uses: it's easy for users to deploy software and
-solutions.
+Project `user%USERNUM%-argocd`. This is one of the benefits of the
+Operator-based mechanism that OpenShift uses: it's easy for users to deploy
+software and solutions.
 
 [#review-argocd]
 == Review the Argo CD Deployment
 
 In the OpenShift web console, with the _Developer_ perspective active, click the
-_Topology_ link in the left navigation and make sure that the `userX-argocd`
-Project is selected at the top. You will see the Argo CD deployment in the
-topology view:
+_Topology_ link in the left navigation and make sure that the
+`user%USERNUM%-argocd` Project is selected at the top. You will see the Argo CD
+deployment in the topology view:
 
 image::argocd-topology.png[]
 
@@ -73,7 +73,21 @@ repository somewhere. You will be using the repository that contains this
 workshop and its documentation as the source of the manifests that define the
 application state:
 
-https://github.com/OpenShiftDemos/openshift-gitops-workshop/tree/master/documentation/modules/ROOT/examples[https://github.com/OpenShiftDemos/openshift-gitops-workshop/tree/master/documentation/modules/ROOT/examples,window="_blank']
+https://github.com/OpenShiftDemos/openshift-gitops-workshop[https://github.com/OpenShiftDemos/openshift-gitops-workshop,window="_blank']
+
+=== Clone the Repository
+
+You need to clone the repository into your web terminal because you will need to
+make very small changes to some of the files for the examples:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+git clone https://github.com/OpenShiftDemos/openshift-gitops-workshop ~/openshift-gitops-workshop
+----
+
+All of the example content will be located in
+`~/openshift-gitops-workshop/documentation/modules/ROOT/examples`
 
 === Review the Application Manifests
 
@@ -144,12 +158,13 @@ Argo CD's concept of a `Project` is different than OpenShift's. Here you're inst
 <3> The manifest repo, and th path within it where the YAML resides.
 <4> The `syncPolicy` is set to `automated`. It will automatically prune resources that have been removed from the Git repo, but will not automatically correct resources that deviate from the definition stored in the repo, i.e manual changes made using `kubectl` will not be "healed".
 
-Apply the Application CR by running the following command:
+You will create an Application by slightly modifying the provided example inline
+using the command below:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc apply -n user%USERNUM%-argocd -f documentation/modules/ROOT/examples/bgd-app.yaml
+sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app.yaml | oc apply -n user%USERNUM%-argocd -f -
 ----
 
 The newly created Application appears as a tile with the title `bgd-app` in the Argo CD UI.

@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     path: documentation/modules/ROOT/examples/bgd
-    repoURL: https://github.com/redhat-developer-demos/openshift-gitops-examples
+    repoURL: https://github.com/openshiftdemos/openshift-gitops-workshop
     targetRevision: updates-for-rhpds
   syncPolicy:
     automated:
