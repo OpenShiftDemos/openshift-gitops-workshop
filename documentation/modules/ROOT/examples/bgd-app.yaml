@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: bgd-app
-  namespace: user1-argo
 spec:
   destination:
     namespace: user1-bgd
