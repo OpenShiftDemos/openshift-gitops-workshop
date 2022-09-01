@@ -1,0 +1,48 @@
+= Getting Started
+include::_attributes.adoc[]
+
+You will frequently see references to `userX` in the documentation for this
+workshop. `X` will correspond to the specific user number that matches your
+account. For example, if you were assigned `user6`, then `X` would be `6` for
+you.
+
+[#cluster-login]
+== OpenShift cluster login
+
+The first thing to do is log in to your OpenShift cluster. In the previous
+screen that handed you your workshop credentials should be a link to the
+OpenShift console, as well as a username and password. Click that link, which
+will take you to the OpenShift login screen:
+
+image::openshift-login.png[]
+
+Once logged in, make sure that you choose the _Developer_ perspective using the
+switcher in the upper-left:
+
+image::openshift-perspective-switcher.png[]
+
+[#open-web-terminal]
+== OpenShift Web Terminal
+
+OpenShift conveniently provides a web-based terminal that includes many of the 
+necessary command-line tools you need to interact with. You can open the web
+terminal by clicking its launcher button on the upper right menu, near your 
+username:
+
+image::openshift-topright-menu.png[]
+
+You will be asked to choose which project in which to initialize your terminal. 
+This workshop has created several Kubernetes namespaces (OpenShift projects) for
+you. It doesn't _really_ matter which one you choose, but we recommend that you
+initialize your terminal in the project that houses Argo CD:
+`user%USER_NUM%-argocd`. 
+
+Once the terminal is launched, you'll see it at the bottom of your screen:
+
+image::openshift-web-terminal-snippet.png[]
+
+You probably want to pop-out the terminal into a new browser window/tab so that
+you can see the OpenShift console with your full screen. There's a pop-out
+button on the right side:
+
+image::openshift-web-terminal-popout.png[]

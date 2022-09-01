@@ -1,7 +1,6 @@
-* xref:01-setup.adoc[1. Setup]
-** xref:01-setup.adoc#prerequisite[Prerequisites]
-** xref:01-setup.adoc#minikube[Setup Minikube]
+* xref:01-getting-started.adoc[1. Getting Started]
+** xref:01-getting-started.adoc#cluster-login[Cluster Login]
+** xref:01-getting-started.adoc#open-web-terminal[Open the Web Terminal]
 
-* xref:02-deploy.adoc[2. Deploy Service]
-** xref:02-deploy.adoc#package[Build Service]
-** xref:02-deploy.adoc#deploy[Deploy Dervice]
+* xref:02-gitops-basics.adoc[2. GitOps Basics]
+** xref:02-gitops-basics.adoc#connect-argocd[2. GitOps Basics]

@@ -1,0 +1,430 @@
+= Getting Started
+include::_attributes.adoc[]
+:profile: gitops
+
+An Argo CD instance dedicated for you has been deployed into the OpenShift
+Project `userX-argocd`. This is one of the benefits of the Operator-based
+mechanism that OpenShift uses: it's easy for users to deploy software and
+solutions.
+
+[#review-argocd]
+== Review the Argo CD Deployment
+
+In the OpenShift web console, with the _Developer_ perspective active, click the
+_Topology_ link in the left navigation and make sure that the `userX-argocd`
+Project is selected at the top. You will see the Argo CD deployment in the
+topology view:
+
+image::argocd-topology.png[]
+
+
+[#connect-argocd]
+== Connecting to Argo CD
+
+Argo CD generates a default `admin` user, and a random password when first
+deployed. You can connect to Argo CD using this user account via the CLI or web
+console.  In this workshop, we will only use the Argo CD web console.
+
+You can retrieve the Argo CD admin password from a secret that is in the same
+Project as the Argo CD deployment:
+
+[subs="attributes+,+macros"]
+====
+To get the Argo CD password execute:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+argoPass=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+echo $argoPass
+----
+====
+
+Login to Argo CD with the `argocd` CLI using the URL and password:
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+argocd login --insecure --grpc-web $argoURL  --username admin --password $argoPass
+----
+
+The following message will be printed upon successful login:
+
+[.console-output]
+[source,bash,subs="attributes+,+macros"]
+----
+'admin:login' logged in successfully
+----
+
+=== Connecting with the Web Console
+
+[tabs, subs="attributes+,+macros"]
+====
+Minikube::
++
+--
+Expose the ArgoCD console using the minikube service.
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+minikube -p {profile} service argocd-server -n argocd
+----
+--
+
+OpenShift::
++
+--
+In the OpenShift Web Console, expand the *Application Launcher* in the  top-right and click the *ArgoCD* icon:
+
+image::argopad.png[ArgoCD]
+
+Alternatively, get Argo CD Route using the `oc` CLI as previously done:
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc get route openshift-gitops-server -n openshift-gitops -o jsonpath='{.spec.host}{"\n"}'
+----
+--
+====
+
+
+Access the Argo CD console by logging in with the username `admin` and the password extracted in the previous step:
+
+image::argocd-login.png[ArgoCDLogin, 600]
+
+Once you've logged in, you should see the following page. This is the Argo CD Web UI.
+
+image::argocd-login2.png[ArgoCDLogin2, 600]
+
+[#deploy_sample_application]
+== Deploy a Sample Application
+
+We'll be using the https://github.com/redhat-developer-demos/openshift-gitops-examples[redhat-developer-demos/openshift-gitops-examples,window='_blank'] Git repository to deploy our first application. It contains the manifests that define the application state.
+
+=== Review the Application Manifests
+
+The application manifests include a Namespace, Deployment, and networking manifests for Minikube/OpenShift. Deploying these manifests to a cluster will result in an application that supports ingress.
+
+[IMPORTANT]
+====
+Review, but do not apply these manifests to your cluster. We will do that shortly using Argo CD.
+====
+
+A *Namespace*:
+
+.link:https://github.com/redhat-developer-demos/openshift-gitops-examples/blob/main/apps/bgd/overlays/bgd/bgd-ns.yaml[bgd-namespace.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgd-yaml/bgd-namespace.yaml[]
+----
+
+A *Deployment*:
+
+.link:https://github.com/redhat-developer-demos/openshift-gitops-examples/blob/main/apps/bgd/base/bgd-deployment.yaml[bgd-deployment.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgd-yaml/bgd-deployment.yaml[]
+----
+
+[tabs, subs="attributes+,+macros"]
+====
+Minikube::
++
+--
+A *Service* of type `NodePort`:
+
+.link:https://github.com/redhat-developer-demos/openshift-gitops-examples/blob/minikube/apps/bgd/base/bgd-svc.yaml[bgd-svc.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$minikube/bgd-yaml/bgd-svc.yaml[]
+----
+
+An *Ingress*:
+
+.link:https://github.com/redhat-developer-demos/openshift-gitops-examples/blob/minikube/apps/bgd/base/bgd-ingress.yaml[bgd-ingress.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$minikube/bgd-yaml/bgd-ingress.yaml[]
+----
+--
+OpenShift::
++
+--
+A *Service* of type `ClusterIP`:
+
+.link:https://github.com/redhat-developer-demos/openshift-gitops-examples/blob/main/apps/bgd/base/bgd-svc.yaml[bgd-svc.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgd-yaml/bgd-svc.yaml[]
+----
+
+A *Route*:
+
+.link:https://github.com/redhat-developer-demos/openshift-gitops-examples/blob/main/apps/bgd/base/bgd-route.yaml[bgd-route.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgd-yaml/bgd-route.yaml[]
+----
+
+--
+====
+
+=== Deploy the Application
+
+A managed collection of manifests is known as an `Application` within Argo CD. Therefore, you must define it as such using an link:https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications[Application CR (CustomResource)^] in order to have Argo CD apply these manifests in your cluster.
+
+Let's review the https://github.com/redhat-scholars/argocd-tutorial/blob/master/assets/bgd-app/bgd-app.yaml[Argo CD Application manifest] used to deploy this application and break this down a bit:
+
+[tabs, subs="attributes+,+macros"]
+====
+Minikube::
++
+--
+.link:https://github.com/redhat-scholars/argocd-tutorial/blob/master/assets/bgd-app/bgd-app.yaml[bgd-app.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bgd-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: bgd
+    server: https://kubernetes.default.svc <1>
+  project: default <2>
+  source: <3>
+    path: apps/bgd/overlays/bgd
+    repoURL: https://github.com/redhat-developer-demos/openshift-gitops-examples
+    targetRevision: minikube
+  syncPolicy: <4>
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
+----
+<1> The destination server is the same server we installed Argo CD on.
+<2> Here you're installing the application in Argo CD's `default` project (`.spec.project`).
+<3> The manifest repo, and th path within it where the YAML resides.
+<4> The `syncPolicy` is set to `automated`. It will automatically prune resources resources that have been removed from the Git repo, but will not automatically correct resources that deviate from the definition stored in the repo, i.e manual changes use `kubectl` will not be "healed".
+
+
+Apply the Application CR by running the following command:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl apply -f documentation/modules/ROOT/examples/minikube/bgd-app/bgd-app.yaml
+----
+--
+OpenShift::
++
+--
+.link:https://github.com/redhat-scholars/argocd-tutorial/blob/master/assets/bgd-app/bgd-app.yaml[bgd-app.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bgd-app
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: bgd
+    server: https://kubernetes.default.svc <1>
+  project: default <2>
+  source: <3>
+    path: apps/bgd/overlays/bgd
+    repoURL: https://github.com/redhat-developer-demos/openshift-gitops-examples
+    targetRevision: main
+  syncPolicy: <4>
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
+----
+<1> The destination server is the same server we installed Argo CD on.
+<2> Here you're installing the application in Argo CD's `default` project (`.spec.project`).
+[NOTE]
+Argo CD's concept of a `Project` is different than OpenShift's. Here you're installing the application in Argo CD's `default` project (`.spec.project`). *NOT* OpenShift's default project.
+<3> The manifest repo, and th path within it where the YAML resides.
+<4> The `syncPolicy` is set to `automated`. It will automatically prune resources resources that have been removed from the Git repo, but will not automatically correct resources that deviate from the definition stored in the repo, i.e manual changes made using `kubectl` will not be "healed".
+
+Apply the Application CR by running the following command:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl apply -f documentation/modules/ROOT/examples/bgd-app/bgd-app.yaml
+----
+--
+====
+
+
+The newly created Application appears as a tile with the title `bgd-app` in the Argo CD UI.
+
+image::argocd-app1.png[SampleApp]
+
+Clicking on this tile takes you to the application details page. You may see it as still progressing or fully synced.
+
+image::argocd-app2.png[SampleApp]
+
+NOTE: You may have to click on `show hidden resources` on this page to see all of the resources.
+
+At this point the application should be up and running. Verify that the resources were created:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl get all -n bgd
+----
+
+The output should list a Service, Deployment, and Pod:
+
+[.console-output]
+[source,bash,subs="attributes+,+macros"]
+----
+NAME                       READY   STATUS    RESTARTS   AGE
+pod/bgd-788cb756f7-kz448   1/1     Running   0          10m
+
+NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/bgd   ClusterIP   172.30.111.118   <none>        8080/TCP   10m
+
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/bgd   1/1     1            1           10m
+----
+
+Verify the the rollout is complete:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl rollout status deploy/bgd -n bgd
+----
+
+Obtain the URL, and visit your application in a web browser:
+
+
+[tabs, subs="attributes+,+macros"]
+====
+Minikube::
++
+--
+Add Minikube IP (`minikube ip`) and the Ingress hostname `bgd.devnation` to your Host file, like `/etc/hosts`.
+
+Example:
+[source,bash,subs="attributes+,+macros"]
+----
+192.168.39.242 bgd.devnation
+----
+
+--
+OpenShift::
++
+--
+From *Web Console*, select *bgd* project from drop-down menu, then click to the application's Route to access it.
+
+image::bgdapp.png[BGD App]
+
+Alternatively, get app Route from CLI:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc get route bgd -n bgd -o jsonpath='{.spec.host}{"\n"}'
+----
+--
+====
+
+Your application should look like this.
+
+image::bgd.png[SampleApp]
+
+=== Addressing Configuration Drift
+
+Let's introduce a change in the application environment! Patch the live Deployment manifest to change the color
+of the bubbles in the application from blue to green:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl -n bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
+----
+
+Wait for the rollout to happen:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl rollout status deploy/bgd -n bgd
+----
+
+Refresh the tab where your application is running. You should see green bubbles.
+
+image::bgd-green.png[BDG Green]
+
+Looking over at your Argo CD Web UI, you can see that Argo detects your
+application as "Out of Sync".
+
+image::out-of-sync.png[Out of Sync]
+
+You can sync your app via the Argo CD by:
+
+* First clicking `SYNC`
+* Then clicking `SYNCHRONIZE`
+
+Alternatively, you can run the following command:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+argocd app sync bgd-app
+----
+
+After the sync process is done, the Argo CD UI should mark the application as in sync.
+
+image::fullysynced.png[Fully Synced]
+
+Reload the page on the tab where the application is running. The bubbles should have returned to their original blue color.
+
+image::bgd.png[BDG App]
+
+You can setup Argo CD to automatically correct drift by setting the
+`Application` manifest to do so. Example:
+
+[.console-input]
+[source,yaml,subs="attributes+,+macros"]
+----
+spec:
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+----
+
+Or, as in our case, after the fact by running the following command:
+
+[tabs, subs="attributes+,+macros"]
+====
+Minikube::
++
+--
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl patch application/bgd-app -n argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
+----
+--
+OpenShift::
++
+--
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl patch application/bgd-app -n openshift-gitops --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
+----
+--
+====
+

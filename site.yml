@@ -2,7 +2,7 @@ runtime:
   cache_dir: ./.cache/antora
 
 site:
-  title: Template Tutorial
+  title: OpenShift GitOps Workshop
   url: https://redhat-scholars.github.io/course-template
   start_page: template-tutorial::index.adoc
 

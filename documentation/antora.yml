@@ -1,5 +1,5 @@
-name: template-tutorial
-title: Template Tutorial
+name: openshift-gitops-workshop
+title: OpenShift GitOps Workshop
 version: master
 nav:
   - modules/ROOT/nav.adoc
