@@ -1,11 +1,6 @@
 = Getting Started
 include::_attributes.adoc[]
 
-You will frequently see references to `userX` in the documentation for this
-workshop. `X` will correspond to the specific user number that matches your
-account. For example, if you were assigned `user6`, then `X` would be `6` for
-you.
-
 [#cluster-login]
 == OpenShift cluster login
 
@@ -35,7 +30,7 @@ You will be asked to choose which project in which to initialize your terminal.
 This workshop has created several Kubernetes namespaces (OpenShift projects) for
 you. It doesn't _really_ matter which one you choose, but we recommend that you
 initialize your terminal in the project that houses Argo CD:
-`user%USER_NUM%-argocd`. 
+`user%USERNUM%-argocd`. 
 
 Once the terminal is launched, you'll see it at the bottom of your screen:
 

@@ -3,4 +3,6 @@
 ** xref:01-getting-started.adoc#open-web-terminal[Open the Web Terminal]
 
 * xref:02-gitops-basics.adoc[2. GitOps Basics]
-** xref:02-gitops-basics.adoc#connect-argocd[2. GitOps Basics]
+** xref:02-gitops-basics.adoc#review-argocd[Review Argo CD Deployment]
+** xref:02-gitops-basics.adoc#connect-argocd[Connecting to Argo CD]
+** xref:02-gitops-basics.adoc#deploy-sample-application[Deploy a Sample Application]
