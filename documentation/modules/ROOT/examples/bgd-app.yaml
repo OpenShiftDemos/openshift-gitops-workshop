@@ -4,7 +4,7 @@ metadata:
   name: bgd-app
 spec:
   destination:
-    namespace: user1-bgd
+    namespace: user$USERNUM-bgd
     server: https://kubernetes.default.svc
   project: default
   source:
