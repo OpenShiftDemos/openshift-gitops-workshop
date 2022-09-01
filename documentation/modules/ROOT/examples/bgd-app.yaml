@@ -11,7 +11,7 @@ spec:
   source:
     path: documentation/modules/ROOT/examples/bgd
     repoURL: https://github.com/redhat-developer-demos/openshift-gitops-examples
-    targetRevision: rhpds-workshop
+    targetRevision: updates-for-rhpds
   syncPolicy:
     automated:
       prune: true
