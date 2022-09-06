@@ -31,8 +31,7 @@ that is in the same Project as the Argo CD deployment:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-argoPass=$(oc -n user%USERNUM%-argocd get secret user%USERNUM%-argo-cluster -o jsonpath="{.data.admin\.password}" | base64 -d)
-echo $argoPass
+oc extract secret/user%USERNUM%-argo-cluster -n user%USERNUM%-argocd --to=-
 ----
 
 You _could_ also get this value by using the web console to navigate to the
