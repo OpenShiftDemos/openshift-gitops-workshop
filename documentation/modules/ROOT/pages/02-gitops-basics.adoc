@@ -86,8 +86,20 @@ make very small changes to some of the files for the examples:
 git clone https://github.com/OpenShiftDemos/openshift-gitops-workshop ~/openshift-gitops-workshop
 ----
 
-All of the example content will be located in
+All of the example content will be located in:
+
 `~/openshift-gitops-workshop/documentation/modules/ROOT/examples`
+
+[IMPORTANT]
+====
+The web terminal only supports ephemeral storage. If you shut it down, or if it
+times out, any local filesystem changes made will be lost. This means you would
+need to clone the repository again. The web terminal is intended for
+troubleshooting and simple interaction, and not as a long-lived remote execution
+environment. For that, something like
+https://developers.redhat.com/products/openshift-dev-spaces/overview[OpenShift
+DevSpaces] is a better choice.
+====
 
 === Review the Application Manifests
 
@@ -151,12 +163,19 @@ spec:
       prune: true
       selfHeal: false
 ----
-<1> The destination server is API endpoint for the cluster where Argo CD is running -- in this case, using the locally-resolveable URL for the cluster
-<2> Here you're installing the application in Argo CD's `default` project (`.spec.project`).
+<1> The destination server is API endpoint for the cluster where Argo CD is
+  running -- in this case, using the locally-resolveable URL for the cluster
+<2> Here you're installing the application in Argo CD's `default` project
+  (`.spec.project`).
 [NOTE]
-Argo CD's concept of a `Project` is different than OpenShift's. Here you're installing the application in Argo CD's `default` project (`.spec.project`). *NOT* OpenShift's default project.
+Argo CD's concept of a `Project` is different than OpenShift's. Here you're
+installing the application in Argo CD's `default` project (`.spec.project`).
+*NOT* OpenShift's default project.
 <3> The manifest repo, and th path within it where the YAML resides.
-<4> The `syncPolicy` is set to `automated`. It will automatically prune resources that have been removed from the Git repo, but will not automatically correct resources that deviate from the definition stored in the repo, i.e manual changes made using `kubectl` will not be "healed".
+<4> The `syncPolicy` is set to `automated`. It will automatically prune
+  resources that have been removed from the Git repo, but will not automatically
+  correct resources that deviate from the definition stored in the repo, i.e
+  manual changes made using `kubectl` will not be "healed".
 
 You will create an Application by slightly modifying the provided example inline
 using the command below:
@@ -167,80 +186,78 @@ using the command below:
 sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app.yaml | oc apply -n user%USERNUM%-argocd -f -
 ----
 
-The newly created Application appears as a tile with the title `bgd-app` in the Argo CD UI.
+The newly created Application appears as a tile with the title `bgd-app` in the
+Argo CD UI.
 
 image::argocd-app1.png[SampleApp]
 
-Clicking on this tile takes you to the application details page. You may see it as still progressing or fully synced.
+Clicking on this tile takes you to the application details page. You may see it
+as still progressing or fully synced.
 
 image::argocd-app2.png[SampleApp]
 
-NOTE: You may have to click on `show hidden resources` on this page to see all of the resources.
+NOTE: You may have to click on `show hidden resources` on this page to see all
+of the resources.
 
-At this point the application should be up and running. Verify that the resources were created:
+At this point the application should be up and running. Verify that the
+resources were created:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl get all -n bgd
+oc get all -n user%USERNUM%-bgd
 ----
 
-The output should list a Service, Deployment, and Pod:
+The output should list several things:
 
 [.console-output]
 [source,bash,subs="attributes+,+macros"]
 ----
 NAME                       READY   STATUS    RESTARTS   AGE
-pod/bgd-788cb756f7-kz448   1/1     Running   0          10m
+pod/bgd-74cf584546-tlqdm   1/1     Running   0          12m
 
 NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-service/bgd   ClusterIP   172.30.111.118   <none>        8080/TCP   10m
+service/bgd   ClusterIP   172.30.124.158   <none>        8080/TCP   12m
 
 NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/bgd   1/1     1            1           10m
+deployment.apps/bgd   1/1     1            1           12m
+
+NAME                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/bgd-74cf584546   1         1         1       12m
+
+NAME                           HOST/PORT                                                       PATH   SERVICES   PORT   TERMINATION   WILDCARD
+route.route.openshift.io/bgd   bgd-user3-bgd.apps.cluster-7pjzx.7pjzx.sandbox141.opentlc.com          bgd        8080                 None
 ----
+
+
+**Extra Credit:** Do you know why you have a ReplicaSet?
 
 Verify the the rollout is complete:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl rollout status deploy/bgd -n bgd
+oc rollout status deploy/bgd -n user%USERNUM%-bgd
 ----
 
-Obtain the URL, and visit your application in a web browser:
+If it is successful, you can now visit the deployed application in the browser.
 
-
-[tabs, subs="attributes+,+macros"]
-====
-Minikube::
-+
---
-Add Minikube IP (`minikube ip`) and the Ingress hostname `bgd.devnation` to your Host file, like `/etc/hosts`.
-
-Example:
-[source,bash,subs="attributes+,+macros"]
-----
-192.168.39.242 bgd.devnation
-----
-
---
-OpenShift::
-+
---
-From *Web Console*, select *bgd* project from drop-down menu, then click to the application's Route to access it.
+From the OpenShift web console, select *user%USERNUM%-bgd* Project from
+drop-down menu, and use the _Topology_ view to find the link as you did with
+the Argo CD console.
 
 image::bgdapp.png[BGD App]
 
-Alternatively, get app Route from CLI:
+Alternatively, get the app Route from the CLI:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd -n bgd -o jsonpath='{.spec.host}{"\n"}'
+oc get route bgd -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
 ----
---
-====
+
+WARNING: This route is only available via HTTP. If you try to visit via HTTPS,
+you will get an _Application not available_ error. Do you know why that is?
 
 Your application should look like this.
 
@@ -248,13 +265,14 @@ image::bgd.png[SampleApp]
 
 === Addressing Configuration Drift
 
-Let's introduce a change in the application environment! Patch the live Deployment manifest to change the color
-of the bubbles in the application from blue to green:
+Let's introduce a change in the application environment! Patch the live
+Deployment manifest to change the color of the bubbles in the application from
+blue to green:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl -n bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
+kubectl -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
 ----
 
 Wait for the rollout to happen:
@@ -262,10 +280,11 @@ Wait for the rollout to happen:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl rollout status deploy/bgd -n bgd
+kubectl rollout status deploy/bgd -n user%USERNUM%-bgd
 ----
 
-Refresh the tab where your application is running. You should see green bubbles.
+Refresh the browser tab where your application is running. You should see green
+bubbles.
 
 image::bgd-green.png[BDG Green]
 
@@ -279,24 +298,18 @@ You can sync your app via the Argo CD by:
 * First clicking `SYNC`
 * Then clicking `SYNCHRONIZE`
 
-Alternatively, you can run the following command:
-
-[.console-input]
-[source,bash,subs="attributes+,+macros"]
-----
-argocd app sync bgd-app
-----
-
-After the sync process is done, the Argo CD UI should mark the application as in sync.
+After the sync process is done, the Argo CD UI should mark the application as in
+sync.
 
 image::fullysynced.png[Fully Synced]
 
-Reload the page on the tab where the application is running. The bubbles should have returned to their original blue color.
+Reload the page on the tab where the application is running. The bubbles should
+have returned to their original blue color.
 
 image::bgd.png[BDG App]
 
-You can setup Argo CD to automatically correct drift by setting the
-`Application` manifest to do so. Example:
+You can setup Argo CD to automatically correct drift by setting the `selfHeal`
+property of the `Application` manifest to do so. Example:
 
 [.console-input]
 [source,yaml,subs="attributes+,+macros"]
@@ -310,25 +323,9 @@ spec:
 
 Or, as in our case, after the fact by running the following command:
 
-[tabs, subs="attributes+,+macros"]
-====
-Minikube::
-+
---
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl patch application/bgd-app -n argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
+oc patch application/bgd-app -n user%USERNUM%-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
 ----
---
-OpenShift::
-+
---
-[.console-input]
-[source,bash,subs="attributes+,+macros"]
-----
-kubectl patch application/bgd-app -n openshift-gitops --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
-----
---
-====
 
