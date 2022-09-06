@@ -14,3 +14,11 @@
 ** xref:03-kustomize.adoc#deploying_kustomized_application[Deploying Kustomized Application]
 *** xref:03-kustomize.adoc#argocd_web_console[The ArgoCD Web Console]
 *** xref:03-kustomize.adoc#kustomized_application[Kustomized Application]
+
+* xref:04-syncwaves-hooks.adoc[4. Sync Waves and Hooks]
+** xref:04-syncwaves-hooks.adoc#using_syncwaves[Using Sync Waves]
+*** xref:04-syncwaves-hooks.adoc#exploring_the_manifests[Exploring the Manifests]
+*** xref:04-syncwaves-hooks.adoc#deploying_the_application[Deploying the Application]
+** xref:04-syncwaves-hooks.adoc#exploring_resource_hooks[Exploring Resource Hooks]
+*** xref:04-syncwaves-hooks.adoc#exploring_the_manifests_hooks[Exploring the Manifests]
+*** xref:04-syncwaves-hooks.adoc#deploying_the_application_hooks[Deploying the Application]
