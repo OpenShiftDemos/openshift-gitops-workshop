@@ -341,7 +341,7 @@ Take a look at the `kustomization.yaml` file:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
-include::ROOT:example$bgdk-app.yaml[]
+include::ROOT:example$bgdk/kustomization.yaml[]
 ----
 
 This `kustomization.yaml` takes the base application and patches the manifest so
@@ -359,13 +359,24 @@ This should show you two apps on the Argo CD UI.
 
 image::two-apps.png[Two Apps]
 
-Open the application's Ingress or Route.
+Open the Route for this application. It's in the `user{USERNUM}-bgdk` Project.
+Remember you can get this from the topology view, or from the CLI:
 
-image::yellow-square.png[Yellow Square]
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc get route -n user%USERNUM%-bgdk bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+----
 
-As you can see, the application deployed with your customizations! To review what we just did.
+You should see yellow balls flying around. This is the same application you used
+previously, and so you know that by changing the environment variable on the
+deployment you can change the ball color.
+
+Argo CD deployed the application with your `kustomize`-ations! To review what we
+just did:
 
 * Deployed an Application called `bgd` with a blue square.
 * Deployed another Application based on `bgd` called `bgdk`
-* The Application `bgdk` was deployed in it's own namespace, with deployment customizations.
+* The Application `bgdk` was deployed in its own namespace, with deployment
+  customizations.
 * ALL without having to duplicate YAML!
