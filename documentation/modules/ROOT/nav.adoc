@@ -6,3 +6,11 @@
 ** xref:02-gitops-basics.adoc#review-argocd[Review Argo CD Deployment]
 ** xref:02-gitops-basics.adoc#connect-argocd[Connecting to Argo CD]
 ** xref:02-gitops-basics.adoc#deploy-sample-application[Deploy a Sample Application]
+
+* xref:03-kustomize.adoc[3. Work with Kustomize]
+** xref:03-kustomize.adoc#exploring_kustomize[Exploring the Kustomize]
+*** xref:03-kustomize.adoc#exploring_kustomize_cli[Exploring the Kustomize CLI]
+*** xref:03-kustomize.adoc#exploring_kustomize_with_kubectl[Exploring Kustomize with Kubectl]
+** xref:03-kustomize.adoc#deploying_kustomized_application[Deploying Kustomized Application]
+*** xref:03-kustomize.adoc#argocd_web_console[The ArgoCD Web Console]
+*** xref:03-kustomize.adoc#kustomized_application[Kustomized Application]
