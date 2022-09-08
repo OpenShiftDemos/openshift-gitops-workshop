@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://redhat-scholars.github.io/course-template/openshift-gitops-workshop/01-getting-started.html</loc>
-<lastmod>2022-09-08T16:51:06.377Z</lastmod>
+<loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/01-getting-started.html</loc>
+<lastmod>2022-09-08T16:58:34.408Z</lastmod>
 </url>
 <url>
-<loc>https://redhat-scholars.github.io/course-template/openshift-gitops-workshop/02-gitops-basics.html</loc>
-<lastmod>2022-09-08T16:51:06.377Z</lastmod>
+<loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/02-gitops-basics.html</loc>
+<lastmod>2022-09-08T16:58:34.408Z</lastmod>
 </url>
 <url>
-<loc>https://redhat-scholars.github.io/course-template/openshift-gitops-workshop/03-kustomize.html</loc>
-<lastmod>2022-09-08T16:51:06.377Z</lastmod>
+<loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/03-kustomize.html</loc>
+<lastmod>2022-09-08T16:58:34.408Z</lastmod>
 </url>
 <url>
-<loc>https://redhat-scholars.github.io/course-template/openshift-gitops-workshop/04-syncwaves-hooks.html</loc>
-<lastmod>2022-09-08T16:51:06.377Z</lastmod>
+<loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/04-syncwaves-hooks.html</loc>
+<lastmod>2022-09-08T16:58:34.408Z</lastmod>
 </url>
 <url>
-<loc>https://redhat-scholars.github.io/course-template/openshift-gitops-workshop/index.html</loc>
-<lastmod>2022-09-08T16:51:06.377Z</lastmod>
+<loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/index.html</loc>
+<lastmod>2022-09-08T16:58:34.408Z</lastmod>
 </url>
 </urlset>
