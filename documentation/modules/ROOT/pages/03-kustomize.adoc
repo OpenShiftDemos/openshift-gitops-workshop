@@ -1,0 +1,382 @@
+= Kustomize
+include::_attributes.adoc[]
+
+link:https://kustomize.io/[Kustomize] traverses a Kubernetes manifest to add,
+remove or update configuration options without forking. It is available both as
+a standalone binary and as a native feature of `kubectl` (and by extension
+`oc`). 
+
+The principals of `kustomize` are:
+
+* Purely declarative approach to configuration customization 
+* Manage an arbitrary number of distinctly customized Kubernetes configurations 
+* Every artifact that kustomize uses is plain YAML and can be validated and
+  processed as such 
+* As a "templateless" templating system; it encourages using YAML without
+  forking the repo it.
+
+image::kustomize_logo.png[Kustomize Logo]
+
+[#exploring_kustomize]
+== Exploring Kustomize
+
+[#exploring_kustomize_cli]
+== Exploring the Kustomize CLI
+
+The `kustomize` CLI should have been installed as part of the lab
+setup. Verify that it has been installed.
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kustomize version --short
+----
+
+
+This should display the version, it should look something like this.
+
+[.console-output]
+[source,bash,subs="attributes+,+macros"]
+----
+{kustomize/v4.5.7  2022-08-02T16:35:54Z  }
+----
+
+
+Kustomize, at its core, is meant to build on top of native Kubernetes manifests
+based on YAML while leaving the original YAML in tact. It achieves this in a
+"template-less" templating format. This is done by providing a
+`kustomization.yaml` file.
+
+We will be focusing on two Kustomize sub-commands: the `build` command and the
+`edit` command.
+
+The `build` command takes the YAML source (via a path or URL) and creates a new
+YAML that can be piped into `oc create`. We will work with an example in the
+`documentation/modules/ROOT/examples/kustomize-build` directory within the
+repository you cloned.
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/kustomize-build
+----
+
+Here you should see two files, a `kustomization.yaml` file and a `welcome.yaml`
+file, let's have a look at them.
+
+.link:[welcome.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$kustomize-build/welcome.yaml[]
+----
+
+This file shows nothing special. Just a standard Kubernetes manifest.
+
+What if, for example, we wanted to add a `label` to this manifest without
+editing it? This is where the `kustomization.yaml` file comes in.
+
+.link:[kustomization.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$kustomize-build/kustomization.yaml[]
+----
+
+As you can see in the output there isn't much. The two sections for this
+example are the `resources` and the `patchesJson6902` sections.
+
+`resources` is an array of individual files, directories, and/or URLs where
+other manifests are stored. In this example we are just loading in one file. The
+(https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patchesjson6902/[`patchesJson6902`
+is a patching RFC] that `kustomize` supports. As you can see, in the
+`patchesJson6902` file, I am adding a label to this manifest.
+
+> **NOTE** You can read about what options are available for patching in the
+https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/[official
+documentation site]
+
+Build this manifest by running:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kustomize build
+----
+
+You can see that the new label got added to the manifest!
+
+[.console-output]
+[source,yaml,subs="attributes+,+macros"]
+----
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: welcome-php
+    testkey: testvalue
+  name: welcome-php
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: welcome-php
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: welcome-php
+    spec:
+      containers:
+      - image: quay.io/redhatworkshops/welcome-php:ffcd15
+        name: welcome-php
+        resources: {}
+----
+
+You can use the `kustomize edit` command instead of writing YAML. For
+example, you can change the image tag this `Deployment` uses from `latest`
+to `ffcd15` by running the following:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+kustomize edit set image quay.io/redhatworkshops/welcome-php:ffcd15
+----
+
+This will update the `kustomization.yaml` file with a `images` section. 
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cat kustomization.yaml
+----
+
+[.console-output]
+[source,yaml,subs="attributes+,+macros"]
+----
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./welcome.yaml
+patchesJson6902:
+- patch: |-
+    - op: add
+      path: /metadata/labels/testkey
+      value: testvalue
+  target:
+    group: apps
+    kind: Deployment
+    name: welcome-php
+    version: v1
+images:
+- name: quay.io/redhatworkshops/welcome-php
+  newTag: ffcd15
+----
+
+Now when you run:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+ kustomize build .
+----
+
+You should see not only the new label but also the new `ffcd15` image tag.
+
+> **NOTE** You may have to close the `kustomization.yaml` tab and re-open it to
+see the changes.
+
+You can see how you can take already existing YAML and modify it for
+your specific environment without the need to copy or edit the original.
+
+Kustomize can be used to write a new YAML file or be pipped into
+the `kubectl` (or `oc`) command. Example:
+
+[source,bash,subs="attributes+,+macros"]
+----
+kustomize build . | kubectl apply -f -
+----
+
+[#exploring_kustomize_with_kubectl]
+=== Exploring Kustomize with Kubectl
+
+Since Kubernetes 1.14, The `kubectl` command (and by extension the
+`oc` cli) has support for Kustomize built in.
+
+You can see this by running:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc kustomize --help
+----
+
+This runs the `kustomize build` command. You can see this by running:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc kustomize
+----
+
+Although you can use this to pipe it into the apply command, you
+don't have to. The `kubectl apply` command has the `-k` option that
+will run the build before it applies the manifest.
+
+> NOTE `kubectl` and `oc kustomize` implement a subset of the `kustomize`
+featureset. For example, the `edit` command is not implemented.
+
+Now you will apply your `kustomize`-d manifest into one of your projects:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc apply -n user%USERNUM%-bgdk -k ./
+----
+
+> **NOTE** You can pass not only directories, but URLs as well. The
+> only requirement is that you have a `kustomization.yaml` file in
+> the path.
+
+This should create the deployment and you should see the pods running in the namespace:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc get pods -n user%USERNUM%-bgdk
+----
+
+You can see the deployment was created with the additional labels:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc get deployment welcome-php -o jsonpath='{.metadata.labels}' -n user%USERNUM%-bgdk | jq -r
+----
+
+Also, the image was updated based on the customization that was made:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc get deploy welcome-php -n user%USERNUM%-bgdk -o jsonpath='{.spec.template.spec.containers[].image}{"\n"}'
+----
+
+As you can see `kustomize` can be a powerful tool.
+
+You can delete the applied resources with `oc delete` and kustomize, too:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc delete -n user%USERNUM%-bgdk -k ./
+----
+
+[#deploying_kustomized_application]
+== Deploying Kustomized Application
+
+In previous chapter, you learned that in a GitOps workflow; the
+entire application stack (including infrastructure) is reflected
+in a git repo. The challenge is how to do this without duplicating
+YAML.
+
+So now that you've explored `kustomize`, let's see how it fits into Argo
+CD and how it can be used in a GitOps workflow.
+
+Before preceeding, move back into the home directory: 
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cd -
+----
+
+[#argocd_web_console]
+=== The Argo CD Web Console
+
+Access Argo CD Web Console.
+
+Once you have accepted the self signed certificate, you should be
+presented with the Argo CD login screen.
+
+image::argocd-login.png[ArgoCD Login]
+
+You can login with the following
+
+**Username**:
+[.console-input]
+[source,text,subs="attributes+,+macros"]
+----
+admin
+----
+
+**Password**:
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc extract secret/user%USERNUM%-argo-cluster -n user%USERNUM%-argocd --to=-
+----
+
+
+[#kustomized_application]
+=== Kustomized Application
+
+Argo CD has native support for Kustomize. You can use this to avoid
+duplicating YAML for each deployment. This is especially good to
+use if you have different environments or clusters you're deploying
+to.
+
+Take a look at the `Application` definition:
+
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgdk-app.yaml[]
+----
+
+This application definition lives in the *same repo* but in a *different
+directory*. The application definition refers to the same resources you used in
+the previous lab scenario. This concept is called an "overlay", where you have a
+"base" set of manifests and you overlay your `kustomize`-ations.
+
+Take a look at the `kustomization.yaml` file:
+
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgdk/kustomization.yaml[]
+----
+
+This `kustomization.yaml` takes the base application and patches the manifest so
+that you get yellow dots instead of blue ones.
+
+Deploy this application:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgdk-app.yaml | oc apply -n user%USERNUM%-argocd -f -
+----
+
+This should show you two apps on the Argo CD UI.
+
+image::two-apps.png[Two Apps]
+
+Open the Route for this application. It's in the `user{USERNUM}-bgdk` Project.
+Remember you can get this from the topology view, or from the CLI:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc get route -n user%USERNUM%-bgdk bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+----
+
+You should see yellow balls flying around. This is the same application you used
+previously, and so you know that by changing the environment variable on the
+deployment you can change the ball color.
+
+Argo CD deployed the application with your `kustomize`-ations! To review what we
+just did:
+
+* Deployed an Application called `bgd` with a blue square.
+* Deployed another Application based on `bgd` called `bgdk`
+* The Application `bgdk` was deployed in its own namespace, with deployment
+  customizations.
+* ALL without having to duplicate YAML!
