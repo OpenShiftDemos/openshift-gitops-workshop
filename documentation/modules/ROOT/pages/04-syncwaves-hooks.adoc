@@ -214,7 +214,7 @@ Create this application:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/todo-application.yaml | oc apply -n user%USERNUM%-todo -f -
+sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/todo-application.yaml | oc apply -n user%USERNUM%-argocd -f -
 ----
 
 [.console-output]
@@ -239,7 +239,7 @@ the namespace:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl get pods -n todo
+oc get pods -n user%USERNUM%-todo
 ----
 
 You should see that the Job is finished, but still there.
