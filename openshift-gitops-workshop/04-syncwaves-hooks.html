@@ -682,11 +682,6 @@ after completion.
 <h2 id="deploying_the_application"><a class="anchor" href="#deploying_the_application"></a>Deploying The Application</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>CHANGEME</strong>
-You can see all deployment files by
-<a href="https://github.com/redhat-developer-demos/openshift-gitops-examples/tree/main/apps/todo" target="_blank" rel="noopener">visiting the repo</a>.</p>
-</div>
-<div class="paragraph">
 <p>Taking a look at this manifest file: <code>todo-application.yaml</code>:</p>
 </div>
 <div class="listingblock">
@@ -703,7 +698,7 @@ spec:
   source:
     path: documentation/modules/ROOT/examples/todo
     repoURL: <a href="https://github.com/openshiftdemos/openshift-gitops-workshop" class="bare">https://github.com/openshiftdemos/openshift-gitops-workshop</a>
-    targetRevision: updates-for-rhpds
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true
