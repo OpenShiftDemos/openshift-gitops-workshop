@@ -3,8 +3,8 @@ runtime:
 
 site:
   title: OpenShift GitOps Workshop
-  url: https://redhat-scholars.github.io/course-template
-  start_page: template-tutorial::index.adoc
+  url: https://openshiftdemos.github.io/openshift-gitops-workshop
+  start_page: openshift-gitops-workshop::index.adoc
 
 content:
   sources:
@@ -23,11 +23,7 @@ ui:
   bundle:
     url: https://github.com/evanshortiss/course-ui/releases/download/v0.1.13-prerelease/ui-bundle.zip
     snapshot: true
-  supplemental_files:
-    - path: ./supplemental-ui
-    - path: .nojekyll
-    - path: ui.yml
-      contents: "static_files: [ .nojekyll ]"
+  supplemental_files: ./supplemental-ui
 
 output:
   dir: ./gh-pages
