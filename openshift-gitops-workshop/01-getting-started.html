@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Getting Started :: OpenShift GitOps Workshop</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/openshift-gitops-workshop/01-getting-started.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="02-gitops-basics.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/header_logo.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://redhat-scholars.github.io/course-template">OpenShift GitOps Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="openshift-gitops-workshop" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">OpenShift GitOps Workshop</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Getting Started</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#cluster-login">Cluster Login</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#open-web-terminal">Open the Web Terminal</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-gitops-basics.html">2. GitOps Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#review-argocd">Review Argo CD Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#connect-argocd">Connecting to Argo CD</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#deploy-sample-application">Deploy a Sample Application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html">3. Work with Kustomize</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize">Exploring the Kustomize</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_cli">Exploring the Kustomize CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_with_kubectl">Exploring Kustomize with Kubectl</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html#deploying_kustomized_application">Deploying Kustomized Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#argocd_web_console">The ArgoCD Web Console</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#kustomized_application">Kustomized Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-syncwaves-hooks.html">4. Sync Waves and Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-syncwaves-hooks.html#using_syncwaves">Using Sync Waves</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-syncwaves-hooks.html#exploring_the_manifests_waves">Exploring Sync Wave Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-syncwaves-hooks.html#using_resource_hooks">Using Resource Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-syncwaves-hooks.html#exploring_the_manifests_hooks">Exploring Resource Hook Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-syncwaves-hooks.html#deploying_the_application">Deploying the Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">OpenShift GitOps Workshop</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">OpenShift GitOps Workshop</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">OpenShift GitOps Workshop</a></li>
+    <li><a href="01-getting-started.html">1. Getting Started</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/edit/master/documentation/modules/ROOT/pages/01-getting-started.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Getting Started</h1>
+<div class="sect1">
+<h2 id="cluster-login"><a class="anchor" href="#cluster-login"></a>OpenShift cluster login</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The first thing to do is log in to your OpenShift cluster. In the previous
+screen that handed you your workshop credentials should be a link to the
+OpenShift console, as well as a username and password. Click that link, which
+will take you to the OpenShift login screen:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift-login.png" alt="openshift login">
+</div>
+</div>
+<div class="paragraph">
+<p>Once logged in, make sure that you choose the <em>Developer</em> perspective using the
+switcher in the upper-left:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift-perspective-switcher.png" alt="openshift perspective switcher">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="open-web-terminal"><a class="anchor" href="#open-web-terminal"></a>OpenShift Web Terminal</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenShift conveniently provides a web-based terminal that includes many of the
+necessary command-line tools you need to interact with. You can open the web
+terminal by clicking its launcher button on the upper right menu, near your
+username:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift-topright-menu.png" alt="openshift topright menu">
+</div>
+</div>
+<div class="paragraph">
+<p>You will be asked to choose which project in which to initialize your terminal.
+This workshop has created several Kubernetes namespaces (OpenShift projects) for
+you. It doesn&#8217;t <em>really</em> matter which one you choose, but we recommend that you
+initialize your terminal in the project that houses Argo CD:
+<code>user%USERNUM%-argocd</code>.</p>
+</div>
+<div class="paragraph">
+<p>Once the terminal is launched, you&#8217;ll see it at the bottom of your screen:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift-web-terminal-snippet.png" alt="openshift web terminal snippet">
+</div>
+</div>
+<div class="paragraph">
+<p>You probably want to pop-out the terminal into a new browser window/tab so that
+you can see the OpenShift console with your full screen. There&#8217;s a pop-out
+button on the right side:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/openshift-web-terminal-popout.png" alt="openshift web terminal popout">
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html" class="query-params-link">OpenShift GitOps Workshop</a></span>
+  <span class="next"><a href="02-gitops-basics.html" class="query-params-link">2. GitOps Basics</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

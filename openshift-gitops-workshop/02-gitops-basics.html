@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Getting Started :: OpenShift GitOps Workshop</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/openshift-gitops-workshop/02-gitops-basics.html">
+    <link rel="prev" href="01-getting-started.html">
+    <link rel="next" href="03-kustomize.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/header_logo.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://redhat-scholars.github.io/course-template">OpenShift GitOps Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="openshift-gitops-workshop" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">OpenShift GitOps Workshop</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Getting Started</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#cluster-login">Cluster Login</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#open-web-terminal">Open the Web Terminal</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-gitops-basics.html">2. GitOps Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#review-argocd">Review Argo CD Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#connect-argocd">Connecting to Argo CD</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#deploy-sample-application">Deploy a Sample Application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html">3. Work with Kustomize</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize">Exploring the Kustomize</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_cli">Exploring the Kustomize CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_with_kubectl">Exploring Kustomize with Kubectl</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html#deploying_kustomized_application">Deploying Kustomized Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#argocd_web_console">The ArgoCD Web Console</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#kustomized_application">Kustomized Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-syncwaves-hooks.html">4. Sync Waves and Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-syncwaves-hooks.html#using_syncwaves">Using Sync Waves</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-syncwaves-hooks.html#exploring_the_manifests_waves">Exploring Sync Wave Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-syncwaves-hooks.html#using_resource_hooks">Using Resource Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-syncwaves-hooks.html#exploring_the_manifests_hooks">Exploring Resource Hook Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-syncwaves-hooks.html#deploying_the_application">Deploying the Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">OpenShift GitOps Workshop</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">OpenShift GitOps Workshop</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">OpenShift GitOps Workshop</a></li>
+    <li><a href="02-gitops-basics.html">2. GitOps Basics</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/edit/master/documentation/modules/ROOT/pages/02-gitops-basics.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Getting Started</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>An Argo CD instance dedicated for you has been deployed into the OpenShift
+Project <code>user%USERNUM%-argocd</code>. This is one of the benefits of the
+Operator-based mechanism that OpenShift uses: it&#8217;s easy for users to deploy
+software and solutions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="review-argocd"><a class="anchor" href="#review-argocd"></a>Review the Argo CD Deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the OpenShift web console, with the <em>Developer</em> perspective active, click the
+<em>Topology</em> link in the left navigation and make sure that the
+<code>user%USERNUM%-argocd</code> Project is selected at the top. You will see the Argo CD
+deployment in the topology view:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-topology.png" alt="argocd topology">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="connect-argocd"><a class="anchor" href="#connect-argocd"></a>Connecting to Argo CD</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Argo CD generates a default <code>admin</code> user and a random password when first
+deployed. You can connect to Argo CD using this user account via the CLI or web
+console.  In this workshop, we will only use the Argo CD web console.</p>
+</div>
+<div class="paragraph">
+<p>In your web terminal, you can retrieve the Argo CD admin password from a secret
+that is in the same Project as the Argo CD deployment:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc extract secret/user%USERNUM%-argo-cluster -n user%USERNUM%-argocd --to=-</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You <em>could</em> also get this value by using the web console to navigate to the
+<em>Secrets</em> menu on the left, finding the <code>user%USERNUM%-argo-cluster</code> secret, and
+then clicking into it.</p>
+</div>
+<div class="paragraph">
+<p>There are a few ways to find the URL for your Argo CD instance. In the <em>Topology</em> view of your Project, any Routes/Ingresses associated with
+services will have a little pop-out icon:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-topology-link.png" alt="argocd topology link">
+</div>
+</div>
+<div class="paragraph">
+<p>You can find all of the Routes by clicking the <em>Project</em> link on the left, and
+then clicking <em>Route</em> on the subsequent page.</p>
+</div>
+<div class="paragraph">
+<p>Also, you can get the Argo CD Route using the <code>oc</code> CLI:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route -n user%USERNUM%-argocd user%USERNUM%-argo-server -o jsonpath='{.spec.host}{"\n"}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However you decide to access the Argo CD console, log in with the username
+<code>admin</code> and the password extracted in the previous step:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-login.png" alt="ArgoCDLogin" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>Once you&#8217;ve logged in, you should see the following page. This is the Argo CD
+Web UI.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-login2.png" alt="ArgoCDLogin2" width="600">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploy-sample-application"><a class="anchor" href="#deploy-sample-application"></a>Deploy a Sample Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As GitOps implies some relationship to Git, we will need to get manifests from a
+repository somewhere. You will be using the repository that contains this
+workshop and its documentation as the source of the manifests that define the
+application state:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop" target=""_blank'">https://github.com/OpenShiftDemos/openshift-gitops-workshop</a></p>
+</div>
+<div class="sect2">
+<h3 id="_clone_the_repository"><a class="anchor" href="#_clone_the_repository"></a>Clone the Repository</h3>
+<div class="paragraph">
+<p>You need to clone the repository into your web terminal because you will need to
+make very small changes to some of the files for the examples:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone <a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop" class="bare">https://github.com/OpenShiftDemos/openshift-gitops-workshop</a> ~/openshift-gitops-workshop</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All of the example content will be located in:</p>
+</div>
+<div class="paragraph">
+<p><code>~/openshift-gitops-workshop/documentation/modules/ROOT/examples</code></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The web terminal only supports ephemeral storage. If you shut it down, or if it
+times out, any local filesystem changes made will be lost. This means you would
+need to clone the repository again. The web terminal is intended for
+troubleshooting and simple interaction, and not as a long-lived remote execution
+environment. For that, something like
+<a href="https://developers.redhat.com/products/openshift-dev-spaces/overview">OpenShift
+DevSpaces</a> is a better choice.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_review_the_application_manifests"><a class="anchor" href="#_review_the_application_manifests"></a>Review the Application Manifests</h3>
+<div class="paragraph">
+<p>The application manifests include a Deployment, Service, and Route.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Review, but do not apply these manifests to your cluster. You will do that
+shortly using Argo CD.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Deployment</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bgd
+  name: bgd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bgd
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: bgd
+    spec:
+      containers:
+      - image: quay.io/rhdevelopers/bgd:1.0.0
+        name: bgd
+        env:
+        - name: COLOR
+          value: "blue"
+        resources: {}
+---</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <strong>Service</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bgd
+  name: bgd
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: bgd
+---</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <strong>Route</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: bgd
+  name: bgd
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: bgd
+    weight: 100</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploy_the_application"><a class="anchor" href="#_deploy_the_application"></a>Deploy the Application</h3>
+<div class="paragraph">
+<p>A managed collection of manifests is known as an <code>Application</code> within Argo CD.
+Therefore, you must define it as such using an
+<a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications" target="_blank" rel="noopener">Application
+CR (CustomResource)</a> in order to have Argo CD apply these manifests in your
+cluster.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s review the Argo CD Application manifest used to deploy this application
+and break this down a bit:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bgd-app
+spec:
+  destination:
+    namespace: bgd
+    server: <a href="https://kubernetes.default.svc" class="bare">https://kubernetes.default.svc</a> <i class="conum" data-value="1"></i><b>(1)</b>
+  project: default <i class="conum" data-value="2"></i><b>(2)</b>
+  source: <i class="conum" data-value="3"></i><b>(3)</b>
+    path: documentation/modules/ROOT/examples/bgd
+    repoURL: <a href="https://github.com/redhat-developer-demos/openshift-gitops-examples" class="bare">https://github.com/redhat-developer-demos/openshift-gitops-examples</a>
+    targetRevision: main
+  syncPolicy: <i class="conum" data-value="4"></i><b>(4)</b>
+    automated:
+      prune: true
+      selfHeal: false</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The destination server is API endpoint for the cluster where Argo CD is
+running&#8201;&#8212;&#8201;in this case, using the locally-resolveable URL for the cluster</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Here you&#8217;re installing the application in Argo CD&#8217;s <code>default</code> project
+(<code>.spec.project</code>).
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Argo CD&#8217;s concept of a <code>Project</code> is different than OpenShift&#8217;s. Here you&#8217;re
+installing the application in Argo CD&#8217;s <code>default</code> project (<code>.spec.project</code>).
+<strong>NOT</strong> OpenShift&#8217;s default project.
+</td>
+</tr>
+</table>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The manifest repo, and th path within it where the YAML resides.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>syncPolicy</code> is set to <code>automated</code>. It will automatically prune
+resources that have been removed from the Git repo, but will not automatically
+correct resources that deviate from the definition stored in the repo, i.e
+manual changes made using <code>kubectl</code> will not be "healed".</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You will create an Application by slightly modifying the provided example inline
+using the command below:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app.yaml | oc apply -n user%USERNUM%-argocd -f -</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The newly created Application appears as a tile with the title <code>bgd-app</code> in the
+Argo CD UI.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-app1.png" alt="SampleApp">
+</div>
+</div>
+<div class="paragraph">
+<p>Clicking on this tile takes you to the application details page. You may see it
+as still progressing or fully synced.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd-app2.png" alt="SampleApp">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You may have to click on <code>show hidden resources</code> on this page to see all
+of the resources.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>At this point the application should be up and running. Verify that the
+resources were created:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get all -n user%USERNUM%-bgd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should list several things:</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                       READY   STATUS    RESTARTS   AGE
+pod/bgd-74cf584546-tlqdm   1/1     Running   0          12m
+
+NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/bgd   ClusterIP   172.30.124.158   &lt;none&gt;        8080/TCP   12m
+
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/bgd   1/1     1            1           12m
+
+NAME                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/bgd-74cf584546   1         1         1       12m
+
+NAME                           HOST/PORT                                                       PATH   SERVICES   PORT   TERMINATION   WILDCARD
+route.route.openshift.io/bgd   bgd-user3-bgd.apps.cluster-7pjzx.7pjzx.sandbox141.opentlc.com          bgd        8080                 None</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Extra Credit:</strong> Do you know why you have a ReplicaSet?</p>
+</div>
+<div class="paragraph">
+<p>Verify the the rollout is complete:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc rollout status deploy/bgd -n user%USERNUM%-bgd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If it is successful, you can now visit the deployed application in the browser.</p>
+</div>
+<div class="paragraph">
+<p>From the OpenShift web console, select <strong>user%USERNUM%-bgd</strong> Project from
+drop-down menu, and use the <em>Topology</em> view to find the link as you did with
+the Argo CD console.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgdapp.png" alt="BGD App">
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, get the app Route from the CLI:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This route is only available via HTTP. If you try to visit via HTTPS,
+you will get an <em>Application not available</em> error. Do you know why that is?
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Your application should look like this.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd.png" alt="SampleApp">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_addressing_configuration_drift"><a class="anchor" href="#_addressing_configuration_drift"></a>Addressing Configuration Drift</h3>
+<div class="paragraph">
+<p>Let&#8217;s introduce a change in the application environment! Patch the live
+Deployment manifest to change the color of the bubbles in the application from
+blue to green:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wait for the rollout to happen:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl rollout status deploy/bgd -n user%USERNUM%-bgd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Refresh the browser tab where your application is running. You should see green
+bubbles.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd-green.png" alt="BDG Green">
+</div>
+</div>
+<div class="paragraph">
+<p>Looking over at your Argo CD Web UI, you can see that Argo detects your
+application as "Out of Sync".</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/out-of-sync.png" alt="Out of Sync">
+</div>
+</div>
+<div class="paragraph">
+<p>You can sync your app via the Argo CD by:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First clicking <code>SYNC</code></p>
+</li>
+<li>
+<p>Then clicking <code>SYNCHRONIZE</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After the sync process is done, the Argo CD UI should mark the application as in
+sync.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/fullysynced.png" alt="Fully Synced">
+</div>
+</div>
+<div class="paragraph">
+<p>Reload the page on the tab where the application is running. The bubbles should
+have returned to their original blue color.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd.png" alt="BDG App">
+</div>
+</div>
+<div class="paragraph">
+<p>You can setup Argo CD to automatically correct drift by setting the <code>selfHeal</code>
+property of the <code>Application</code> manifest to do so. Example:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or, as in our case, after the fact by running the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc patch application/bgd-app -n user%USERNUM%-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="01-getting-started.html" class="query-params-link">1. Getting Started</a></span>
+  <span class="next"><a href="03-kustomize.html" class="query-params-link">3. Work with Kustomize</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

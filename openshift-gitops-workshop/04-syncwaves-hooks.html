@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SyncWaves and Hooks :: OpenShift GitOps Workshop</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/openshift-gitops-workshop/04-syncwaves-hooks.html">
+    <link rel="prev" href="03-kustomize.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/header_logo.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://redhat-scholars.github.io/course-template">OpenShift GitOps Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="openshift-gitops-workshop" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">OpenShift GitOps Workshop</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Getting Started</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#cluster-login">Cluster Login</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#open-web-terminal">Open the Web Terminal</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-gitops-basics.html">2. GitOps Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#review-argocd">Review Argo CD Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#connect-argocd">Connecting to Argo CD</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#deploy-sample-application">Deploy a Sample Application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html">3. Work with Kustomize</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize">Exploring the Kustomize</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_cli">Exploring the Kustomize CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_with_kubectl">Exploring Kustomize with Kubectl</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html#deploying_kustomized_application">Deploying Kustomized Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#argocd_web_console">The ArgoCD Web Console</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#kustomized_application">Kustomized Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-syncwaves-hooks.html">4. Sync Waves and Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#using_syncwaves">Using Sync Waves</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#exploring_the_manifests_waves">Exploring Sync Wave Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#using_resource_hooks">Using Resource Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#exploring_the_manifests_hooks">Exploring Resource Hook Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#deploying_the_application">Deploying the Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">OpenShift GitOps Workshop</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">OpenShift GitOps Workshop</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">OpenShift GitOps Workshop</a></li>
+    <li><a href="04-syncwaves-hooks.html">4. Sync Waves and Hooks</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/edit/master/documentation/modules/ROOT/pages/04-syncwaves-hooks.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">SyncWaves and Hooks</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://argoproj.github.io/argo-cd/user-guide/sync-waves/" target="_blank" rel="noopener">Syncwaves</a>
+are used in Argo CD to order how manifests are applied to the cluster.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://argoproj.github.io/argo-cd/user-guide/resource_hooks/" target="_blank" rel="noopener">resource hooks</a> break up the delivery of these manifests into different
+phases.</p>
+</div>
+<div class="paragraph">
+<p>Using a combination of syncwaves and resource hooks, you can control how your
+application rolls out.</p>
+</div>
+<div class="paragraph">
+<p>This example will take you through the following steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Using Syncwaves to order deployment</p>
+</li>
+<li>
+<p>Exploring Resource Hooks</p>
+</li>
+<li>
+<p>Using Syncwaves and Hooks together</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The sample application that we will deploy is a TODO application with a database
+and, apart from deployment files, syncwaves and resource hooks are used:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/todo-app.png" alt="todo app">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using_syncwaves"><a class="anchor" href="#using_syncwaves"></a>Using Sync Waves</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A Syncwave is a way to order how Argo CD applies the manifests that are stored
+in git. All manifests have a wave of zero by default, but you can set these by
+using the <code>argocd.argoproj.io/sync-wave</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The wave can also be negative as well.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When Argo CD starts a sync action, the manifests get placed in the following
+order:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Phase that they&#8217;re in (we&#8217;ll cover phases in the next section)</p>
+</li>
+<li>
+<p>The wave the resource is annotated in (starting from the lowest value to the
+highest)</p>
+</li>
+<li>
+<p>By kind (Namespaces first, then services, then deployments, etc &#8230;&#8203;)</p>
+</li>
+<li>
+<p>By name (ascending order)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Read more about syncwaves on the
+<a href="https://argoproj.github.io/argo-cd/user-guide/sync-waves/#how-do-i-configure-waves" target="_blank" rel="noopener">official documentation site</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="exploring_the_manifests_waves"><a class="anchor" href="#exploring_the_manifests_waves"></a>Exploring Sync Wave Manifests</h3>
+<div class="paragraph">
+<p>The sample application that you will deploy has several waves.</p>
+</div>
+<div class="paragraph">
+<p>First, <strong>PostgreSQL</strong> with syncwave <strong>0</strong>. It has a Deployment:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+        - name: postgresql
+          image: quay.io/redhatdemo/openshift-pgsql12-primary:centos7
+          imagePullPolicy: Always
+          ports:
+            - name: tcp
+              containerPort: 5432
+          env:
+            - name: PG_USER_PASSWORD
+              value: admin
+            - name: PG_USER_NAME
+              value: admin
+            - name: PG_DATABASE
+              value: todo
+            - name: PG_NETWORK_MASK
+              value: all</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>PostgreSQL Service</strong> with syncwave <strong>0</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  selector:
+    app: postgresql
+  ports:
+    - name: pgsql
+      port: 5432
+      targetPort: 5432</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Second, <strong>Database table creation</strong> with syncwave <strong>1</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: batch/v1
+kind: Job
+metadata:
+  name: todo-table
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  template:
+    spec:
+      containers:
+        - name: postgresql-client
+          image: postgres:12
+          imagePullPolicy: Always
+          env:
+            - name: PGPASSWORD
+              value: admin
+          command: ["psql"]
+          args:
+            [
+              "--host=postgresql",
+              "--username=admin",
+              "--no-password",
+              "--dbname=todo",
+              "--command=create table Todo (id bigint not null,completed boolean not null,ordering integer,title varchar(255),url varchar(255),primary key (id));create sequence hibernate_sequence start with 1 increment by 1;",
+            ]
+      restartPolicy: Never
+  backoffLimit: 1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>TODO application deployment</strong> with syncwave <strong>2</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: "v1"
+kind: "ServiceAccount"
+metadata:
+  labels:
+    app.kubernetes.io/name: "todo-gitops"
+    app.kubernetes.io/version: "1.0.0"
+  name: "todo-gitops"
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  labels:
+    app.kubernetes.io/name: "todo-gitops"
+    app.kubernetes.io/version: "1.0.0"
+  name: "todo-gitops"
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "todo-gitops"
+      app.kubernetes.io/version: "1.0.0"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "todo-gitops"
+        app.kubernetes.io/version: "1.0.0"
+    spec:
+      containers:
+      - env:
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
+        image: "quay.io/rhdevelopers/todo-gitops:1.0.0"
+        imagePullPolicy: "Always"
+        name: "todo-gitops"
+        ports:
+        - containerPort: 8080
+          name: "http"
+          protocol: "TCP"
+      serviceAccount: "todo-gitops"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>TODO Service</strong> with syncwave <strong>2</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    app.kubernetes.io/name: "todo-gitops"
+    app.kubernetes.io/version: "1.0.0"
+  name: "todo-gitops"
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  ports:
+  - name: "http"
+    port: 8080
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: "todo-gitops"
+    app.kubernetes.io/version: "1.0.0"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>TODO Route</strong> with syncwave <strong>3</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: todo
+  name: todo
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: todo-gitops
+    weight: 100</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>First, the PostgreSQL Deployment will be applied. After that reports healthy,
+Argo CD will continue with the rest of resources.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Argo CD won&#8217;t apply the next manifest in a wave until the previous
+reports "healthy".
+</td>
+</tr>
+</table>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using_resource_hooks"><a class="anchor" href="#using_resource_hooks"></a>Using Resource Hooks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that you&#8217;re familiar with syncwaves, we can begin exploring applying
+manifests in phases using <code>resource hooks</code>.</p>
+</div>
+<div class="paragraph">
+<p>Controlling your sync operation can be further redefined by using
+hooks. These hooks can run before, during, and after a sync
+operation. These hooks are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>PreSync</strong> - Runs before the sync operation. This can be something like a
+database backup before a schema change</p>
+</li>
+<li>
+<p><strong>Sync</strong> - Runs after <code>PreSync</code> has successfully ran. This will run alongside
+your normal manifests.</p>
+</li>
+<li>
+<p><strong>PostSync</strong> - Runs after <code>Sync</code> has ran successfully. This can be something
+like a Slack message or an email notification.</p>
+</li>
+<li>
+<p><strong>SyncFail</strong> - Runs if the <code>Sync</code> operation as failed. This is also used to
+send notifications or do other evasive actions.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To enable a sync, annotate the specific object manifest with
+<code>argocd.argoproj.io/hook</code> with the type of sync you want to use for that
+resource. For example, if you wanted to use the <code>PreSync</code> hook:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">metadata:
+  annotations:
+    argocd.argoproj.io/hook: PreSync</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also have the hooks be deleted after a successful/unsuccessful run.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>HookSucceeded</strong> - The resource will be deleted after it has succeeded.</p>
+</li>
+<li>
+<p><strong>HookFailed</strong> - The resource will be deleted if it has failed.</p>
+</li>
+<li>
+<p><strong>BeforeHookCreation</strong> - The resource will be deleted before a new one is
+created (when a new sync is triggered).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can apply these with the <code>argocd.argoproj.io/hook-delete-policy</code>
+annotation. For example:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">metadata:
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded</code></pre>
+</div>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Since a sync can fail in any phase, you can come to a situation where
+the application never reports healthy!
+</td>
+</tr>
+</table>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Although hooks can be any resource, they are usually Pods and/or Jobs.</p>
+</div>
+<div class="paragraph">
+<p>To read more about resource hooks, consult the
+<a href="https://argoproj.github.io/argo-cd/user-guide/resource_hooks">official
+documentation</a></p>
+</div>
+<div class="sect2">
+<h3 id="exploring_the_manifests_hooks"><a class="anchor" href="#exploring_the_manifests_hooks"></a>Exploring Resource Hook Manifests</h3>
+<div class="paragraph">
+<p>Take a look at this <code>PostSync</code> manifest which sends an HTTP request to insert a
+new TODO item:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: batch/v1
+kind: Job
+metadata:
+  name: todo-insert
+  annotations:
+    argocd.argoproj.io/hook: PostSync <i class="conum" data-value="1"></i><b>(1)</b>
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: httpie
+          image: alpine/httpie:2.4.0
+          imagePullPolicy: Always
+          command: ["http"]
+          args:
+            [
+              "POST",
+              "todo-gitops:8080/api",
+              "title=Finish ArgoCD tutorial",
+              "--ignore-stdin"
+            ]
+      restartPolicy: Never
+  backoffLimit: 1</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This means that this Job will run in the <code>PostSync</code> phase, after the
+application of the manifests in the <code>Sync</code> phase.</td>
+</tr>
+</table>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Since there is no deletion policy, this job will "stick around"
+after completion.
+</td>
+</tr>
+</table>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>The execution order can be seen in the following diagram:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/presyncpost.png" alt="presyncpost">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploying_the_application"><a class="anchor" href="#deploying_the_application"></a>Deploying The Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>CHANGEME</strong>
+You can see all deployment files by
+<a href="https://github.com/redhat-developer-demos/openshift-gitops-examples/tree/main/apps/todo" target="_blank" rel="noopener">visiting the repo</a>.</p>
+</div>
+<div class="paragraph">
+<p>Taking a look at this manifest file: <code>todo-application.yaml</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: todo-app
+spec:
+  destination:
+    namespace: user$USERNUM-todo
+    server: <a href="https://kubernetes.default.svc" class="bare">https://kubernetes.default.svc</a>
+  project: default
+  source:
+    path: documentation/modules/ROOT/examples/todo
+    repoURL: <a href="https://github.com/openshiftdemos/openshift-gitops-workshop" class="bare">https://github.com/openshiftdemos/openshift-gitops-workshop</a>
+    targetRevision: updates-for-rhpds
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create this application:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/todo-application.yaml | oc apply -n user%USERNUM%-argocd -f -</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">application.argoproj.io/todo-app created</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On the Argo CD WebUI, you should see another application appear.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/todo-card.png" alt="TODO Card">
+</div>
+</div>
+<div class="paragraph">
+<p>Clicking on this "card" should take you over to the tree view.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/todo-argocd.png" alt="TODO Tree">
+</div>
+</div>
+<div class="paragraph">
+<p>Observe the sync process. You will see the order that the resource has been applied, first the namespace creation and last the creation of Route to access the application.</p>
+</div>
+<div class="paragraph">
+<p>Once the application is fully synced. Take a look at the pods and jobs in
+the namespace:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods -n user%USERNUM%-todo</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see that the Job is finished, but still there.</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                           READY   STATUS      RESTARTS   AGE
+postgresql-599467fd86-cgj9v    1/1     Running     0          32s
+todo-gitops-679d88f6f4-v4djp   1/1     Running     0          19s
+todo-table-xhddk               0/1     Completed   0          27s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Your application should look like this.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/todo-app-screenshot.png" alt="TODO">
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>todo-insert</code> Job is not shown as it was configured to be deleted if succeeded:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">argocd.argoproj.io/hook-delete-policy: HookSucceeded</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="03-kustomize.html" class="query-params-link">3. Work with Kustomize</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
