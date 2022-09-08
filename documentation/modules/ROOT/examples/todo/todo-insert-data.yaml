@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: todo-insert
   annotations:
-    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook: PostSync # <1>
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   ttlSecondsAfterFinished: 100

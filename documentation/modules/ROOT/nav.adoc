@@ -17,8 +17,7 @@
 
 * xref:04-syncwaves-hooks.adoc[4. Sync Waves and Hooks]
 ** xref:04-syncwaves-hooks.adoc#using_syncwaves[Using Sync Waves]
-*** xref:04-syncwaves-hooks.adoc#exploring_the_manifests[Exploring the Manifests]
-*** xref:04-syncwaves-hooks.adoc#deploying_the_application[Deploying the Application]
-** xref:04-syncwaves-hooks.adoc#exploring_resource_hooks[Exploring Resource Hooks]
-*** xref:04-syncwaves-hooks.adoc#exploring_the_manifests_hooks[Exploring the Manifests]
-*** xref:04-syncwaves-hooks.adoc#deploying_the_application_hooks[Deploying the Application]
+*** xref:04-syncwaves-hooks.adoc#exploring_the_manifests_waves[Exploring Sync Wave Manifests]
+** xref:04-syncwaves-hooks.adoc#using_resource_hooks[Using Resource Hooks]
+*** xref:04-syncwaves-hooks.adoc#exploring_the_manifests_hooks[Exploring Resource Hook Manifests]
+** xref:04-syncwaves-hooks.adoc#deploying_the_application[Deploying the Application]

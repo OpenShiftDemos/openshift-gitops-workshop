@@ -62,8 +62,8 @@ Read more about syncwaves on the
 https://argoproj.github.io/argo-cd/user-guide/sync-waves/#how-do-i-configure-waves[official
 documentation site,window='_blank'].
 
-[#exploring_the_manifests]
-=== Exploring the Manifests
+[#exploring_the_manifests_waves]
+=== Exploring Sync Wave Manifests
 
 The sample application that you will deploy has several waves.
 
@@ -112,11 +112,11 @@ include::ROOT:example$todo/todo-route.yaml[]
 First, the PostgreSQL Deployment will be applied. After that reports healthy,
 Argo CD will continue with the rest of resources.
 
-> NOTE: Argo CD won't apply the next manifest until the previous reports
-"healthy".
+> NOTE: Argo CD won't apply the next manifest in a wave until the previous
+reports "healthy".
 
-[#exploring_resource_hooks]
-== Exploring Resource Hooks
+[#using_resource_hooks]
+== Using Resource Hooks
 
 Now that you're familiar with syncwaves, we can begin exploring applying
 manifests in phases using `resource hooks`.
@@ -125,14 +125,18 @@ Controlling your sync operation can be further redefined by using
 hooks. These hooks can run before, during, and after a sync
 operation. These hooks are:
 
-* **PreSync** - Runs before the sync operation. This can be something like a database backup before a schema change
-* **Sync** - Runs after `PreSync` has successfully ran. This will run alongside your normal manifests.
-* **PostSync** - Runs after `Sync` has ran successfully. This can be something like a Slack message or an email notification.
-* **SyncFail** - Runs if the `Sync` operation as failed. This is also used to send notifications or do other evasive actions.
+* **PreSync** - Runs before the sync operation. This can be something like a
+  database backup before a schema change
+* **Sync** - Runs after `PreSync` has successfully ran. This will run alongside
+  your normal manifests.
+* **PostSync** - Runs after `Sync` has ran successfully. This can be something
+  like a Slack message or an email notification.
+* **SyncFail** - Runs if the `Sync` operation as failed. This is also used to
+  send notifications or do other evasive actions.
 
 To enable a sync, annotate the specific object manifest with
 `argocd.argoproj.io/hook` with the type of sync you want to use for that
-resource. For example, if I wanted to use the `PreSync` hook:
+resource. For example, if you wanted to use the `PreSync` hook:
 
 [.console-input]
 [source,yaml,subs="attributes+,+macros"]
@@ -146,10 +150,11 @@ You can also have the hooks be deleted after a successful/unsuccessful run.
 
 * **HookSucceeded** - The resource will be deleted after it has succeeded.
 * **HookFailed** - The resource will be deleted if it has failed.
-* **BeforeHookCreation** - The resource will be deleted before a new one is created (when a new sync is triggered).
+* **BeforeHookCreation** - The resource will be deleted before a new one is
+  created (when a new sync is triggered).
 
 You can apply these with the `argocd.argoproj.io/hook-delete-policy`
-annotation. For example
+annotation. For example:
 
 [.console-input]
 [source,yaml,subs="attributes+,+macros"]
@@ -160,81 +165,57 @@ metadata:
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
 ----
 
-IMPORTANT: Since a sync can fail in any phase, you can come to a situation where the application never reports healthy!
+> IMPORTANT: Since a sync can fail in any phase, you can come to a situation where
+the application never reports healthy!
 
 Although hooks can be any resource, they are usually Pods and/or Jobs.
 
-To read more about resource hooks, consult the https://argoproj.github.io/argo-cd/user-guide/resource_hooks[official documentation]
+To read more about resource hooks, consult the
+https://argoproj.github.io/argo-cd/user-guide/resource_hooks[official
+documentation]
 
 [#exploring_the_manifests_hooks]
-=== Exploring Manifests
+=== Exploring Resource Hook Manifests
 
-Take a look at this `PostSync` manifest which sends an HTTP request to insert a new TODO item:
+Take a look at this `PostSync` manifest which sends an HTTP request to insert a
+new TODO item:
 
-.link:https://github.com/redhat-developer-demos/openshift-gitops-examples/blob/main/apps/todo/todo-insert-data.yaml[todo-insert-data.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$todo/todo-insert-data.yaml[]
 ----
-<1> This means that this Job will run in the `PostSync` phase, after the application of the manifests in the `Sync` phase.
+<1> This means that this Job will run in the `PostSync` phase, after the
+  application of the manifests in the `Sync` phase.
 
-IMPORTANT: Since I don't have a deletion policy, this job will "stick around" after completion.
+> IMPORTANT: Since there is no deletion policy, this job will "stick around"
+after completion.
 
 The execution order can be seen in the following diagram:
 
 image::presyncpost.png[]
 
-[#deploying_the_application_hooks]
-=== Deploying The Application
+[#deploying_the_application]
+== Deploying The Application
 
-You can see all deployment files by https://github.com/redhat-developer-demos/openshift-gitops-examples/tree/main/apps/todo[visiting the repo,window='_blank'].
+*CHANGEME*
+You can see all deployment files by
+https://github.com/redhat-developer-demos/openshift-gitops-examples/tree/main/apps/todo[visiting
+the repo,window='_blank'].
 
 Taking a look at this manifest file: `todo-application.yaml`:
 
-[tabs, subs="attributes+,+macros"]
-====
-Minikube::
-+
---
-.link:https://github.com/redhat-scholars/argocd-tutorial/blob/master/documentation/modules/ROOT/examples/minikube/todo/todo-application.yaml[todo-application.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
-include::ROOT:example$minikube/todo/todo-application.yaml[]
+include::ROOT:example$todo-application.yaml[]
 ----
-
-It will show that this will deploy the application in the `todo`
-namespace.
 
 Create this application:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl apply -f documentation/modules/ROOT/examples/minikube/todo/todo-application.yaml 
+sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/todo-application.yaml | oc apply -n user%USERNUM%-todo -f -
 ----
-
---
-OpenShift::
-+
---
-.link:https://github.com/redhat-scholars/argocd-tutorial/blob/master/documentation/modules/ROOT/examples/todo/todo-application.yaml[todo-application.yaml,window='_blank']
-[source,yaml,subs="+macros,attributes+"]
-----
-include::ROOT:example$todo/todo-application.yaml[]
-----
-
-It will show that this will deploy the application in the `todo`
-namespace.
-
-Create this application:
-
-[.console-input]
-[source,bash,subs="attributes+,+macros"]
-----
-kubectl apply -f documentation/modules/ROOT/examples/todo/todo-application.yaml 
-----
---
-====
 
 [.console-output]
 [source,bash,subs="attributes+,+macros"]
