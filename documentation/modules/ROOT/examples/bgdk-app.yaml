@@ -10,7 +10,7 @@ spec:
   source:
     path: documentation/modules/ROOT/examples/bgdk
     repoURL: https://github.com/openshiftdemos/openshift-gitops-workshop
-    targetRevision: updates-for-rhpds
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true

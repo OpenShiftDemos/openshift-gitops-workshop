@@ -197,11 +197,6 @@ image::presyncpost.png[]
 [#deploying_the_application]
 == Deploying The Application
 
-*CHANGEME*
-You can see all deployment files by
-https://github.com/redhat-developer-demos/openshift-gitops-examples/tree/main/apps/todo[visiting
-the repo,window='_blank'].
-
 Taking a look at this manifest file: `todo-application.yaml`:
 
 [source,yaml,subs="+macros,attributes+"]

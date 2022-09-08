@@ -155,7 +155,7 @@ spec:
   project: default <2>
   source: <3>
     path: documentation/modules/ROOT/examples/bgd
-    repoURL: https://github.com/redhat-developer-demos/openshift-gitops-examples
+    repoURL: https://github.com/OpenShiftDemos/openshift-gitops-workshop
     targetRevision: main
   syncPolicy: <4>
     automated:
