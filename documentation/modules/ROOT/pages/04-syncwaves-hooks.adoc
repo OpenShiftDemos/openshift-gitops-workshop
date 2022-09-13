@@ -131,7 +131,7 @@ operation. These hooks are:
   your normal manifests.
 * **PostSync** - Runs after `Sync` has ran successfully. This can be something
   like a Slack message or an email notification.
-* **SyncFail** - Runs if the `Sync` operation as failed. This is also used to
+* **SyncFail** - Runs if the `Sync` operation has failed. This is also used to
   send notifications or do other evasive actions.
 
 To enable a sync, annotate the specific object manifest with

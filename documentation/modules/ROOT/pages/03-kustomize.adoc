@@ -359,7 +359,7 @@ This should show you two apps on the Argo CD UI.
 
 image::two-apps.png[Two Apps]
 
-Open the Route for this application. It's in the `user{USERNUM}-bgdk` Project.
+Open the Route for this application. It's in the `user%USERNUM%-bgdk` Project.
 Remember you can get this from the topology view, or from the CLI:
 
 [.console-input]
