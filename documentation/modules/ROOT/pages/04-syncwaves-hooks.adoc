@@ -248,7 +248,19 @@ todo-gitops-679d88f6f4-v4djp   1/1     Running     0          19s
 todo-table-xhddk               0/1     Completed   0          27s
 ----
 
-Your application should look like this.
+You can get the Route for your application from the topology view, or you can
+use the following CLI snippet to get the exact URL you need:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+oc get route -n user%USERNUM%-todo todo -o jsonpath='{"http://"}{.spec.host}{"/todo.html\n"}'
+----
+
+> WARNING: You need to use `/todo.html` in the URL to access the application. It
+does not automatically redirect.
+
+Your application should look like this:
 
 image::todo-app-screenshot.png[TODO]
 
