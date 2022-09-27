@@ -245,7 +245,7 @@ using the <code>argocd.argoproj.io/sync-wave</code> annotation.</p>
 <div class="paragraph">
 <p>Example:</p>
 </div>
-<div class="listingblock console-input">
+<div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">metadata:
   annotations:
@@ -255,7 +255,7 @@ using the <code>argocd.argoproj.io/sync-wave</code> annotation.</p>
 <div class="paragraph">
 <p>The wave can also be negative as well.</p>
 </div>
-<div class="listingblock console-input">
+<div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">metadata:
   annotations:
@@ -547,7 +547,7 @@ send notifications or do other evasive actions.</p>
 <code>argocd.argoproj.io/hook</code> with the type of sync you want to use for that
 resource. For example, if you wanted to use the <code>PreSync</code> hook:</p>
 </div>
-<div class="listingblock console-input">
+<div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">metadata:
   annotations:
@@ -575,7 +575,7 @@ created (when a new sync is triggered).</p>
 <p>You can apply these with the <code>argocd.argoproj.io/hook-delete-policy</code>
 annotation. For example:</p>
 </div>
-<div class="listingblock console-input">
+<div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">metadata:
   annotations:
