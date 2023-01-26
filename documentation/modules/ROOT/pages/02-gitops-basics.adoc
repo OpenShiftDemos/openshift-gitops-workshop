@@ -170,7 +170,7 @@ spec:
 Argo CD's concept of a `Project` is different than OpenShift's. Here you're
 installing the application in Argo CD's `default` project (`.spec.project`).
 *NOT* OpenShift's default project.
-<3> The manifest repo, and th path within it where the YAML resides.
+<3> The manifest repo, and the path within it where the YAML resides.
 <4> The `syncPolicy` is set to `automated`. It will automatically prune
   resources that have been removed from the Git repo, but will not automatically
   correct resources that deviate from the definition stored in the repo, i.e
@@ -327,4 +327,3 @@ Or, as in our case, after the fact by running the following command:
 ----
 oc patch application/bgd-app -n user%USERNUM%-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
 ----
-
