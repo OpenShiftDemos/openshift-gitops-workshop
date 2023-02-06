@@ -42,7 +42,7 @@ button on the right side:
 
 image::openshift-web-terminal-popout.png[]
 
-[IMPORTANT]
+[TIP]
 ====
 In order to copy and paste content into the terminal, you can use
 the secondary (typically right click) menus to do so. You can also
