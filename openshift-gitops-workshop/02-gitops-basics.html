@@ -224,23 +224,10 @@ deployment in the topology view:</p>
 <h2 id="connect-argocd"><a class="anchor" href="#connect-argocd"></a>Connecting to Argo CD</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Argo CD generates a default <code>admin</code> user and a random password when first
-deployed. You can connect to Argo CD using this user account via the CLI or web
+<p>While Argo CD generates a default <code>admin</code> user and a random password when first
+deployed you can also configure Argo CD to use the OpenShift authentication.
+You can connect to Argo CD using this user account via the CLI or web
 console.  In this workshop, we will only use the Argo CD web console.</p>
-</div>
-<div class="paragraph">
-<p>In your web terminal, you can retrieve the Argo CD admin password from a secret
-that is in the same Project as the Argo CD deployment:</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc extract secret/user%USERNUM%-argo-cluster -n user%USERNUM%-argocd --to=-</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You <em>could</em> also get this value by using the web console to navigate to the
-<em>Secrets</em> menu on the left, finding the <code>user%USERNUM%-argo-cluster</code> secret, and
-then clicking into it.</p>
 </div>
 <div class="paragraph">
 <p>There are a few ways to find the URL for your Argo CD instance. In the <em>Topology</em> view of your Project, any Routes/Ingresses associated with
@@ -264,12 +251,21 @@ then clicking <em>Route</em> on the subsequent page.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>However you decide to access the Argo CD console, log in with the username
-<code>admin</code> and the password extracted in the previous step:</p>
+<p>However you decide to access the Argo CD console, log in with the same username
+and password that you used to login in with OpenShift.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/argocd-login.png" alt="ArgoCDLogin" width="600">
+<img src="_images/argo-cd-login.png" alt="ArgoCDLogin" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>After you enter your credentials you will see the following prompting you to authorize acess,
+click the "Allow selected permissions" button.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argo-cd-allow-access.png" alt="ArgoCDAuthorize" width="600">
 </div>
 </div>
 <div class="paragraph">
