@@ -45,7 +45,12 @@ oc get route -n user%USERNUM%-argocd user%USERNUM%-argo-server -o jsonpath='{.sp
 However you decide to access the Argo CD console, log in with the same username
 and password that you used to login in with OpenShift.
 
-image::argocd-login.png[ArgoCDLogin, 600]
+image::argo-cd-login.png[ArgoCDLogin, 600]
+
+After you enter your credentials you will see the following prompting you to authorize acess,
+click the "Allow selected permissions" button.
+
+image::argo-cd-allow-access.png[ArgoCDAuthorize, 600]
 
 Once you've logged in, you should see the following page. This is the Argo CD
 Web UI.
