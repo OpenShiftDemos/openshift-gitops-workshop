@@ -21,22 +21,10 @@ image::argocd-topology.png[]
 [#connect-argocd]
 == Connecting to Argo CD
 
-Argo CD generates a default `admin` user and a random password when first
-deployed. You can connect to Argo CD using this user account via the CLI or web
+While Argo CD generates a default `admin` user and a random password when first
+deployed you can also configure Argo CD to use the OpenShift authentication.
+You can connect to Argo CD using this user account via the CLI or web
 console.  In this workshop, we will only use the Argo CD web console.
-
-In your web terminal, you can retrieve the Argo CD admin password from a secret
-that is in the same Project as the Argo CD deployment:
-
-[.console-input]
-[source,bash,subs="attributes+,+macros"]
-----
-oc extract secret/user%USERNUM%-argo-cluster -n user%USERNUM%-argocd --to=-
-----
-
-You _could_ also get this value by using the web console to navigate to the
-_Secrets_ menu on the left, finding the `user%USERNUM%-argo-cluster` secret, and
-then clicking into it.
 
 There are a few ways to find the URL for your Argo CD instance. In the _Topology_ view of your Project, any Routes/Ingresses associated with
 services will have a little pop-out icon:
@@ -54,8 +42,8 @@ Also, you can get the Argo CD Route using the `oc` CLI:
 oc get route -n user%USERNUM%-argocd user%USERNUM%-argo-server -o jsonpath='{.spec.host}{"\n"}'
 ----
 
-However you decide to access the Argo CD console, log in with the username
-`admin` and the password extracted in the previous step:
+However you decide to access the Argo CD console, log in with the same username
+and password that you used to login in with OpenShift.
 
 image::argocd-login.png[ArgoCDLogin, 600]
 
