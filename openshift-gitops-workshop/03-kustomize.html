@@ -583,32 +583,17 @@ CD and how it can be used in a GitOps workflow.</p>
 <p>Access Argo CD Web Console.</p>
 </div>
 <div class="paragraph">
-<p>Once you have accepted the self signed certificate, you should be
-presented with the Argo CD login screen.</p>
+<p>Switch back to the Argo CD Web UI, you may be
+presented with the Argo CD login screen again.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/argocd-login.png" alt="ArgoCD Login">
+<img src="_images/argo-cd-login.png" alt="ArgoCD Login">
 </div>
 </div>
 <div class="paragraph">
-<p>You can login with the following</p>
-</div>
-<div class="paragraph">
-<p><strong>Username</strong>:</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">admin</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Password</strong>:</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc extract secret/user%USERNUM%-argo-cluster -n user%USERNUM%-argocd --to=-</code></pre>
-</div>
+<p>You can login using your the same credential you used for OpenShift which
+were provided by the workshop administrator.</p>
 </div>
 </div>
 <div class="sect2">
