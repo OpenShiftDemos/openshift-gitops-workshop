@@ -4,14 +4,14 @@ include::_attributes.adoc[]
 link:https://kustomize.io/[Kustomize] traverses a Kubernetes manifest to add,
 remove or update configuration options without forking. It is available both as
 a standalone binary and as a native feature of `kubectl` (and by extension
-`oc`). 
+`oc`).
 
 The principals of `kustomize` are:
 
-* Purely declarative approach to configuration customization 
-* Manage an arbitrary number of distinctly customized Kubernetes configurations 
+* Purely declarative approach to configuration customization
+* Manage an arbitrary number of distinctly customized Kubernetes configurations
 * Every artifact that kustomize uses is plain YAML and can be validated and
-  processed as such 
+  processed as such
 * As a "templateless" templating system; it encourages using YAML without
   forking the repo it.
 
@@ -143,7 +143,7 @@ to `ffcd15` by running the following:
 kustomize edit set image quay.io/redhatworkshops/welcome-php:ffcd15
 ----
 
-This will update the `kustomization.yaml` file with a `images` section. 
+This will update the `kustomization.yaml` file with a `images` section.
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
@@ -282,7 +282,7 @@ YAML.
 So now that you've explored `kustomize`, let's see how it fits into Argo
 CD and how it can be used in a GitOps workflow.
 
-Before preceeding, move back into the home directory: 
+Before preceeding, move back into the home directory:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
@@ -295,27 +295,13 @@ cd -
 
 Access Argo CD Web Console.
 
-Once you have accepted the self signed certificate, you should be
-presented with the Argo CD login screen.
+Switch back to the Argo CD Web UI, you may be
+presented with the Argo CD login screen again.
 
-image::argocd-login.png[ArgoCD Login]
+image::argo-cd-login.png[ArgoCD Login]
 
-You can login with the following
-
-**Username**:
-[.console-input]
-[source,text,subs="attributes+,+macros"]
-----
-admin
-----
-
-**Password**:
-[.console-input]
-[source,bash,subs="attributes+,+macros"]
-----
-oc extract secret/user%USERNUM%-argo-cluster -n user%USERNUM%-argocd --to=-
-----
-
+You can login using your the same credential you used for OpenShift which
+were provided by the workshop administrator.
 
 [#kustomized_application]
 === Kustomized Application
