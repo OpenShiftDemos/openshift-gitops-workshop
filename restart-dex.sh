@@ -6,5 +6,5 @@ NUM_USERS=100
 for i in $(seq 1 $NUM_USERS);
 do
   echo "Restart dex for user ${i}"
-  #oc rollout restart deploy argocd-dex-server -n "user${i}-argocd"
+  oc rollout restart deploy argocd-dex-server -n "user${i}-argocd"
 done
