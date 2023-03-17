@@ -269,6 +269,11 @@ kubectl -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace
 
 Wait for the rollout to happen:
 
+[NOTE]
+====
+This rollout is unrelated to Argo Rollouts!
+====
+
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
@@ -300,7 +305,7 @@ have returned to their original blue color.
 
 image::bgd.png[BDG App]
 
-You can setup Argo CD to automatically correct drift by setting the `selfHeal`
+You can set up Argo CD to automatically correct drift by setting the `selfHeal`
 property of the `Application` manifest to do so. Example:
 
 [.console-input]
@@ -320,3 +325,5 @@ Or, as in our case, after the fact by running the following command:
 ----
 oc patch application/bgd-app -n user%USERNUM%-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
 ----
+
+To see an example of an `Application` manifest in git, check out .link:[ROOT:example$bgd-app.yaml,window='_blank']

@@ -222,7 +222,7 @@ Although you can use this to pipe it into the apply command, you
 don't have to. The `kubectl apply` command has the `-k` option that
 will run the build before it applies the manifest.
 
-> NOTE `kubectl` and `oc kustomize` implement a subset of the `kustomize`
+> **NOTE** `kubectl` and `oc kustomize` implement a subset of the `kustomize`
 featureset. For example, the `edit` command is not implemented.
 
 Now you will apply your `kustomize`-d manifest into one of your projects:
@@ -282,12 +282,52 @@ YAML.
 So now that you've explored `kustomize`, let's see how it fits into Argo
 CD and how it can be used in a GitOps workflow.
 
-Before preceeding, move back into the home directory:
+Before proceeding, move back into the examples home directory:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cd -
+cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples
+----
+
+[#kustomized_application]
+=== Kustomized Application
+
+Argo CD has native support for Kustomize. You can use this to avoid
+duplicating YAML for each deployment. This is especially good to
+use if you have different environments or clusters you're deploying
+to.
+
+Take a look at this `Application` definition:
+
+.link:[ROOT:example$bgdk-app.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgdk-app.yaml[]
+----
+
+As you will see below, this application definition refers to the same **base** resources you used in
+the previous lab scenario. It references a directory path (`documentation/modules/ROOT/examples/bgdk`)
+which contains a new `kustomization.yaml` file specific to this app. This concept is called an **overlay**,
+where you have a **base** set of manifests and you **overlay** your customizations.
+
+Now take a look at this `Kustomization` defintion:
+
+.link:[ROOT:example$bgdk/kustomization.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgdk/kustomization.yaml[]
+----
+
+This `kustomization.yaml` takes the base application located at `documentation/modules/ROOT/examples/bgd-base`
+and patches the `Deployment` manifest so that you get yellow dots instead of blue ones.
+
+Deploy this application:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgdk-app.yaml | oc apply -n user%USERNUM%-argocd -f -
 ----
 
 [#argocd_web_console]
@@ -303,45 +343,7 @@ image::argo-cd-login.png[ArgoCD Login]
 You can login using your the same credential you used for OpenShift which
 were provided by the workshop administrator.
 
-[#kustomized_application]
-=== Kustomized Application
-
-Argo CD has native support for Kustomize. You can use this to avoid
-duplicating YAML for each deployment. This is especially good to
-use if you have different environments or clusters you're deploying
-to.
-
-Take a look at the `Application` definition:
-
-[source,yaml,subs="+macros,attributes+"]
-----
-include::ROOT:example$bgdk-app.yaml[]
-----
-
-This application definition lives in the *same repo* but in a *different
-directory*. The application definition refers to the same resources you used in
-the previous lab scenario. This concept is called an "overlay", where you have a
-"base" set of manifests and you overlay your `kustomize`-ations.
-
-Take a look at the `kustomization.yaml` file:
-
-[source,yaml,subs="+macros,attributes+"]
-----
-include::ROOT:example$bgdk/kustomization.yaml[]
-----
-
-This `kustomization.yaml` takes the base application and patches the manifest so
-that you get yellow dots instead of blue ones.
-
-Deploy this application:
-
-[.console-input]
-[source,bash,subs="attributes+,+macros"]
-----
-sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgdk-app.yaml | oc apply -n user%USERNUM%-argocd -f -
-----
-
-This should show you two apps on the Argo CD UI.
+This should now show you two apps on the Argo CD UI.
 
 image::two-apps.png[Two Apps]
 
