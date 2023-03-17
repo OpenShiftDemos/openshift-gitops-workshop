@@ -1,10 +1,10 @@
 = Sync Waves and Hooks
 include::_attributes.adoc[]
 
-https://argoproj.github.io/argo-cd/user-guide/sync-waves/[Syncwaves,window='_blank']
+https://argoproj.github.io/argo-cd/user-guide/sync-waves/[Sync waves,window='_blank']
 are used in Argo CD to order how manifests are applied to the cluster. 
 
-https://argoproj.github.io/argo-cd/user-guide/resource_hooks/[resource
+https://argoproj.github.io/argo-cd/user-guide/resource_hooks/[Resource
 hooks,window='_blank'] break up the delivery of these manifests into different
 phases.
 
@@ -14,8 +14,8 @@ application rolls out.
 This example will take you through the following steps:
 
 * Using sync waves to order deployment
-* Exploring Resource Hooks
-* Using sync waves and Hooks together
+* Exploring resource hooks
+* Using sync waves and hooks together
 
 The sample application that we will deploy is a TODO application with a database
 and, apart from deployment files, sync waves and resource hooks are used:

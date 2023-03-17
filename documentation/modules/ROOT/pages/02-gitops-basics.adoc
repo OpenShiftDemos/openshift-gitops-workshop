@@ -95,7 +95,7 @@ DevSpaces] is a better choice.
 
 === Review the Application Manifests
 
-The application manifests include a Deployment, Service, and Route.
+For our first lab, the application manifests include a link:[bgdk-app.yaml,window='_blank']Deployment, Service, and Route.
 
 [IMPORTANT]
 ====
@@ -271,7 +271,7 @@ Wait for the rollout to happen:
 
 [NOTE]
 ====
-This rollout is unrelated to Argo Rollouts!
+This rollout is unrelated to Argo Rollouts
 ====
 
 [.console-input]
@@ -326,4 +326,4 @@ Or, as in our case, after the fact by running the following command:
 oc patch application/bgd-app -n user%USERNUM%-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
 ----
 
-To see an example of an `Application` manifest in git, check out .link:[ROOT:example$bgd-app.yaml,window='_blank']
+To see an example of an `Application` manifest in Git, check out link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window='_blank']
