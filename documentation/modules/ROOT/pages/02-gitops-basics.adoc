@@ -267,12 +267,7 @@ blue to green:
 kubectl -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
 ----
 
-Wait for the rollout to happen:
-
-[NOTE]
-====
-This rollout is unrelated to Argo Rollouts
-====
+Wait for the rollout of the new pods to happen in the deployment:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]

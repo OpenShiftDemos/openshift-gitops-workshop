@@ -194,7 +194,7 @@ see the changes.
 You can see how you can take already existing YAML and modify it for
 your specific environment without the need to copy or edit the original.
 
-Kustomize can also be used to write a new YAML file amd pipe into
+Kustomize can also be used to write a new YAML file and pipe into
 the `kubectl` (or `oc`) command. Example:
 
 [source,bash,subs="attributes+,+macros"]
