@@ -43,12 +43,14 @@ This should display the version, it should look something like this.
 
 
 Kustomize, at its core, is meant to build on top of native Kubernetes manifests
-based on YAML while leaving the original YAML in tact. It achieves this in a
+based on YAML while leaving the original YAML intact. It achieves this in a
 "template-less" templating format. This is done by providing a
 `kustomization.yaml` file.
 
 We will be focusing on two Kustomize sub-commands: the `build` command and the
 `edit` command.
+
+### Kustomize `build`
 
 The `build` command takes the YAML source (via a path or URL) and creates a new
 YAML that can be piped into `oc create`. We will work with an example in the
@@ -61,8 +63,7 @@ repository you cloned.
 cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/kustomize-build
 ----
 
-Here you should see two files, a `kustomization.yaml` file and a `welcome.yaml`
-file, let's have a look at them.
+Here you should see two files, a `welcome.yaml` file and a `kustomization.yaml` file, let's have a look at them.
 
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/kustomize-build/welcome.yaml[welcome.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
@@ -70,9 +71,9 @@ file, let's have a look at them.
 include::ROOT:example$kustomize-build/welcome.yaml[]
 ----
 
-This file shows nothing special. Just a standard Kubernetes manifest.
+This file shows nothing special. Just a standard Kubernetes `Deployment` manifest.
 
-What if, for example, we wanted to add a `label` to this manifest without
+Now what if, for example, we wanted to add a `label` to this manifest without
 editing it? This is where the `kustomization.yaml` file comes in.
 
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/kustomize-build/kustomization.yaml[kustomization.yaml,window='_blank']
@@ -81,20 +82,17 @@ editing it? This is where the `kustomization.yaml` file comes in.
 include::ROOT:example$kustomize-build/kustomization.yaml[]
 ----
 
-As you can see in the output there isn't much. The two sections for this
-example are the `resources` and the `patchesJson6902` sections.
+As you can see in the output, we only need a `resources` and a `patches` section to accomplish this:
 
-`resources` is an array of individual files, directories, and/or URLs where
-other manifests are stored. In this example we are just loading in one file. The
-(https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patchesjson6902/[`patchesJson6902`
-is a patching RFC] that `kustomize` supports. As you can see, in the
-`patchesJson6902` file, I am adding a label to this manifest.
+- The `resources` is an array of individual files, directories, and/or URLs where
+other manifests are stored. In this example we are just loading in one file.
+- The link:https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patches/[`patches`,window="blank"] is where we add our label to this manifest.
 
 [NOTE]
 ====
 You can read about what options are available for patching in the
 https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/[official
-documentation site]
+documentation site,window="blank"]
 ====
 
 Build this manifest by running:
@@ -113,10 +111,9 @@ You can see that the new label got added to the manifest!
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: welcome-php
-    testkey: testvalue
+    testkey: testvalue # Our new label
   name: welcome-php
 spec:
   replicas: 1
@@ -126,18 +123,19 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: welcome-php
     spec:
       containers:
-      - image: quay.io/redhatworkshops/welcome-php:ffcd15
+      - image: quay.io/redhatworkshops/welcome-php:latest
         name: welcome-php
         resources: {}
 ----
 
-You can use the `kustomize edit` command instead of writing YAML. For
-example, you can change the image tag this `Deployment` uses from `latest`
+### Kustomize `edit`
+
+You can use the `kustomize edit` command to make manifest changes instead of manually writing YAML. For
+example, you can change the image tag the `Deployment` above uses from `latest`
 to `ffcd15` by running the following:
 
 [.console-input]
@@ -146,7 +144,7 @@ to `ffcd15` by running the following:
 kustomize edit set image quay.io/redhatworkshops/welcome-php:ffcd15
 ----
 
-This will update the `kustomization.yaml` file with a `images` section.
+This will update the `kustomization.yaml` file with an `images` section.
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
@@ -160,7 +158,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ./welcome.yaml
-patchesJson6902:
+patches:
 - patch: |-
     - op: add
       path: /metadata/labels/testkey
