@@ -1,31 +1,31 @@
-= SyncWaves and Hooks
+= Sync Waves and Hooks
 include::_attributes.adoc[]
 
-https://argoproj.github.io/argo-cd/user-guide/sync-waves/[Syncwaves,window='_blank']
+https://argoproj.github.io/argo-cd/user-guide/sync-waves/[Sync waves,window='_blank']
 are used in Argo CD to order how manifests are applied to the cluster. 
 
-https://argoproj.github.io/argo-cd/user-guide/resource_hooks/[resource
+https://argoproj.github.io/argo-cd/user-guide/resource_hooks/[Resource
 hooks,window='_blank'] break up the delivery of these manifests into different
 phases.
 
-Using a combination of syncwaves and resource hooks, you can control how your
+Using a combination of sync waves and resource hooks, you can control how your
 application rolls out.
 
 This example will take you through the following steps:
 
-* Using Syncwaves to order deployment
-* Exploring Resource Hooks
-* Using Syncwaves and Hooks together
+* Using sync waves to order deployment
+* Exploring resource hooks
+* Using sync waves and hooks together
 
 The sample application that we will deploy is a TODO application with a database
-and, apart from deployment files, syncwaves and resource hooks are used:
+and, apart from deployment files, sync waves and resource hooks are used:
 
 image::todo-app.png[]
 
 [#using_syncwaves]
 == Using Sync Waves
 
-A Syncwave is a way to order how Argo CD applies the manifests that are stored
+A sync wave is a way to order how Argo CD applies the manifests that are stored
 in git. All manifests have a wave of zero by default, but you can set these by
 using the `argocd.argoproj.io/sync-wave` annotation. 
 
@@ -58,7 +58,7 @@ order:
 * By kind (Namespaces first, then services, then deployments, etc ...)
 * By name (ascending order)
 
-Read more about syncwaves on the
+Read more about sync waves on the
 https://argoproj.github.io/argo-cd/user-guide/sync-waves/#how-do-i-configure-waves[official
 documentation site,window='_blank'].
 
@@ -67,42 +67,42 @@ documentation site,window='_blank'].
 
 The sample application that you will deploy has several waves.
 
-First, *PostgreSQL* with syncwave *0*. It has a Deployment:
+First, *PostgreSQL* with sync wave *0*. It has a Deployment:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$todo/postgres-deployment.yaml[]
 ----
 
-The *PostgreSQL Service* with syncwave *0*:
+The *PostgreSQL Service* with sync wave *0*:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$todo/postgres-service.yaml[]
 ----
 
-Second, *Database table creation* with syncwave *1*:
+Second, *Database table creation* with sync wave *1*:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$todo/postgres-create-table.yaml[]
 ----
 
-The *TODO application deployment* with syncwave *2*:
+The *TODO application deployment* with sync wave *2*:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$todo/todo-deployment.yaml[]
 ----
 
-The *TODO Service* with syncwave *2*:
+The *TODO Service* with sync wave *2*:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$todo/todo-service.yaml[]
 ----
 
-The *TODO Route* with syncwave *3*:
+The *TODO Route* with sync wave *3*:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
@@ -118,10 +118,10 @@ reports "healthy".
 [#using_resource_hooks]
 == Using Resource Hooks
 
-Now that you're familiar with syncwaves, we can begin exploring applying
+Now that you're familiar with sync waves, we can begin exploring applying
 manifests in phases using `resource hooks`.
 
-Controlling your sync operation can be further redefined by using
+Controlling your sync operation can be further refined by using
 hooks. These hooks can run before, during, and after a sync
 operation. These hooks are:
 

@@ -64,7 +64,7 @@ cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/kustomize-bui
 Here you should see two files, a `kustomization.yaml` file and a `welcome.yaml`
 file, let's have a look at them.
 
-.link:[welcome.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/kustomize-build/welcome.yaml[welcome.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$kustomize-build/welcome.yaml[]
@@ -75,7 +75,7 @@ This file shows nothing special. Just a standard Kubernetes manifest.
 What if, for example, we wanted to add a `label` to this manifest without
 editing it? This is where the `kustomization.yaml` file comes in.
 
-.link:[kustomization.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/kustomize-build/kustomization.yaml[kustomization.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$kustomize-build/kustomization.yaml[]
@@ -90,9 +90,12 @@ other manifests are stored. In this example we are just loading in one file. The
 is a patching RFC] that `kustomize` supports. As you can see, in the
 `patchesJson6902` file, I am adding a label to this manifest.
 
-> **NOTE** You can read about what options are available for patching in the
+[NOTE]
+====
+You can read about what options are available for patching in the
 https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/[official
 documentation site]
+====
 
 Build this manifest by running:
 
@@ -182,13 +185,16 @@ Now when you run:
 
 You should see not only the new label but also the new `ffcd15` image tag.
 
-> **NOTE** You may have to close the `kustomization.yaml` tab and re-open it to
+[NOTE]
+====
+You may have to close the `kustomization.yaml` tab and re-open it to
 see the changes.
+====
 
 You can see how you can take already existing YAML and modify it for
 your specific environment without the need to copy or edit the original.
 
-Kustomize can be used to write a new YAML file or be pipped into
+Kustomize can also be used to write a new YAML file and pipe into
 the `kubectl` (or `oc`) command. Example:
 
 [source,bash,subs="attributes+,+macros"]
@@ -222,8 +228,11 @@ Although you can use this to pipe it into the apply command, you
 don't have to. The `kubectl apply` command has the `-k` option that
 will run the build before it applies the manifest.
 
-> NOTE `kubectl` and `oc kustomize` implement a subset of the `kustomize`
+[NOTE]
+====
+`kubectl` and `oc kustomize` implement a subset of the `kustomize`
 featureset. For example, the `edit` command is not implemented.
+====
 
 Now you will apply your `kustomize`-d manifest into one of your projects:
 
@@ -233,9 +242,11 @@ Now you will apply your `kustomize`-d manifest into one of your projects:
 oc apply -n user%USERNUM%-bgdk -k ./
 ----
 
-> **NOTE** You can pass not only directories, but URLs as well. The
-> only requirement is that you have a `kustomization.yaml` file in
-> the path.
+[NOTE]
+====
+You can pass not only directories, but URLs as well.
+The only requirement is that you have a `kustomization.yaml` file in the path.
+====
 
 This should create the deployment and you should see the pods running in the namespace:
 
@@ -282,26 +293,13 @@ YAML.
 So now that you've explored `kustomize`, let's see how it fits into Argo
 CD and how it can be used in a GitOps workflow.
 
-Before preceeding, move back into the home directory:
+Before proceeding, move back into the examples home directory:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cd -
+cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples
 ----
-
-[#argocd_web_console]
-=== The Argo CD Web Console
-
-Access Argo CD Web Console.
-
-Switch back to the Argo CD Web UI, you may be
-presented with the Argo CD login screen again.
-
-image::argo-cd-login.png[ArgoCD Login]
-
-You can login using your the same credential you used for OpenShift which
-were provided by the workshop administrator.
 
 [#kustomized_application]
 === Kustomized Application
@@ -311,29 +309,33 @@ duplicating YAML for each deployment. This is especially good to
 use if you have different environments or clusters you're deploying
 to.
 
-Take a look at the `Application` definition:
+Take a look at this `Application` definition:
 
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgdk-app.yaml[bgdk-app.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgdk-app.yaml[]
 ----
 
-This application definition lives in the *same repo* but in a *different
-directory*. The application definition refers to the same resources you used in
-the previous lab scenario. This concept is called an "overlay", where you have a
-"base" set of manifests and you overlay your `kustomize`-ations.
+As you will see below, this `Application` definition refers to the same **base** resources you used in
+the previous lab scenario. It references a directory path (`documentation/modules/ROOT/examples/bgdk`)
+which contains a new `kustomization.yaml` file specific to this application. This concept is called an **overlay**:
+where you have a **base** set of manifests and you **overlay** your customizations.
 
-Take a look at the `kustomization.yaml` file:
+Click link:https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/#bases-and-overlays[here,window='_blank'] to learn more about Kustomize bases and overlays, 
 
+Now take a look at this `Kustomization` defintion:
+
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgdk/kustomization.yaml[kustomization.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgdk/kustomization.yaml[]
 ----
 
-This `kustomization.yaml` takes the base application and patches the manifest so
-that you get yellow dots instead of blue ones.
+This `kustomization.yaml` takes the base application located at `documentation/modules/ROOT/examples/bgd-base`
+and patches the `Deployment` manifest so that you get yellow dots instead of blue ones.
 
-Deploy this application:
+Now deploy this application:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
@@ -341,7 +343,18 @@ Deploy this application:
 sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgdk-app.yaml | oc apply -n user%USERNUM%-argocd -f -
 ----
 
-This should show you two apps on the Argo CD UI.
+[#argocd_web_console]
+=== The Argo CD Web Console
+
+Switch back to the Argo CD Web UI, you may be
+presented with the Argo CD login screen again.
+
+image::argo-cd-login.png[ArgoCD Login]
+
+You can login using your the same credential you used for OpenShift which
+were provided by the workshop administrator.
+
+This should now show you two apps on the Argo CD UI.
 
 image::two-apps.png[Two Apps]
 
