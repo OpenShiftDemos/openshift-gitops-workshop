@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>SyncWaves and Hooks :: OpenShift GitOps Workshop</title>
+    <title>Sync Waves and Hooks :: OpenShift GitOps Workshop</title>
     <link rel="canonical" href="https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/04-syncwaves-hooks.html">
     <link rel="prev" href="03-kustomize.html">
     <meta name="generator" content="Antora 3.0.0">
@@ -192,19 +192,19 @@
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">SyncWaves and Hooks</h1>
+<h1 class="page">Sync Waves and Hooks</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://argoproj.github.io/argo-cd/user-guide/sync-waves/" target="_blank" rel="noopener">Syncwaves</a>
+<p><a href="https://argoproj.github.io/argo-cd/user-guide/sync-waves/" target="_blank" rel="noopener">Sync waves</a>
 are used in Argo CD to order how manifests are applied to the cluster.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://argoproj.github.io/argo-cd/user-guide/resource_hooks/" target="_blank" rel="noopener">resource hooks</a> break up the delivery of these manifests into different
+<p><a href="https://argoproj.github.io/argo-cd/user-guide/resource_hooks/" target="_blank" rel="noopener">Resource hooks</a> break up the delivery of these manifests into different
 phases.</p>
 </div>
 <div class="paragraph">
-<p>Using a combination of syncwaves and resource hooks, you can control how your
+<p>Using a combination of sync waves and resource hooks, you can control how your
 application rolls out.</p>
 </div>
 <div class="paragraph">
@@ -213,19 +213,19 @@ application rolls out.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Using Syncwaves to order deployment</p>
+<p>Using sync waves to order deployment</p>
 </li>
 <li>
-<p>Exploring Resource Hooks</p>
+<p>Exploring resource hooks</p>
 </li>
 <li>
-<p>Using Syncwaves and Hooks together</p>
+<p>Using sync waves and hooks together</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>The sample application that we will deploy is a TODO application with a database
-and, apart from deployment files, syncwaves and resource hooks are used:</p>
+and, apart from deployment files, sync waves and resource hooks are used:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -238,7 +238,7 @@ and, apart from deployment files, syncwaves and resource hooks are used:</p>
 <h2 id="using_syncwaves"><a class="anchor" href="#using_syncwaves"></a>Using Sync Waves</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A Syncwave is a way to order how Argo CD applies the manifests that are stored
+<p>A sync wave is a way to order how Argo CD applies the manifests that are stored
 in git. All manifests have a wave of zero by default, but you can set these by
 using the <code>argocd.argoproj.io/sync-wave</code> annotation.</p>
 </div>
@@ -284,7 +284,7 @@ highest)</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Read more about syncwaves on the
+<p>Read more about sync waves on the
 <a href="https://argoproj.github.io/argo-cd/user-guide/sync-waves/#how-do-i-configure-waves" target="_blank" rel="noopener">official documentation site</a>.</p>
 </div>
 <div class="sect2">
@@ -293,7 +293,7 @@ highest)</p>
 <p>The sample application that you will deploy has several waves.</p>
 </div>
 <div class="paragraph">
-<p>First, <strong>PostgreSQL</strong> with syncwave <strong>0</strong>. It has a Deployment:</p>
+<p>First, <strong>PostgreSQL</strong> with sync wave <strong>0</strong>. It has a Deployment:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -332,7 +332,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>The <strong>PostgreSQL Service</strong> with syncwave <strong>0</strong>:</p>
+<p>The <strong>PostgreSQL Service</strong> with sync wave <strong>0</strong>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -353,7 +353,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>Second, <strong>Database table creation</strong> with syncwave <strong>1</strong>:</p>
+<p>Second, <strong>Database table creation</strong> with sync wave <strong>1</strong>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -387,7 +387,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>The <strong>TODO application deployment</strong> with syncwave <strong>2</strong>:</p>
+<p>The <strong>TODO application deployment</strong> with sync wave <strong>2</strong>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -440,7 +440,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>The <strong>TODO Service</strong> with syncwave <strong>2</strong>:</p>
+<p>The <strong>TODO Service</strong> with sync wave <strong>2</strong>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -465,7 +465,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>The <strong>TODO Route</strong> with syncwave <strong>3</strong>:</p>
+<p>The <strong>TODO Route</strong> with sync wave <strong>3</strong>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -514,11 +514,11 @@ reports "healthy".
 <h2 id="using_resource_hooks"><a class="anchor" href="#using_resource_hooks"></a>Using Resource Hooks</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Now that you&#8217;re familiar with syncwaves, we can begin exploring applying
+<p>Now that you&#8217;re familiar with sync waves, we can begin exploring applying
 manifests in phases using <code>resource hooks</code>.</p>
 </div>
 <div class="paragraph">
-<p>Controlling your sync operation can be further redefined by using
+<p>Controlling your sync operation can be further refined by using
 hooks. These hooks can run before, during, and after a sync
 operation. These hooks are:</p>
 </div>
