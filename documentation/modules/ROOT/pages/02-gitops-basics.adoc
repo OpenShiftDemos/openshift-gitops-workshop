@@ -95,7 +95,7 @@ DevSpaces] is a better choice.
 
 === Review the Application Manifests
 
-For our first lab, the application manifests include a link:[bgdk-app.yaml,window='_blank']Deployment, Service, and Route.
+For this first lab, the application manifests are located link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd[here,window='_blank'] and include a Deployment, Service, and Route.
 
 [IMPORTANT]
 ====
@@ -103,7 +103,7 @@ Review, but do not apply these manifests to your cluster. You will do that
 shortly using Argo CD.
 ====
 
-*Deployment*:
+A *Deployment*:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
@@ -132,9 +132,10 @@ link:https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/
 CR (CustomResource)^] in order to have Argo CD apply these manifests in your
 cluster.
 
-Let's review the Argo CD Application manifest used to deploy this application
+Let's review the `Application` manifest used to deploy this application (found link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml[here,window="_blank"])
 and break this down a bit:
 
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window="_blank"]
 [source,yaml,subs="+macros,attributes+"]
 ----
 apiVersion: argoproj.io/v1alpha1
@@ -143,13 +144,13 @@ metadata:
   name: bgd-app
 spec:
   destination:
-    namespace: bgd
+    namespace: user$USERNUM-bgd
     server: https://kubernetes.default.svc <1>
   project: default <2>
   source: <3>
     path: documentation/modules/ROOT/examples/bgd
     repoURL: https://github.com/OpenShiftDemos/openshift-gitops-workshop
-    targetRevision: main
+    targetRevision: master
   syncPolicy: <4>
     automated:
       prune: true
@@ -224,7 +225,7 @@ route.route.openshift.io/bgd   bgd-user3-bgd.apps.cluster-7pjzx.7pjzx.sandbox141
 
 **Extra Credit:** Do you know why you have a ReplicaSet?
 
-Verify the the rollout is complete:
+Wait for the rollout of the new pods to happen in the deployment:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
@@ -263,6 +264,7 @@ blue to green:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
+
 ----
 kubectl -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
 ----
@@ -301,16 +303,18 @@ have returned to their original blue color.
 image::bgd.png[BDG App]
 
 You can set up Argo CD to automatically correct drift by setting the `selfHeal`
-property of the `Application` manifest to do so. Example:
+property of the `Application` manifest to do so. Using the example from link:#_deploy_the_application[above]:
 
 [.console-input]
 [source,yaml,subs="attributes+,+macros"]
 ----
+# bgd-app.yaml
+...
 spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: true # Set this to true
 ----
 
 Or, as in our case, after the fact by running the following command:
@@ -320,5 +324,3 @@ Or, as in our case, after the fact by running the following command:
 ----
 oc patch application/bgd-app -n user%USERNUM%-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
 ----
-
-To see an example of an `Application` manifest in Git, check out link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window='_blank']
