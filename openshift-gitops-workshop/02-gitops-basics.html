@@ -332,7 +332,7 @@ DevSpaces</a> is a better choice.</p>
 <div class="sect2">
 <h3 id="_review_the_application_manifests"><a class="anchor" href="#_review_the_application_manifests"></a>Review the Application Manifests</h3>
 <div class="paragraph">
-<p>For our first lab, the application manifests include a <a href="" target="_blank" rel="noopener">bgdk-app.yaml</a>Deployment, Service, and Route.</p>
+<p>For this first lab, the application manifests are located <a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd" target="_blank" rel="noopener">here</a> and include a Deployment, Service, and Route.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -350,7 +350,7 @@ shortly using Argo CD.</p>
 </table>
 </div>
 <div class="paragraph">
-<p><strong>Deployment</strong>:</p>
+<p>A <strong>Deployment</strong>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -435,10 +435,11 @@ CR (CustomResource)</a> in order to have Argo CD apply these manifests in your
 cluster.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s review the Argo CD Application manifest used to deploy this application
+<p>Let&#8217;s review the <code>Application</code> manifest used to deploy this application (found <a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml" target="_blank" rel="noopener">here</a>)
 and break this down a bit:</p>
 </div>
 <div class="listingblock">
+<div class="title"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml" target="_blank" rel="noopener">bgd-app.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -446,13 +447,13 @@ metadata:
   name: bgd-app
 spec:
   destination:
-    namespace: bgd
+    namespace: user$USERNUM-bgd
     server: <a href="https://kubernetes.default.svc" class="bare">https://kubernetes.default.svc</a> <i class="conum" data-value="1"></i><b>(1)</b>
   project: default <i class="conum" data-value="2"></i><b>(2)</b>
   source: <i class="conum" data-value="3"></i><b>(3)</b>
     path: documentation/modules/ROOT/examples/bgd
     repoURL: <a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop" class="bare">https://github.com/OpenShiftDemos/openshift-gitops-workshop</a>
-    targetRevision: main
+    targetRevision: master
   syncPolicy: <i class="conum" data-value="4"></i><b>(4)</b>
     automated:
       prune: true
@@ -572,7 +573,7 @@ route.route.openshift.io/bgd   bgd-user3-bgd.apps.cluster-7pjzx.7pjzx.sandbox141
 <p><strong>Extra Credit:</strong> Do you know why you have a ReplicaSet?</p>
 </div>
 <div class="paragraph">
-<p>Verify the the rollout is complete:</p>
+<p>Wait for the rollout of the new pods to happen in the deployment:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -693,15 +694,17 @@ have returned to their original blue color.</p>
 </div>
 <div class="paragraph">
 <p>You can set up Argo CD to automatically correct drift by setting the <code>selfHeal</code>
-property of the <code>Application</code> manifest to do so. Example:</p>
+property of the <code>Application</code> manifest to do so. Using the example from <a href="#_deploy_the_application">above</a>:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml"># bgd-app.yaml
+...
+spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true</code></pre>
+      selfHeal: true # Set this to true</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -711,9 +714,6 @@ property of the <code>Application</code> manifest to do so. Example:</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc patch application/bgd-app -n user%USERNUM%-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>To see an example of an <code>Application</code> manifest in Git, check out <a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml" target="_blank" rel="noopener">bgd-app.yaml</a></p>
 </div>
 </div>
 </div>

@@ -258,7 +258,7 @@ setup. Verify that it has been installed.</p>
 </div>
 <div class="paragraph">
 <p>Kustomize, at its core, is meant to build on top of native Kubernetes manifests
-based on YAML while leaving the original YAML in tact. It achieves this in a
+based on YAML while leaving the original YAML intact. It achieves this in a
 "template-less" templating format. This is done by providing a
 <code>kustomization.yaml</code> file.</p>
 </div>
@@ -266,6 +266,8 @@ based on YAML while leaving the original YAML in tact. It achieves this in a
 <p>We will be focusing on two Kustomize sub-commands: the <code>build</code> command and the
 <code>edit</code> command.</p>
 </div>
+<div class="sect2">
+<h3 id="_kustomize_build"><a class="anchor" href="#_kustomize_build"></a>Kustomize <code>build</code></h3>
 <div class="paragraph">
 <p>The <code>build</code> command takes the YAML source (via a path or URL) and creates a new
 YAML that can be piped into <code>oc create</code>. We will work with an example in the
@@ -278,8 +280,7 @@ repository you cloned.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Here you should see two files, a <code>kustomization.yaml</code> file and a <code>welcome.yaml</code>
-file, let&#8217;s have a look at them.</p>
+<p>Here you should see two files, a <code>welcome.yaml</code> file and a <code>kustomization.yaml</code> file, let&#8217;s have a look at them.</p>
 </div>
 <div class="listingblock">
 <div class="title"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/kustomize-build/welcome.yaml" target="_blank" rel="noopener">welcome.yaml</a></div>
@@ -308,10 +309,10 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>This file shows nothing special. Just a standard Kubernetes manifest.</p>
+<p>This file shows nothing special. Just a standard Kubernetes <code>Deployment</code> manifest.</p>
 </div>
 <div class="paragraph">
-<p>What if, for example, we wanted to add a <code>label</code> to this manifest without
+<p>Now what if, for example, we wanted to add a <code>label</code> to this manifest without
 editing it? This is where the <code>kustomization.yaml</code> file comes in.</p>
 </div>
 <div class="listingblock">
@@ -321,7 +322,7 @@ editing it? This is where the <code>kustomization.yaml</code> file comes in.</p>
 kind: Kustomization
 resources:
 - ./welcome.yaml
-patchesJson6902:
+patches:
 - patch: |-
     - op: add
       path: /metadata/labels/testkey
@@ -330,22 +331,22 @@ patchesJson6902:
     group: apps
     kind: Deployment
     name: welcome-php
-    version: v1
-images:
-- name: quay.io/redhatworkshops/welcome-php
-  newTag: ffcd15</code></pre>
+    version: v1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see in the output there isn&#8217;t much. The two sections for this
-example are the <code>resources</code> and the <code>patchesJson6902</code> sections.</p>
+<p>As you can see in the output, we only need a <code>resources</code> and a <code>patches</code> section to accomplish this:</p>
 </div>
-<div class="paragraph">
-<p><code>resources</code> is an array of individual files, directories, and/or URLs where
-other manifests are stored. In this example we are just loading in one file. The
-(<a href="https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patchesjson6902/"><code>patchesJson6902</code>
-is a patching RFC</a> that <code>kustomize</code> supports. As you can see, in the
-<code>patchesJson6902</code> file, I am adding a label to this manifest.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>resources</code> is an array of individual files, directories, and/or URLs where
+other manifests are stored. In this example we are just loading in one file.</p>
+</li>
+<li>
+<p>The <a href="https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patches/" target="blank"><code>patches</code></a> is where we add our label to this manifest.</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -356,8 +357,7 @@ is a patching RFC</a> that <code>kustomize</code> supports. As you can see, in t
 <td class="content">
 <div class="paragraph">
 <p>You can read about what options are available for patching in the
-<a href="https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/">official
-documentation site</a></p>
+<a href="https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/" target="blank">official documentation site</a></p>
 </div>
 </td>
 </tr>
@@ -379,10 +379,9 @@ documentation site</a></p>
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: welcome-php
-    testkey: testvalue
+    testkey: testvalue # Our new label
   name: welcome-php
 spec:
   replicas: 1
@@ -392,19 +391,21 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: welcome-php
     spec:
       containers:
-      - image: quay.io/redhatworkshops/welcome-php:ffcd15
+      - image: quay.io/redhatworkshops/welcome-php:latest
         name: welcome-php
         resources: {}</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_kustomize_edit"><a class="anchor" href="#_kustomize_edit"></a>Kustomize <code>edit</code></h3>
 <div class="paragraph">
-<p>You can use the <code>kustomize edit</code> command instead of writing YAML. For
-example, you can change the image tag this <code>Deployment</code> uses from <code>latest</code>
+<p>You can use the <code>kustomize edit</code> command to make manifest changes instead of manually writing YAML. For
+example, you can change the image tag the <code>Deployment</code> above uses from <code>latest</code>
 to <code>ffcd15</code> by running the following:</p>
 </div>
 <div class="listingblock console-input">
@@ -413,7 +414,7 @@ to <code>ffcd15</code> by running the following:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This will update the <code>kustomization.yaml</code> file with a <code>images</code> section.</p>
+<p>This will update the <code>kustomization.yaml</code> file with an <code>images</code> section.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -426,7 +427,7 @@ to <code>ffcd15</code> by running the following:</p>
 kind: Kustomization
 resources:
 - ./welcome.yaml
-patchesJson6902:
+patches:
 - patch: |-
     - op: add
       path: /metadata/labels/testkey
@@ -478,6 +479,7 @@ the <code>kubectl</code> (or <code>oc</code>) command. Example:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kustomize build . | kubectl apply -f -</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -656,16 +658,16 @@ where you have a <strong>base</strong> set of manifests and you <strong>overlay<
 kind: Kustomization
 resources:
 - ../bgd-base
-patchesJson6902:
-  - target:
-      version: v1
-      group: apps
-      kind: Deployment
-      name: bgd
-    patch: |-
-      - op: replace
-        path: /spec/template/spec/containers/0/env/0/value
-        value: yellow</code></pre>
+patches:
+- patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/env/0/value
+      value: yellow
+  target:
+    group: apps
+    kind: Deployment
+    name: bgd
+    version: v1</code></pre>
 </div>
 </div>
 <div class="paragraph">
