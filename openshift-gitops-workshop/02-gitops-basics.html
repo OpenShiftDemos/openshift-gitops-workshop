@@ -110,7 +110,7 @@
     <a class="nav-link" href="03-kustomize.html#exploring_kustomize_cli">Exploring the Kustomize CLI</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_with_kubectl">Exploring Kustomize with Kubectl</a>
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_with_oc">Exploring Kustomize with <code>oc</code></a>
   </li>
 </ul>
   </li>
@@ -495,7 +495,7 @@ installing the application in Argo CD&#8217;s <code>default</code> project (<cod
 <td>The <code>syncPolicy</code> is set to <code>automated</code>. It will automatically prune
 resources that have been removed from the Git repo, but will not automatically
 correct resources that deviate from the definition stored in the repo, i.e
-manual changes made using <code>kubectl</code> will not be "healed".</td>
+manual changes made using <code>oc</code> or <code>kubectl</code> will not be "healed".</td>
 </tr>
 </table>
 </div>
@@ -632,7 +632,7 @@ blue to green:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -640,7 +640,7 @@ blue to green:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl rollout status deploy/bgd -n user%USERNUM%-bgd</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc rollout status deploy/bgd -n user%USERNUM%-bgd</code></pre>
 </div>
 </div>
 <div class="paragraph">

@@ -110,7 +110,7 @@
     <a class="nav-link" href="#exploring_kustomize_cli">Exploring the Kustomize CLI</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#exploring_kustomize_with_kubectl">Exploring Kustomize with Kubectl</a>
+    <a class="nav-link" href="#exploring_kustomize_with_oc">Exploring Kustomize with <code>oc</code></a>
   </li>
 </ul>
   </li>
@@ -199,11 +199,15 @@
 <div class="paragraph">
 <p><a href="https://kustomize.io/">Kustomize</a> traverses a Kubernetes manifest to add,
 remove or update configuration options without forking. It is available both as
-a standalone binary and as a native feature of <code>kubectl</code> (and by extension
-<code>oc</code>).</p>
+a standalone binary and as a native feature of both <code>oc</code> and <code>kubectl</code>.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exploring_kustomize"><a class="anchor" href="#exploring_kustomize"></a>Exploring Kustomize</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>The principals of <code>kustomize</code> are:</p>
+<p>The principles of <code>kustomize</code> are:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -228,12 +232,6 @@ forking the repo it.</p>
 <img src="_images/kustomize_logo.png" alt="Kustomize Logo">
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="exploring_kustomize"><a class="anchor" href="#exploring_kustomize"></a>Exploring Kustomize</h2>
-<div class="sectionbody">
-
 </div>
 </div>
 <div class="sect1">
@@ -451,7 +449,33 @@ images:
 </div>
 </div>
 <div class="paragraph">
-<p>You should see not only the new label but also the new <code>ffcd15</code> image tag.</p>
+<p>You should see not only the new label, but also the new <code>ffcd15</code> image tag!</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: welcome-php
+    testkey: testvalue
+  name: welcome-php
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: welcome-php
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: welcome-php
+    spec:
+      containers:
+      - image: quay.io/redhatworkshops/welcome-php:ffcd15
+        name: welcome-php
+        resources: {}</code></pre>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -469,24 +493,38 @@ see the changes.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>You can see how you can take already existing YAML and modify it for
+<p>You can now see how you can take existing YAML and modify it for
 your specific environment without the need to copy or edit the original.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>Kustomize can also be used to write a new YAML file and pipe into
-the <code>kubectl</code> (or <code>oc</code>) command. Example:</p>
+<p>Kustomize can also be used to write a new YAML file and pipe it into
+the <code>oc</code> (or <code>kubectl</code>) command for immediate execution in your environment. Example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kustomize build . | kubectl apply -f -</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kustomize build . | oc apply -f -</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="exploring_kustomize_with_kubectl"><a class="anchor" href="#exploring_kustomize_with_kubectl"></a>Exploring Kustomize with Kubectl</h3>
+</div>
+<div class="sect1">
+<h2 id="exploring_kustomize_with_oc"><a class="anchor" href="#exploring_kustomize_with_oc"></a>Exploring Kustomize with <code>oc</code></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Since Kubernetes 1.14, The <code>kubectl</code> command (and by extension the
-<code>oc</code> cli) has support for Kustomize built in.</p>
+<p>The OpenShift CLI (<code>oc</code>) has support for Kustomize built in.
+It inherits this from <code>kubectl</code> which has had this same support since Kubernetes 1.14.</p>
 </div>
 <div class="paragraph">
 <p>You can see this by running:</p>
@@ -497,16 +535,16 @@ the <code>kubectl</code> (or <code>oc</code>) command. Example:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This runs the <code>kustomize build</code> command. You can see this by running:</p>
+<p>You can run the <code>kustomize build</code> command by doing:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc kustomize</code></pre>
+<pre>oc kustomize</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Although you can use this to pipe it into the apply command, you
-don&#8217;t have to. The <code>kubectl apply</code> command has the <code>-k</code> option that
+<p>Although you can use <code>oc kustomize</code> and pipe it into the <code>oc apply</code> command, you
+don&#8217;t have to. The <code>oc apply</code> command has the <code>-k</code> option that
 will run the build before it applies the manifest.</p>
 </div>
 <div class="admonitionblock note">
@@ -517,7 +555,7 @@ will run the build before it applies the manifest.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><code>kubectl</code> and <code>oc kustomize</code> implement a subset of the <code>kustomize</code>
+<p><code>oc kustomize</code> and <code>kubectl kustomize</code> implement a subset of the <code>kustomize</code>
 featureset. For example, the <code>edit</code> command is not implemented.</p>
 </div>
 </td>
@@ -525,11 +563,33 @@ featureset. For example, the <code>edit</code> command is not implemented.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Now you will apply your <code>kustomize</code>-d manifest into one of your projects:</p>
+<p>Now you will apply your <code>kustomize</code>-d <code>Deployment</code> manifest into one of your projects:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Ensure that you are in the <code>~/openshift-gitops-workshop/documentation/modules/ROOT/examples/kustomize-build</code> directory</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -n user%USERNUM%-bgdk -k ./</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -n user%USERNUM%-bgdk -k .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see the following letting you know the deployment was successful</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">deployment.apps/welcome-php created</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -548,7 +608,7 @@ The only requirement is that you have a <code>kustomization.yaml</code> file in 
 </table>
 </div>
 <div class="paragraph">
-<p>This should create the deployment and you should see the pods running in the namespace:</p>
+<p>Now that the deployment is created, you should see the pods running in the namespace with</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -556,7 +616,16 @@ The only requirement is that you have a <code>kustomization.yaml</code> file in 
 </div>
 </div>
 <div class="paragraph">
-<p>You can see the deployment was created with the additional labels:</p>
+<p>The console should return something along the lines of</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                          READY   STATUS    RESTARTS   AGE
+welcome-php-9474fc448-sthzr   1/1     Running   0          34s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also see the deployment was created with the additional labels</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -564,7 +633,18 @@ The only requirement is that you have a <code>kustomization.yaml</code> file in 
 </div>
 </div>
 <div class="paragraph">
-<p>Also, the image was updated based on the customization that was made:</p>
+<p>Resulting in</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "app": "welcome-php",
+  "testkey": "testvalue"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, check that the image was updated based on the customization we made</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -572,15 +652,30 @@ The only requirement is that you have a <code>kustomization.yaml</code> file in 
 </div>
 </div>
 <div class="paragraph">
+<p>The output should return</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">quay.io/redhatworkshops/welcome-php:ffcd15</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>As you can see <code>kustomize</code> can be a powerful tool.</p>
 </div>
 <div class="paragraph">
-<p>You can delete the applied resources with <code>oc delete</code> and kustomize, too:</p>
+<p>You can delete the applied resources with <code>oc delete</code> and kustomize, too</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc delete -n user%USERNUM%-bgdk -k ./</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc delete -n user%USERNUM%-bgdk -k .</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Once you run this command, check that you see the following to confirm deletion</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">deployment.apps "welcome-php" deleted</code></pre>
 </div>
 </div>
 </div>
@@ -589,9 +684,9 @@ The only requirement is that you have a <code>kustomization.yaml</code> file in 
 <h2 id="deploying_kustomized_application"><a class="anchor" href="#deploying_kustomized_application"></a>Deploying Kustomized Application</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In previous chapter, you learned that in a GitOps workflow; the
+<p>In Chapter 2 - GitOps Basics, you learned that in a GitOps workflow the
 entire application stack (including infrastructure) is reflected
-in a git repo. The challenge is how to do this without duplicating
+in a Git repo. The challenge is how to do this without duplicating
 YAML.</p>
 </div>
 <div class="paragraph">
@@ -610,9 +705,8 @@ CD and how it can be used in a GitOps workflow.</p>
 <h3 id="kustomized_application"><a class="anchor" href="#kustomized_application"></a>Kustomized Application</h3>
 <div class="paragraph">
 <p>Argo CD has native support for Kustomize. You can use this to avoid
-duplicating YAML for each deployment. This is especially good to
-use if you have different environments or clusters you&#8217;re deploying
-to.</p>
+duplicating YAML for each deployment. This is especially helpful if you
+have different environments or clusters you&#8217;re deploying to.</p>
 </div>
 <div class="paragraph">
 <p>Take a look at this <code>Application</code> definition:</p>
@@ -641,9 +735,9 @@ spec:
 </div>
 <div class="paragraph">
 <p>As you will see below, this <code>Application</code> definition refers to the same <strong>base</strong> resources you used in
-the previous lab scenario. It references a directory path (<code>documentation/modules/ROOT/examples/bgdk</code>)
-which contains a new <code>kustomization.yaml</code> file specific to this application. This concept is called an <strong>overlay</strong>:
-where you have a <strong>base</strong> set of manifests and you <strong>overlay</strong> your customizations.</p>
+Chapter 2. It references a directory path (<code>documentation/modules/ROOT/examples/bgdk</code>)
+which contains a new <code>kustomization.yaml</code> file specific to this application. This concept is called an <strong>overlay</strong>.
+Where a <strong>base</strong> set of manifests are <strong>overlay</strong>-d with your customizations.</p>
 </div>
 <div class="paragraph">
 <p>Click <a href="https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/#bases-and-overlays" target="_blank" rel="noopener">here</a> to learn more about Kustomize bases and overlays,</p>
