@@ -3,13 +3,12 @@ include::_attributes.adoc[]
 
 link:https://kustomize.io/[Kustomize] traverses a Kubernetes manifest to add,
 remove or update configuration options without forking. It is available both as
-a standalone binary and as a native feature of `kubectl` (and by extension
-`oc`).
+a standalone binary and as a native feature of both `oc` and `kubectl`.
 
 [#exploring_kustomize]
 == Exploring Kustomize
 
-The principals of `kustomize` are:
+The principles of `kustomize` are:
 
 * Purely declarative approach to configuration customization
 * Manage an arbitrary number of distinctly customized Kubernetes configurations
@@ -229,11 +228,11 @@ kustomize build . | oc apply -f -
 ----
 ====
 
-[#exploring_kustomize_with_kubectl]
-== Exploring Kustomize with Kubectl
+[#exploring_kustomize_with_oc]
+== Exploring Kustomize with `oc`
 
-Since Kubernetes 1.14, The `kubectl` command (and by extension the
-`oc` cli) has support for Kustomize built in.
+The OpenShift CLI (`oc`) has support for Kustomize built in.
+It inherits this from `kubectl` which has had this same support since Kubernetes 1.14.
 
 You can see this by running:
 
@@ -256,7 +255,7 @@ will run the build before it applies the manifest.
 
 [NOTE]
 ====
-`kubectl kustomize` and `oc kustomize` implement a subset of the `kustomize`
+`oc kustomize` and `kubectl kustomize` implement a subset of the `kustomize`
 featureset. For example, the `edit` command is not implemented.
 ====
 
