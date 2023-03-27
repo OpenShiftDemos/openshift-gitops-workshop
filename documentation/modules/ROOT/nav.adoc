@@ -10,7 +10,7 @@
 * xref:03-kustomize.adoc[3. Work with Kustomize]
 ** xref:03-kustomize.adoc#exploring_kustomize[Exploring the Kustomize]
 *** xref:03-kustomize.adoc#exploring_kustomize_cli[Exploring the Kustomize CLI]
-*** xref:03-kustomize.adoc#exploring_kustomize_with_kubectl[Exploring Kustomize with Kubectl]
+*** xref:03-kustomize.adoc#exploring_kustomize_with_oc[Exploring Kustomize with `oc`]
 ** xref:03-kustomize.adoc#deploying_kustomized_application[Deploying Kustomized Application]
 *** xref:03-kustomize.adoc#argocd_web_console[The ArgoCD Web Console]
 *** xref:03-kustomize.adoc#kustomized_application[Kustomized Application]

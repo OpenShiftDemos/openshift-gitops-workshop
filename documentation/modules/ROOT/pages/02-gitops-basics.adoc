@@ -168,7 +168,7 @@ installing the application in Argo CD's `default` project (`.spec.project`).
 <4> The `syncPolicy` is set to `automated`. It will automatically prune
   resources that have been removed from the Git repo, but will not automatically
   correct resources that deviate from the definition stored in the repo, i.e
-  manual changes made using `kubectl` will not be "healed".
+  manual changes made using `oc` or `kubectl` will not be "healed".
 
 You will create an Application by slightly modifying the provided example inline
 using the command below:
@@ -266,7 +266,7 @@ blue to green:
 [source,bash,subs="attributes+,+macros"]
 
 ----
-kubectl -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
+oc -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
 ----
 
 Wait for the rollout of the new pods to happen in the deployment:
@@ -274,7 +274,7 @@ Wait for the rollout of the new pods to happen in the deployment:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl rollout status deploy/bgd -n user%USERNUM%-bgd
+oc rollout status deploy/bgd -n user%USERNUM%-bgd
 ----
 
 Refresh the browser tab where your application is running. You should see green
