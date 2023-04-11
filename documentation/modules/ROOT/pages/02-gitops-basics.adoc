@@ -111,7 +111,6 @@ A *Deployment*:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
-bash-4.4 ~ $ cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd/bgd-deployment.yaml
 include::ROOT:example$bgd/bgd-deployment.yaml[]
 ----
 
