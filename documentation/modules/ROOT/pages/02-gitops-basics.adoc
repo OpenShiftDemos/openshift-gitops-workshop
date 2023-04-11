@@ -96,6 +96,10 @@ DevSpaces] is a better choice.
 === Review the Application Manifests
 
 For this first lab, the application manifests are located link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd[here,window='_blank'] and include a Deployment, Service, and Route.
+If you want to review these in your terminal, the files can be found here:
+
+`~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd`
+
 
 [IMPORTANT]
 ====
@@ -107,6 +111,7 @@ A *Deployment*:
 
 [source,yaml,subs="+macros,attributes+"]
 ----
+bash-4.4 ~ $ cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd/bgd-deployment.yaml
 include::ROOT:example$bgd/bgd-deployment.yaml[]
 ----
 
