@@ -332,7 +332,11 @@ DevSpaces</a> is a better choice.</p>
 <div class="sect2">
 <h3 id="_review_the_application_manifests"><a class="anchor" href="#_review_the_application_manifests"></a>Review the Application Manifests</h3>
 <div class="paragraph">
-<p>For this first lab, the application manifests are located <a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd" target="_blank" rel="noopener">here</a> and include a Deployment, Service, and Route.</p>
+<p>For this first lab, the application manifests are located <a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd" target="_blank" rel="noopener">here</a> and include a Deployment, Service, and Route.
+If you want to review these in your terminal, the files can be found here:</p>
+</div>
+<div class="paragraph">
+<p><code>~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd</code></p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -379,6 +383,15 @@ spec:
         - name: COLOR
           value: "blue"
         resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
 ---</code></pre>
 </div>
 </div>
