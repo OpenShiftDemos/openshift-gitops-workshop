@@ -21,3 +21,6 @@
 ** xref:04-syncwaves-hooks.adoc#using_resource_hooks[Using Resource Hooks]
 *** xref:04-syncwaves-hooks.adoc#exploring_the_manifests_hooks[Exploring Resource Hook Manifests]
 ** xref:04-syncwaves-hooks.adoc#deploying_the_application[Deploying the Application]
+
+* xref:05-conclusion.adoc[5. Conclusion]
+** xref:05-conclusion.adoc#Resources[Resources]
