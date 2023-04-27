@@ -1,0 +1,22 @@
+= Conclusion
+include::_attributes.adoc[]
+
+Thanks for participating in this workshop, we hope you enjoyed it.
+
+== Resources
+
+Interested in learning more? Check out these other great resources from Red Hat:
+
+=== Free GitOps e-books from Red Hat:
+
+[cols="a,a", frame=none, grid=none]
+|===
+| image::PathtoGitOps_EBook.png[link="https://developers.redhat.com/e-books/path-gitops",window='_blank']
+| image::gitops-cookbook-ebook-cover.png[link="https://developers.redhat.com/e-books/gitops-cookbook",window='_blank']
+|===
+
+=== Online Resources
+
+==== https://developers.redhat.com/learn/openshift/develop-gitops[Kubernetes by Example introduction to Argo CD,window='_blank']
+
+==== http://red.ht/gitops[GitOps Guide to the Galaxy Streaming Series,window='_blank']
