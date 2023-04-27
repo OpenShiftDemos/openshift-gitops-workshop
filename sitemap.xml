@@ -2,22 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/01-getting-started.html</loc>
-<lastmod>2023-04-27T18:23:34.545Z</lastmod>
+<lastmod>2023-04-27T18:46:42.761Z</lastmod>
 </url>
 <url>
 <loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/02-gitops-basics.html</loc>
-<lastmod>2023-04-27T18:23:34.545Z</lastmod>
+<lastmod>2023-04-27T18:46:42.761Z</lastmod>
 </url>
 <url>
 <loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/03-kustomize.html</loc>
-<lastmod>2023-04-27T18:23:34.545Z</lastmod>
+<lastmod>2023-04-27T18:46:42.761Z</lastmod>
 </url>
 <url>
 <loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/04-syncwaves-hooks.html</loc>
-<lastmod>2023-04-27T18:23:34.545Z</lastmod>
+<lastmod>2023-04-27T18:46:42.761Z</lastmod>
 </url>
 <url>
 <loc>https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/index.html</loc>
-<lastmod>2023-04-27T18:23:34.545Z</lastmod>
+<lastmod>2023-04-27T18:46:42.761Z</lastmod>
 </url>
 </urlset>
