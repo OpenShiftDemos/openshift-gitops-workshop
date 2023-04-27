@@ -193,9 +193,6 @@ as still progressing or fully synced.
 
 image::argocd-app2.png[SampleApp]
 
-NOTE: You may have to click on `show hidden resources` on this page to see all
-of the resources.
-
 At this point the application should be up and running. Verify that the
 resources were created:
 
