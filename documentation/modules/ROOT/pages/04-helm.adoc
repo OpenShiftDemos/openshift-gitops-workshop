@@ -1,7 +1,89 @@
 = Helm
 include::_attributes.adoc[]
 
-link:https://kustomize.io/[Helm] Helm is a package and install manager that standardizes and
+link:https://helm.sh/[Helm] Helm is a package and install manager that standardizes and
 simplifies packaging and deployment of containerized applications with Kubernetes. Unlike Kustomize, which
-uses a patching approach, Helm uses a templating approach to enable users to tailor the deployed manifests
+uses a patching approach, Helm uses templating to enable users to tailor the deployed manifests
 as required.
+
+[#exploring_helm]
+== Exploring Helm
+
+The principles of 'Helm' are as follows:
+
+* A package manager for Kubernetes with applications packaged as charts
+* Uses templates to enable applications to be configured per installation
+* Parameters for the chart are held in a `values.yaml` file and consumed by the templates
+
+image::helm_logo.png[Helm Logo]
+
+[#exploring_helm_cli]
+== Exploring the Helm CLI
+
+Similar to kustomize from the previous lab, the `helm` CLI should have been installed as part of the lab
+setup. Verify that it has been installed.
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+helm version --short
+----
+
+This should display the version, it should look something like this.
+
+[.console-output]
+[source,bash,subs="attributes+,+macros"]
+----
+{v3.9.0+3.el8+ge09b16a}
+----
+
+Helm as a package manager can be used to install a helm chart into a kubernetes cluster
+and can then manage the lifecycle of the application including upgrades and uninstalling the
+application. However helm can also render the chart as pure yaml without installing the
+application in a cluster.
+
+Argo CD follows a philosphy of managing manifests and as a result it interacts with Helm by
+having Helm templating the chart, it does not install the chart in a Kubernetes cluster. The
+lifecycle of a Helm chart in Argo CD is managed by updating version of the chart Argo CD is
+using and having Argo CD render the new version of the chart.
+
+As a result for the purpose of this workshop we will be focusing on the `helm template`
+command rather than `helm install`.
+
+[#exploring_helm_chart]
+== Exploring Helm Charts
+
+In this section we will explore the chart that we will be deploying into the cluster using GitOps,
+this chart will be used to deploy the same application we did previously with kustomize. We will work
+with a chart in the
+`documentation/modules/ROOT/examples/bgd-helm-chart` directory within the
+repository you cloned.
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-helm-chart
+----
+
+Next if you run the `ls` command you should see two files, `Chart.yaml` and `values.yaml`, as well
+as a directory called templates. Lets have a look at these in more detail.
+
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-helm-chart/Chart.yaml[Chart.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgd-helm-chart/Chart.yaml[]
+----
+
+This file is the link:https://helm.sh/docs/topics/charts/#the-chartyaml-file[chart definition] which specifies name, version and other characteristics of the chart.
+
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-helm-chart/values.yaml[values.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
+----
+include::ROOT:example$bgd-helm-chart/values.yaml[]
+----
+
+The `values.yaml` file is the default set of values that will be used by the chart. When templating or installing the chart
+you can provide your own values.yaml to override some or all of these defaults as needed for a specific use case.
+
+Notice that since this is a yaml file parameters can be hierarchical which enables grouping related parameters together as shown
+by the `image` section.
