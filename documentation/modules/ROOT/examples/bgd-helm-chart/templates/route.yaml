@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: {{ .Release.Name }}
+    weight: 100

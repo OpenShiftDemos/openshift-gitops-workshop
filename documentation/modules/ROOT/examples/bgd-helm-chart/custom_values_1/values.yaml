@@ -1,0 +1,7 @@
+replicas: 1
+color: green
+
+image:
+  name: quay.io/rhdevelopers/bgd
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
