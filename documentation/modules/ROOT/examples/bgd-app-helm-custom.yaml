@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bgd-helm
+spec:
+  destination:
+    name: ''
+    namespace: user1-bgd
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: documentation/modules/ROOT/examples/bgd-helm-chart
+    repoURL: 'https://github.com/jnewsome97/openshift-gitops-workshop'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - custom_values_1/values.yaml
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

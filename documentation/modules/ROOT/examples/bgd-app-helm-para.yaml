@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bgd-helm
+spec:
+  destination:
+    name: ''
+    namespace: user1-bgd
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: documentation/modules/ROOT/examples/bgd-helm-chart
+    repoURL: 'https://github.com/jnewsome97/openshift-gitops-workshop'
+    targetRevision: master
+    helm:
+      parameters:
+        - name: color
+          value: purple
+        - name: image.name
+          value: quay.io/rhdevelopers/bgd
+        - name: image.pullPolicy
+          value: IfNotPresent
+        - name: image.tag
+          value: 1.0.0
+        - name: replicas
+          value: '1'
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
