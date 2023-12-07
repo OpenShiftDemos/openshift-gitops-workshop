@@ -4,7 +4,7 @@ include::_attributes.adoc[]
 [#cluster-login]
 == OpenShift cluster login
 
-The first thing to do is log in to your OpenShift cluster. In the previous
+..The first thing to do is log in to your OpenShift cluster. In the previous
 screen that handed you your workshop credentials should be a link to the
 OpenShift console, as well as a username and password. Click that link, which
 will take you to the OpenShift login screen:
