@@ -15,12 +15,24 @@
 *** xref:03-kustomize.adoc#argocd_web_console[The ArgoCD Web Console]
 *** xref:03-kustomize.adoc#kustomized_application[Kustomized Application]
 
-* xref:04-syncwaves-hooks.adoc[4. Sync Waves and Hooks]
-** xref:04-syncwaves-hooks.adoc#using_syncwaves[Using Sync Waves]
-*** xref:04-syncwaves-hooks.adoc#exploring_the_manifests_waves[Exploring Sync Wave Manifests]
-** xref:04-syncwaves-hooks.adoc#using_resource_hooks[Using Resource Hooks]
-*** xref:04-syncwaves-hooks.adoc#exploring_the_manifests_hooks[Exploring Resource Hook Manifests]
-** xref:04-syncwaves-hooks.adoc#deploying_the_application[Deploying the Application]
+* xref:04-helm.adoc[4. Work with Helm]
+** xref:04-helm.adoc#exploring-helm[Exploring Helm]
+*** xref:04-helm.adoc#exploring-helm-cli[Exploring the Helm CLI]
+** xref:04-helm.adoc#exploring-helm-charts[Exploring Helm Charts]
+*** xref:04-helm.adoc#helm-template[Helm Template]
+** xref:04-helm.adoc#helm-charts-deploy-applications[Helm Chart Deployment in Argo CD]
+*** xref:04-helm.adoc#custom-values-files[Custom Values Files]
+*** xref:04-helm.adoc#parameter_values[Parameter Values]
+** xref:04-helm.adoc#helm-conclusion[Conclusion: Helm on ArgoCD]
+ 
 
-* xref:05-conclusion.adoc[5. Conclusion]
-** xref:05-conclusion.adoc#Resources[Resources]
+
+* xref:05-syncwaves-hooks.adoc[5. Sync Waves and Hooks]
+** xref:05-syncwaves-hooks.adoc#using_syncwaves[Using Sync Waves]
+*** xref:05-syncwaves-hooks.adoc#exploring_the_manifests_waves[Exploring Sync Wave Manifests]
+** xref:05-syncwaves-hooks.adoc#using_resource_hooks[Using Resource Hooks]
+*** xref:05-syncwaves-hooks.adoc#exploring_the_manifests_hooks[Exploring Resource Hook Manifests]
+** xref:05-syncwaves-hooks.adoc#deploying_the_application[Deploying the Application]
+
+* xref:06-conclusion.adoc[6. Conclusion]
+** xref:06-conclusion.adoc#Resources[Resources]
