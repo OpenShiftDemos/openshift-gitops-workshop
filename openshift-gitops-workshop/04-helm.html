@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Helm :: OpenShift GitOps Workshop</title>
+    <link rel="canonical" href="https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/04-helm.html">
+    <link rel="prev" href="03-kustomize.html">
+    <link rel="next" href="05-syncwaves-hooks.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img
+          src="../_/img/header_logo.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://openshiftdemos.github.io/openshift-gitops-workshop">OpenShift GitOps Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Books</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">CheatSheets</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">CheatSheet A</a>
+            <a class="navbar-item" href="#">CheatSheet B</a>
+            <a class="navbar-item" href="#">CheatSheet C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Upcoming Events</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Event A</a>
+            <a class="navbar-item" href="#">Event B</a>
+            <a class="navbar-item" href="#">Event C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Tutorial A</a>
+            <a class="navbar-item" href="#">Tutorial B</a>
+            <a class="navbar-item" href="#">Tutorial C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="openshift-gitops-workshop" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">OpenShift GitOps Workshop</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Getting Started</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#cluster-login">Cluster Login</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#open-web-terminal">Open the Web Terminal</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-gitops-basics.html">2. GitOps Basics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#review-argocd">Review Argo CD Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#connect-argocd">Connecting to Argo CD</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-gitops-basics.html#deploy-sample-application">Deploy a Sample Application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html">3. Work with Kustomize</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize">Exploring the Kustomize</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_cli">Exploring the Kustomize CLI</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#exploring_kustomize_with_oc">Exploring Kustomize with <code>oc</code></a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-kustomize.html#deploying_kustomized_application">Deploying Kustomized Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#argocd_web_console">The ArgoCD Web Console</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-kustomize.html#kustomized_application">Kustomized Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-helm.html">4. Work with Helm</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#exploring-helm">Exploring Helm</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#exploring-helm-cli">Exploring the Helm CLI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#exploring-helm-charts">Exploring Helm Charts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#helm-template">Helm Template</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#helm-charts-deploy-applications">Helm Chart Deployment in Argo CD</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#custom-values-files">Custom Values Files</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#parameter_values">Parameter Values</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#helm-conclusion">Conclusion: Helm on ArgoCD</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-syncwaves-hooks.html">5. Sync Waves and Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-syncwaves-hooks.html#using_syncwaves">Using Sync Waves</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-syncwaves-hooks.html#exploring_the_manifests_waves">Exploring Sync Wave Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-syncwaves-hooks.html#using_resource_hooks">Using Resource Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-syncwaves-hooks.html#exploring_the_manifests_hooks">Exploring Resource Hook Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-syncwaves-hooks.html#deploying_the_application">Deploying the Application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-conclusion.html">6. Conclusion</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="06-conclusion.html#Resources">Resources</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">OpenShift GitOps Workshop</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">OpenShift GitOps Workshop</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">OpenShift GitOps Workshop</a></li>
+    <li><a href="04-helm.html">4. Work with Helm</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/edit/master/documentation/modules/ROOT/pages/04-helm.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Helm</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://helm.sh/">Helm</a> is a package and install manager that standardises and
+simplifies packaging and deployment of containerized applications with Kubernetes. Unlike Kustomize, which
+uses a patching approach, Helm uses templating to enable users to tailor the deployed manifests
+as required.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exploring-helm"><a class="anchor" href="#exploring-helm"></a>Exploring Helm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The principles of 'Helm' are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A package manager for Kubernetes with applications packaged as charts</p>
+</li>
+<li>
+<p>Uses templates to enable applications to be configured per installation</p>
+</li>
+<li>
+<p>Parameters for the chart are held in a <code>values.yaml</code> file and consumed by the templates</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/helm-logo.png" alt="Helm Logo">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exploring-helm-cli"><a class="anchor" href="#exploring-helm-cli"></a>Exploring the Helm CLI</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Similar to Kustomize from the previous lab, the <code>helm</code> CLI should have been installed as part of the lab
+setup. Verify that it has been installed.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm version --short</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should display the version, it should look something like this.</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">{v3.9.0+3.el8+ge09b16a}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Helm as a package manager can be used to install a Helm chart into a kubernetes cluster
+and can then manage the lifecycle of the application including upgrades and uninstalling the
+application. However Helm can also render the chart as pure yaml without installing the
+application in a cluster.</p>
+</div>
+<div class="paragraph">
+<p>Argo CD follows a philosophy of managing manifests and as a result it interacts with Helm by
+having Helm templating the chart. It does not install the chart in a Kubernetes cluster. The
+lifecycle of a Helm chart in Argo CD is managed by updating the version of the chart Argo CD is
+using and having Argo CD render the new version of the chart.</p>
+</div>
+<div class="paragraph">
+<p>As a result for the purpose of this workshop we will be focusing on the <code>helm template</code>
+command rather than <code>helm install</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exploring-helm-charts"><a class="anchor" href="#exploring-helm-charts"></a>Exploring Helm Charts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section we will explore the chart that we will be deploying into the cluster using GitOps.
+This chart will be used to deploy the same application we did previously with Kustomize. We will work
+with a chart in the
+<code>documentation/modules/ROOT/examples/bgd-helm-chart</code> directory within the
+repository you cloned.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-helm-chart</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next if you run the <code>ls</code> command you should see two files: <code>Chart.yaml</code> and <code>values.yaml</code>, as well
+as a directory called templates. Let&#8217;s have a look at these in more detail.</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-helm-chart/Chart.yaml" target="_blank" rel="noopener">Chart.yaml</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v2
+name: bgd
+description: Blue-Green
+
+type: application
+
+version: 1.0.0
+appVersion: 1.16.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This file is the <a href="https://helm.sh/docs/topics/charts/#the-chartyaml-file">chart definition</a> which specifies name, version and other characteristics of the chart.</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-helm-chart/values.yaml" target="_blank" rel="noopener">values.yaml</a></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">replicas: 1
+color: yellow
+
+image:
+  name: quay.io/rhdevelopers/bgd
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>values.yaml</code> file is the default set of values that will be used by the chart. When templating or installing the chart
+you can provide your own values.yaml to override some or all of these defaults as needed for a specific use case.</p>
+</div>
+<div class="paragraph">
+<p>Notice that since this is a yaml file parameters can be hierarchical which enables grouping related parameters together as shown
+by the <code>image</code> section.</p>
+</div>
+<div class="paragraph">
+<p>The templates/ directory is where template files reside. When Helm assesses a chart, it processes all files in the templates/ directory using the template rendering engine. The results of these templates are then gathered and forwarded to Kubernetes.You can learn more about templating <a href="https://helm.sh/docs/chart_template_guide/getting_started/">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="helm-template"><a class="anchor" href="#helm-template"></a>Helm Template</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section, we will explore how to use the <code>helm template</code> command to generate Kubernetes manifests from a Helm chart. This command is a fundamental tool for understanding how Helm charts work and for visualising the resources they create.</p>
+</div>
+<div class="sect3">
+<h4 id="_step_1_run_the_helm_template_command"><a class="anchor" href="#_step_1_run_the_helm_template_command"></a>Step 1: Run the Helm template Command</h4>
+<div class="paragraph">
+<p>Execute the following command to render the chart template from your local directory and display the output on the screen:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm template bgd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-helm-chart</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_2_view_the_output"><a class="anchor" href="#_step_2_view_the_output"></a>Step 2: View the Output</h4>
+<div class="paragraph">
+<p>After running the command, you will see the output of the <code>helm template</code> command, which represents the generated Kubernetes manifest files. Below is an example of what you can expect to see:</p>
+</div>
+<div class="paragraph">
+<p>You will see the output of the <code>helm template</code>:</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bgd
+  name: bgd
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: bgd
+---
+# Source: bgd/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bgd
+  name: bgd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bgd
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: bgd
+    spec:
+      containers:
+      - image: quay.io/rhdevelopers/bgd:1.0.0
+        imagePullPolicy: IfNotPresent
+        name: bgd
+        env:
+        - name: COLOR
+          value: yellow
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+---
+# Source: bgd/templates/route.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: bgd
+  name: bgd
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: bgd
+    weight: 100</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="helm-charts-deploy-applications"><a class="anchor" href="#helm-charts-deploy-applications"></a>Using Helm charts to deploy applications in Argo CD</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section, we will utilise Helm charts to deploy applications within Argo CD. Helm charts provide a convenient way to manage and deploy Kubernetes applications. We will first examine the configuration file for an Argo CD Application that deploys a Helm chart for the BGD app. This file contains essential configuration details such as the destination, source, project, and sync policy.</p>
+</div>
+<div class="sect3">
+<h4 id="_step_1_view_the_argo_cd_application_configuration"><a class="anchor" href="#_step_1_view_the_argo_cd_application_configuration"></a>Step 1: View the Argo CD Application Configuration</h4>
+<div class="paragraph">
+<p>To view the YAML configuration file for the Argo CD Application, execute the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see the following output:</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bgd-helm
+spec:
+  destination:
+    name: ''
+    namespace: user1-bgd
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: documentation/modules/ROOT/examples/bgd-helm-chart
+    repoURL: 'https://github.com/OpenShiftDemos/openshift-gitops-workshop'
+    targetRevision: master
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "user1-bgd".</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_2_deployobserve_the_argo_cd_application"><a class="anchor" href="#_step_2_deployobserve_the_argo_cd_application"></a>Step 2: Deploy/Observe the Argo CD Application</h4>
+<div class="paragraph">
+<p>Apply the configuration in the file to create the Argo CD Application in the namespace user1-argocd. This application will deploy the Helm chart for the BGD app:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml -n user1-argocd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the ArgoCD interface you should see the successful deployment of the "bgd-helm" application.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd-helm1.png" alt="bgd helm1">
+</div>
+</div>
+<div class="paragraph">
+<p>Now click on the "bgd-helm" application. We will explore its deployment. You can tell by the icon that it&#8217;s deployed via a Helm chart from a Git repository. Although you could deploy it through a Helm repository, we&#8217;re using a Git repository for this demonstration.</p>
+</div>
+<div class="paragraph">
+<p>Access the application details by clicking on the "App Details" option.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd-helm2.png" alt="bgd helm2">
+</div>
+</div>
+<div class="paragraph">
+<p>Next, click on "Parameters." You will notice that there is no separate values file as the application is deployed directly from the Helm chart. However, it has automatically retrieved the following values:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd-helm3.png" alt="bgd helm3">
+</div>
+</div>
+<div class="paragraph">
+<p>If you view the route of your application you should be able to see the animated balls are now yellow!</p>
+</div>
+<div class="paragraph">
+<p>You can see the link by using this command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/yellowoutput.png" alt="yellowoutput">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="custom-values-files"><a class="anchor" href="#custom-values-files"></a>Custom values files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section we explore the use of custom values files with Helm charts. These allow you to tailor deployments to your specific needs. Custom values files offer the flexibility to override default settings without modifying the chart directly.</p>
+</div>
+<div class="sect3">
+<h4 id="_step_1_explore_the_custom_values_configuration"><a class="anchor" href="#_step_1_explore_the_custom_values_configuration"></a>Step 1: Explore the Custom Values Configuration</h4>
+<div class="paragraph">
+<p>Begin by examining a YAML file named "bgd-app-helm-custom.yaml." This file closely resembles the previous configuration but introduces a critical difference: it references a custom values file stored in the same Git repository as the Helm chart.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will notice a section in this YAML file that defines the name and path of the custom values file responsible for adjusting the Helm chart&#8217;s default settings:</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">    helm:
+      valueFiles:
+        - custom_values_1/values.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This configuration specifies how Helm accesses and uses the custom values file to modify the Helm chart&#8217;s behaviour.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_2_explore_the_custom_values_file"><a class="anchor" href="#_step_2_explore_the_custom_values_file"></a>Step 2: Explore the Custom Values File</h4>
+<div class="paragraph">
+<p>Examine the custom values file that is being referenced:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-helm-chart/custom_values_1/values.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see that it transforms the color of the animated balls from yellow to green, among other settings:</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">replicas: 1
+color: green
+
+image:
+  name: quay.io/rhdevelopers/bgd
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_3_apply_the_custom_values"><a class="anchor" href="#_step_3_apply_the_custom_values"></a>Step 3: Apply the Custom Values</h4>
+<div class="paragraph">
+<p>Now, apply the custom values file to the initial application using Argo CD:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml -n user1-argocd</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_4_verify_the_changes"><a class="anchor" href="#_step_4_verify_the_changes"></a>Step 4: Verify the Changes</h4>
+<div class="paragraph">
+<p>Return to ArgoCD and click on "App Details," then navigate to the "Parameters" section, where you previously made changes. You’ll notice that the custom value file has been successfully added, and it has updated the values to display the animated balls in green.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd-helm4.png" alt="bgd helm4">
+</div>
+</div>
+<div class="paragraph">
+<p>Using ArgoCD to deploy a Helm chart with custom values files offers the advantage of tailoring and overriding the chart’s default settings, all without needing to alter the chart directly. This flexibility enables you to deploy the chart with different configurations to suit various environments or specific use cases.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_5_confirming_the_change"><a class="anchor" href="#_step_5_confirming_the_change"></a>Step 5: Confirming the Change</h4>
+<div class="paragraph">
+<p>If you access the route again the animated balls should now be green!</p>
+</div>
+<div class="paragraph">
+<p>You can see the link by using this command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd-green.png" alt="bgd green">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameter_values"><a class="anchor" href="#parameter_values"></a>Argo CD Application with Parameter Values</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section, we&#8217;ll explore a YAML file where parameter values are embedded directly within the Application, eliminating the need for separate values files.</p>
+</div>
+<div class="sect3">
+<h4 id="_step_1_examine_the_parameterised_configuration"><a class="anchor" href="#_step_1_examine_the_parameterised_configuration"></a>Step 1: Examine the Parameterised Configuration</h4>
+<div class="paragraph">
+<p>Begin by examining the YAML file named "bgd-app-helm-para.yaml." This file, similar to the previous configurations, defines an Argo CD Application for deploying a Helm chart. However, a notable difference is the inclusion of all desired parameter values directly within the YAML file:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bgd-helm
+spec:
+  destination:
+    name: ''
+    namespace: user1-bgd
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: documentation/modules/ROOT/examples/bgd-helm-chart
+    repoURL: 'https://github.com/OpenShiftDemos/openshift-gitops-workshop'
+    targetRevision: master
+    helm:
+      parameters:
+        - name: color
+          value: purple
+        - name: image.name
+          value: quay.io/rhdevelopers/bgd
+        - name: image.pullPolicy
+          value: IfNotPresent
+        - name: image.tag
+          value: 1.0.0
+        - name: replicas
+          value: '1'
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the 'parameters' section of the YAML, you will notice that we have included all the desired values, such as the color, image name, image pull policy, image tag, and the number of replicas.</p>
+</div>
+<div class="paragraph">
+<p>This approach allows us to apply these settings directly to Argo CD without relying on external values files. For this example we’ve changed the color to purple.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_2_apply_the_parameterised_configuration"><a class="anchor" href="#_step_2_apply_the_parameterised_configuration"></a>Step 2: Apply the Parameterised Configuration</h4>
+<div class="paragraph">
+<p>Apply this parameterised configuration to Argo CD:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml -n user1-argocd</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Return to the ArgoCD interface and navigate to the 'App Details' section. Click on 'Parameters.' You will notice that the custom values file, which was present in the previous example, has been successfully removed from the ArgoCD Application.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd-helm5.png" alt="bgd helm5">
+</div>
+</div>
+<div class="paragraph">
+<p>Deploying a Helm chart through ArgoCD with integrated parameters allows you to customise default settings without modifying the chart itself or relying on external values files. This centralises configuration management across different environments.</p>
+</div>
+<div class="paragraph">
+<p>Step 3: Confirm the Application</p>
+</div>
+<div class="paragraph">
+<p>Access the route again, and you should now see the application in purple. Use the following command to view the application:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bgd-purple.png" alt="bgd purple">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_4_make_further_adjustments"><a class="anchor" href="#_step_4_make_further_adjustments"></a>Step 4: Make Further Adjustments</h4>
+<div class="paragraph">
+<p>To make changes to the parameters, simply click on the 'Edit' button. Feel free to explore and make adjustments as desired during the workshop.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="helm-conclusion"><a class="anchor" href="#helm-conclusion"></a>Conclusion: Helm on ArgoCD</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this module we learned how to deploy Helm charts using Argo CD and we looked at the different ways in Argo CD to pass parameters to the Helm chart. A brief summary of the Pros and Cons of the approaches we examined can be summarised as follows:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Custom Values File - Pros</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Built-in Parameters - Pros</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Customise Configurations:Create a separate values.yaml file to tailor configurations for different environments. Override default values in the chart’s values.yaml file with your specific settings.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Environment-specific YAML: Manage YAML configurations for each environment using branches or tags.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rapid Modification: External values files provide an advantage over managing multiple Helm charts with individual values.
+Facilitates quick modification of multiple values through a single file change.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No reliance on external values files makes local testing and debugging with <code>helm template</code> and <code>helm lint</code> easier.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Custom Values File - Cons</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Built-in Parameters - Cons</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manual Updates: Requires manual updates to the values file, deviating from the default Helm charts behaviour.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Customisation Limitations: Limited customisation options due to YAML file constraints.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Potential for errors or inconsistencies if the values file and chart configurations do not align.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Necessitates a separate chart for each environment, potentially leading to redundancy.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You can read more about the patterns for deploying Helm charts with Argo CD <a href="https://developers.redhat.com/articles/2023/05/25/3-patterns-deploying-helm-charts-argocd">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>In conclusion, this module introduced Helm as a Kubernetes package manager with templating capabilities. We explored its usage in ArgoCD, focusing on rendering Helm charts as pure YAML and customising deployments with custom values and parameter values for flexible configuration management. This approach streamlines the deployment process and enables customised configurations without altering the Helm chart directly.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="03-kustomize.html" class="query-params-link">3. Work with Kustomize</a></span>
+  <span class="next"><a href="05-syncwaves-hooks.html" class="query-params-link">5. Sync Waves and Hooks</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

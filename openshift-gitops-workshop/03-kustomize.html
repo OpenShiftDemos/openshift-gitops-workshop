@@ -6,7 +6,7 @@
     <title>Kustomize :: OpenShift GitOps Workshop</title>
     <link rel="canonical" href="https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/03-kustomize.html">
     <link rel="prev" href="02-gitops-basics.html">
-    <link rel="next" href="04-syncwaves-hooks.html">
+    <link rel="next" href="04-helm.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -130,37 +130,76 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="04-syncwaves-hooks.html">4. Sync Waves and Hooks</a>
+    <a class="nav-link" href="04-helm.html">4. Work with Helm</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="04-syncwaves-hooks.html#using_syncwaves">Using Sync Waves</a>
+    <a class="nav-link" href="04-helm.html#exploring-helm">Exploring Helm</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="04-syncwaves-hooks.html#exploring_the_manifests_waves">Exploring Sync Wave Manifests</a>
+    <a class="nav-link" href="04-helm.html#exploring-helm-cli">Exploring the Helm CLI</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="04-syncwaves-hooks.html#using_resource_hooks">Using Resource Hooks</a>
+    <a class="nav-link" href="04-helm.html#exploring-helm-charts">Exploring Helm Charts</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="04-syncwaves-hooks.html#exploring_the_manifests_hooks">Exploring Resource Hook Manifests</a>
+    <a class="nav-link" href="04-helm.html#helm-template">Helm Template</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-syncwaves-hooks.html#deploying_the_application">Deploying the Application</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-helm.html#helm-charts-deploy-applications">Helm Chart Deployment in Argo CD</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-helm.html#custom-values-files">Custom Values Files</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-helm.html#parameter_values">Parameter Values</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-helm.html#helm-conclusion">Conclusion: Helm on ArgoCD</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="05-conclusion.html">5. Conclusion</a>
+    <a class="nav-link" href="05-syncwaves-hooks.html">5. Sync Waves and Hooks</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-conclusion.html#Resources">Resources</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-syncwaves-hooks.html#using_syncwaves">Using Sync Waves</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-syncwaves-hooks.html#exploring_the_manifests_waves">Exploring Sync Wave Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-syncwaves-hooks.html#using_resource_hooks">Using Resource Hooks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-syncwaves-hooks.html#exploring_the_manifests_hooks">Exploring Resource Hook Manifests</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-syncwaves-hooks.html#deploying_the_application">Deploying the Application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-conclusion.html">6. Conclusion</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="06-conclusion.html#Resources">Resources</a>
   </li>
 </ul>
   </li>
@@ -858,7 +897,7 @@ customizations.</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="02-gitops-basics.html" class="query-params-link">2. GitOps Basics</a></span>
-  <span class="next"><a href="04-syncwaves-hooks.html" class="query-params-link">4. Sync Waves and Hooks</a></span>
+  <span class="next"><a href="04-helm.html" class="query-params-link">4. Work with Helm</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

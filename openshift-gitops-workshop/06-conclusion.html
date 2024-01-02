@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Welcome to the OpenShift GitOps Workshop :: OpenShift GitOps Workshop</title>
-    <link rel="canonical" href="https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/index.html">
-    <link rel="next" href="01-getting-started.html">
+    <title>Conclusion :: OpenShift GitOps Workshop</title>
+    <link rel="canonical" href="https://openshiftdemos.github.io/openshift-gitops-workshop/openshift-gitops-workshop/06-conclusion.html">
+    <link rel="prev" href="05-syncwaves-hooks.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -193,12 +193,12 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="06-conclusion.html">6. Conclusion</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="06-conclusion.html#Resources">Resources</a>
+    <a class="nav-link" href="#Resources">Resources</a>
   </li>
 </ul>
   </li>
@@ -229,75 +229,69 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link is-current"></a>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">OpenShift GitOps Workshop</a></li>
-    <li><a href="index.html">Welcome to the OpenShift GitOps Workshop</a></li>
+    <li><a href="06-conclusion.html">6. Conclusion</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/edit/master/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/OpenShiftDemos/openshift-gitops-workshop/edit/master/documentation/modules/ROOT/pages/06-conclusion.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Welcome to the OpenShift GitOps Workshop</h1>
+<h1 class="page">Conclusion</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>OpenShift Gitops is based on the upstream
-<a href="https://argoproj.github.io/argo-cd/" target="_blank" rel="noopener">Argo CD</a> project. ArgoCD is
-a declarative, GitOps continuous delivery tool for Kubernetes.</p>
-</div>
-<div class="paragraph">
-<p>It follows the <strong>GitOps</strong> pattern of using Git repositories as the source of
-truth for defining the desired application state.</p>
-</div>
-<div class="paragraph">
-<p>It automates the deployment of the desired application states in the specified
-target environments. Application deployments can track updates to branches,
-tags, or be pinned to a specific version of manifests at a Git commit.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/argocd-sync-flow.png" alt="Argo CD Sync Flow" width="700">
-</div>
+<p>Thanks for participating in this workshop, we hope you enjoyed it.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2>GitOps</h2>
+<h2 id="_resources"><a class="anchor" href="#_resources"></a>Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://www.openshift.com/learn/topics/gitops/" target="_blank" rel="noopener">GitOps</a> is a set of practices that leverages Git workflows to manage infrastructure and application configurations.
-By using Git repositories as the source of truth, it allows the DevOps team to store the entire state of the cluster configuration in Git so that the trail of changes are visible and auditable.</p>
+<p>Interested in learning more? Check out these other great resources from Red Hat:</p>
 </div>
-<div class="paragraph">
-<p><strong>GitOps</strong> simplifies the propagation of infrastructure and application
-configuration changes across multiple clusters by defining your infrastructure and applications definitions as “code”.</p>
+<div class="sect2">
+<h3 id="_free_gitops_e_books_from_red_hat"><a class="anchor" href="#_free_gitops_e_books_from_red_hat"></a>Free GitOps e-books from Red Hat:</h3>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<a class="image" href="https://developers.redhat.com/e-books/path-gitops" target="_blank" rel="noopener"><img src="_images/PathtoGitOps_EBook.png" alt="PathtoGitOps EBook"></a>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Ensure that the clusters have similar states for configuration, monitoring, or storage.</p>
-</li>
-<li>
-<p>Recover or recreate clusters from a known state.</p>
-</li>
-<li>
-<p>Create clusters with a known state.</p>
-</li>
-<li>
-<p>Apply or revert configuration changes to multiple clusters.</p>
-</li>
-<li>
-<p>Associate templated configuration with different environments.</p>
-</li>
-</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<a class="image" href="https://developers.redhat.com/e-books/gitops-cookbook" target="_blank" rel="noopener"><img src="_images/gitops-cookbook-ebook-cover.png" alt="gitops cookbook ebook cover"></a>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_online_resources"><a class="anchor" href="#_online_resources"></a>Online Resources</h3>
+<div class="sect3">
+<h4 id="_kubernetes_by_example_introduction_to_argo_cd"><a class="anchor" href="#_kubernetes_by_example_introduction_to_argo_cd"></a><a href="https://developers.redhat.com/learn/openshift/develop-gitops" target="_blank" rel="noopener">Kubernetes by Example introduction to Argo CD</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="_gitops_guide_to_the_galaxy_streaming_series"><a class="anchor" href="#_gitops_guide_to_the_galaxy_streaming_series"></a><a href="http://red.ht/gitops" target="_blank" rel="noopener">GitOps Guide to the Galaxy Streaming Series</a></h4>
+
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="01-getting-started.html" class="query-params-link">1. Getting Started</a></span>
+  <span class="prev"><a href="05-syncwaves-hooks.html" class="query-params-link">5. Sync Waves and Hooks</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
