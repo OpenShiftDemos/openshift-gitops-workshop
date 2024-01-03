@@ -9,7 +9,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: documentation/modules/ROOT/examples/bgd-helm-chart
-    repoURL: 'https://github.com/jnewsome97/openshift-gitops-workshop'
+    repoURL: 'https://github.com/OpenShiftDemos/openshift-gitops-workshop'
     targetRevision: master
     helm:
       valueFiles:
