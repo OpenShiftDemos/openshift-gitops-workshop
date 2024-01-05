@@ -491,7 +491,8 @@ spec:
 <div class="paragraph">
 <p>You should see the following output:</p>
 </div>
-<div class="listingblock console-output">
+<div class="listingblock">
+<div class="title">link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm.yaml,window='_blank']</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -500,7 +501,7 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: user1-bgd
+    namespace: user1-bgdh
     server: 'https://kubernetes.default.svc'
   source:
     path: documentation/modules/ROOT/examples/bgd-helm-chart
@@ -515,7 +516,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "user1-bgd".</p>
+<p>This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "user1-bgdh" namespace.</p>
 </div>
 </div>
 <div class="sect3">
@@ -664,7 +665,7 @@ image:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -691,7 +692,8 @@ image:
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml</code></pre>
 </div>
 </div>
-<div class="listingblock console-output">
+<div class="listingblock">
+<div class="title">link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml,window='_blank']</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -700,7 +702,7 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: user1-bgd
+    namespace: user1-bgdh
     server: 'https://kubernetes.default.svc'
   source:
     path: documentation/modules/ROOT/examples/bgd-helm-chart
@@ -762,7 +764,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
 </div>
 </div>
 <div class="imageblock">
