@@ -201,7 +201,7 @@ cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm
 You should see the following output:
 
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm.yaml[bgd-app-helm.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgd-app-helm.yaml[]
@@ -351,7 +351,7 @@ Begin by examining the YAML file named "bgd-app-helm-para.yaml." This file, simi
 cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml
 ----
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml[bgd-app-helm-para.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgd-app-helm-para.yaml[]
