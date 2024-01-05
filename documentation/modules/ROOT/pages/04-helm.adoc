@@ -201,31 +201,13 @@ cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm
 You should see the following output:
 
 
-[.console-output]
-[source,yaml,subs="attributes+,+macros"]
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
 ----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: bgd-helm
-spec:
-  destination:
-    name: ''
-    namespace: user1-bgd
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: documentation/modules/ROOT/examples/bgd-helm-chart
-    repoURL: 'https://github.com/OpenShiftDemos/openshift-gitops-workshop'
-    targetRevision: master
-  sources: []
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+include::ROOT:example$bgd-app-helm.yaml[]
 ----
 
-This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "user1-bgd".
+This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "user1-bgdh" namespace.
 
 ==== Step 2: Deploy/Observe the Argo CD Application
 
@@ -305,7 +287,6 @@ Examine the custom values file that is being referenced:
 cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-helm-chart/custom_values_1/values.yaml
 ----
 
-
 You should see that it transforms the color of the animated balls from yellow to green, among other settings:
 
 [.console-output]
@@ -320,7 +301,7 @@ image:
   pullPolicy: IfNotPresent
 ----
 
-==== Step 3: Apply the Custom Values 
+==== Step 3: Apply the Custom Values
 
 Now, apply the custom values file to the initial application using Argo CD:
 
@@ -333,7 +314,7 @@ oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-
 ==== Step 4: Verify the Changes
 
 
-Return to ArgoCD and click on "App Details," then navigate to the "Parameters" section, where you previously made changes. You’ll notice that the custom value file has been successfully added, and it has updated the values to display the animated balls in green. 
+Return to ArgoCD and click on "App Details," then navigate to the "Parameters" section, where you previously made changes. You’ll notice that the custom value file has been successfully added, and it has updated the values to display the animated balls in green.
 
 
 image::bgd-helm4.png[]
@@ -350,7 +331,7 @@ You can see the link by using this command:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd-helm -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd-helm -n user%USERNUM%-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
 ----
 
 image::bgd-green.png[]
@@ -370,42 +351,11 @@ Begin by examining the YAML file named "bgd-app-helm-para.yaml." This file, simi
 cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml
 ----
 
-[.console-output]
-[source,yaml,subs="attributes+,+macros"]
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml,window='_blank']
+[source,yaml,subs="+macros,attributes+"]
 ----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: bgd-helm
-spec:
-  destination:
-    name: ''
-    namespace: user1-bgd
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: documentation/modules/ROOT/examples/bgd-helm-chart
-    repoURL: 'https://github.com/OpenShiftDemos/openshift-gitops-workshop'
-    targetRevision: master
-    helm:
-      parameters:
-        - name: color
-          value: purple
-        - name: image.name
-          value: quay.io/rhdevelopers/bgd
-        - name: image.pullPolicy
-          value: IfNotPresent
-        - name: image.tag
-          value: 1.0.0
-        - name: replicas
-          value: '1'
-  sources: []
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+include::ROOT:example$bgd-app-helm-para.yaml[]
 ----
-
 
 In the 'parameters' section of the YAML, you will notice that we have included all the desired values, such as the color, image name, image pull policy, image tag, and the number of replicas.
 
@@ -436,7 +386,7 @@ Access the route again, and you should now see the application in purple. Use th
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd-helm -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd-helm -n user%USERNUM%-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
 ----
 
 image::bgd-purple.png[]
@@ -464,25 +414,3 @@ Facilitates quick modification of multiple values through a single file change.|
 You can read more about the patterns for deploying Helm charts with Argo CD link:https://developers.redhat.com/articles/2023/05/25/3-patterns-deploying-helm-charts-argocd[here].
 
 In conclusion, this module introduced Helm as a Kubernetes package manager with templating capabilities. We explored its usage in ArgoCD, focusing on rendering Helm charts as pure YAML and customising deployments with custom values and parameter values for flexible configuration management. This approach streamlines the deployment process and enables customised configurations without altering the Helm chart directly.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
