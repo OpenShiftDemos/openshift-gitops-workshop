@@ -500,7 +500,6 @@ metadata:
   name: bgd-helm
 spec:
   destination:
-    name: ''
     namespace: user1-bgdh
     server: 'https://kubernetes.default.svc'
   source:
@@ -564,7 +563,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get route bgd-helm -n user%USERNUM%-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -701,7 +700,6 @@ metadata:
   name: bgd-helm
 spec:
   destination:
-    name: ''
     namespace: user1-bgdh
     server: 'https://kubernetes.default.svc'
   source:
