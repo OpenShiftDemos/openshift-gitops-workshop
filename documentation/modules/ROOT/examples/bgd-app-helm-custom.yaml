@@ -4,7 +4,6 @@ metadata:
   name: bgd-helm
 spec:
   destination:
-    name: ''
     namespace: user1-bgdh
     server: 'https://kubernetes.default.svc'
   source:
