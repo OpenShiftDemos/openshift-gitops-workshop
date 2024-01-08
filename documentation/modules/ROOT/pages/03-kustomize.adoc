@@ -112,7 +112,7 @@ kind: Deployment
 metadata:
   labels:
     app: welcome-php
-    testkey: testvalue
+    testkey: testvalue # Our new label
   name: welcome-php
 spec:
   replicas: 1
