@@ -452,7 +452,16 @@ spec:
       containers:
       - image: quay.io/redhatworkshops/welcome-php:latest
         name: welcome-php
-        resources: {}</code></pre>
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault</code></pre>
 </div>
 </div>
 </div>
@@ -531,7 +540,16 @@ spec:
       containers:
       - image: quay.io/redhatworkshops/welcome-php:ffcd15
         name: welcome-php
-        resources: {}</code></pre>
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
