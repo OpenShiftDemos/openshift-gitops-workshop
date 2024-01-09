@@ -129,6 +129,15 @@ spec:
       - image: quay.io/redhatworkshops/welcome-php:latest
         name: welcome-php
         resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
 ----
 
 === Kustomize `edit`
@@ -206,6 +215,15 @@ spec:
       - image: quay.io/redhatworkshops/welcome-php:ffcd15
         name: welcome-php
         resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
 ----
 
 [NOTE]
