@@ -212,12 +212,12 @@ This YAML configuration defines an Argo CD Application named "bgd-helm" that dep
 ==== Step 2: Deploy/Observe the Argo CD Application
 
 
-Apply the configuration in the file to create the Argo CD Application in the namespace %USERNUM%-argocd. This application will deploy the Helm chart for the BGD app:
+Apply the configuration in the file to create the Argo CD Application in the namespace user%USERNUM%-argocd. This application will deploy the Helm chart for the BGD app:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml -n %USERNUM%-argocd
+oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml -n user%USERNUM%-argocd
 ----
 
 In the ArgoCD interface you should see the successful deployment of the "bgd-helm" application.
@@ -308,7 +308,7 @@ Now, apply the custom values file to the initial application using Argo CD:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml -n %USERNUM%-argocd
+oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml -n user%USERNUM%-argocd
 ----
 
 ==== Step 4: Verify the Changes
@@ -368,7 +368,7 @@ Apply this parameterised configuration to Argo CD:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml -n %USERNUM%-argocd
+oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml -n user%USERNUM%-argocd
 ----
 
 Return to the ArgoCD interface and navigate to the 'App Details' section. Click on 'Parameters.' You will notice that the custom values file, which was present in the previous example, has been successfully removed from the ArgoCD Application.
