@@ -500,7 +500,7 @@ metadata:
   name: bgd-helm
 spec:
   destination:
-    namespace: user1-bgdh
+    namespace: user%USERNUM%-bgdh
     server: 'https://kubernetes.default.svc'
   source:
     path: documentation/modules/ROOT/examples/bgd-helm-chart
@@ -515,17 +515,17 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "user1-bgdh" namespace.</p>
+<p>This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "%USERNUM%-bgdh" namespace.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_step_2_deployobserve_the_argo_cd_application"><a class="anchor" href="#_step_2_deployobserve_the_argo_cd_application"></a>Step 2: Deploy/Observe the Argo CD Application</h4>
 <div class="paragraph">
-<p>Apply the configuration in the file to create the Argo CD Application in the namespace user1-argocd. This application will deploy the Helm chart for the BGD app:</p>
+<p>Apply the configuration in the file to create the Argo CD Application in the namespace user%USERNUM%-argocd. This application will deploy the Helm chart for the BGD app:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml -n user1-argocd</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml -n user%USERNUM%-argocd</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -636,7 +636,7 @@ image:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml -n user1-argocd</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml -n user%USERNUM%-argocd</code></pre>
 </div>
 </div>
 </div>
@@ -700,7 +700,7 @@ metadata:
   name: bgd-helm
 spec:
   destination:
-    namespace: user1-bgdh
+    namespace: user%USERNUM%-bgdh
     server: 'https://kubernetes.default.svc'
   source:
     path: documentation/modules/ROOT/examples/bgd-helm-chart
@@ -740,7 +740,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml -n user1-argocd</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml -n user%USERNUM%-argocd</code></pre>
 </div>
 </div>
 <div class="paragraph">
