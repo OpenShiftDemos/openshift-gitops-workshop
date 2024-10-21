@@ -1,0 +1,33 @@
+---
+site:
+  title: OpenShift GitOps Workshop
+  url: https://openshiftdemos.github.io/openshift-gitops-workshop
+  start_page: openshift-gitops-workshop::index.adoc
+
+content:
+  sources:
+    - url: .
+      start_path: content
+
+ui:
+  bundle:
+    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/v0.0.1/ui-bundle.zip
+    snapshot: true
+  supplemental_files:
+    - path: ./content/supplemental-ui
+    - path: ./content/lib
+    - path: .nojekyll
+    - path: ui.yml
+      contents: "static_files: [ .nojekyll ]"
+
+runtime:
+  cache_dir: ./.cache/antora
+
+output:
+  dir: ./www
+
+antora:
+  extensions:
+    - id: dev-mode
+      require: ./content/lib/dev-mode.js
+      enabled: true
