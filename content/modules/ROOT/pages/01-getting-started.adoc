@@ -4,10 +4,32 @@ include::_attributes.adoc[]
 [#cluster-login]
 == OpenShift cluster login
 
-The first thing to do is log in to your OpenShift cluster. In the previous
-screen that handed you your workshop credentials should be a link to the
-OpenShift console, as well as a username and password. Click that link, which
-will take you to the OpenShift login screen:
+== OpenShift Cluster Login
+
+The first thing to do is log in to your OpenShift cluster with the following
+information:
+
+*OpenShift Console*
+link:{console_url}[{console_url},window='_blank']
+
+*Username*
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+{user}
+----
+
+*Password*
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+{password}
+----
+
+Clicking the link above for the OpenShift Console will take you to the OpenShift
+login screen where you can login using the provided username and password.
 
 image::openshift-login.png[]
 
@@ -17,30 +39,35 @@ switcher in the upper-left:
 image::openshift-perspective-switcher.png[]
 
 [#open-web-terminal]
-== OpenShift Web Terminal
+== Workshop Web Terminal
 
-OpenShift conveniently provides a web-based terminal that includes many of the
-necessary command-line tools you need to interact with. You can open the web
-terminal by clicking its launcher button on the upper right menu, near your
-username:
+On the right side of your screen is a web terminal which includes many of the
+necessary command-line tools you need to interact with. By default the terminal
+is logged in with a service account with limited permissions, execute the following
+command to login as {user}.
 
-image::openshift-topright-menu.png[]
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+{login_command}
+----
 
-You will be asked to choose which project in which to initialize your terminal.
-This workshop has created several Kubernetes namespaces (OpenShift projects) for
-you. It doesn't _really_ matter which one you choose, but we recommend that you
-initialize your terminal in the project that houses Argo CD:
-`user%USERNUM%-argocd`.
+When you login you will see a prompt about using an insecure connection as the Kubernetes API
+in this workshop is using a default certificate, type `y` to accept and the login will continue.
 
-Once the terminal is launched, you'll see it at the bottom of your screen:
+*Once completed you should see the following in the terminal:*
 
-image::openshift-web-terminal-snippet.png[]
+[.console-output]
+[source,bash,subs="attributes+,+macros"]
+----
+[lab-user: ~]$ {login_command}
+The server uses a certificate signed by an unknown authority.
+You can bypass the certificate check, but any data you send to the server could be intercepted by others.
+Use insecure connections? (y/n): y
 
-You probably want to pop-out the terminal into a new browser window/tab so that
-you can see the OpenShift console with your full screen. There's a pop-out
-button on the right side:
+WARNING: Using insecure TLS client config. Setting this option is not supported!
 
-image::openshift-web-terminal-popout.png[]
+Login successful.
 
 [TIP]
 ====
