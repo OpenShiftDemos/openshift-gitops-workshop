@@ -1,3 +1,4 @@
+www/
 target/
 !.mvn/wrapper/maven-wrapper.jar
 audit.log
