@@ -28,7 +28,7 @@ setup. Verify that it has been installed.
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-kustomize version --short
+kustomize version
 ----
 
 
@@ -37,9 +37,8 @@ This should display the version, it should look something like this.
 [.console-output]
 [source,bash,subs="attributes+,+macros"]
 ----
-{kustomize/v4.5.7  2022-08-02T16:35:54Z  }
+v5.1.0
 ----
-
 
 Kustomize, at its core, is meant to build on top of native Kubernetes manifests
 based on YAML while leaving the original YAML intact. It achieves this in a
@@ -59,12 +58,12 @@ repository you cloned.
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/kustomize-build
+cd ~/openshift-gitops-workshop/content/modules/ROOT/examples/kustomize-build
 ----
 
 Here you should see two files, a `welcome.yaml` file and a `kustomization.yaml` file, let's have a look at them.
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/kustomize-build/welcome.yaml[welcome.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/kustomize-build/welcome.yaml[welcome.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$kustomize-build/welcome.yaml[]
@@ -75,7 +74,7 @@ This file shows nothing special. Just a standard Kubernetes `Deployment` manifes
 Now what if, for example, we wanted to add a `label` to this manifest without
 editing it? This is where the `kustomization.yaml` file comes in.
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/kustomize-build/kustomization.yaml[kustomization.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/kustomize-build/kustomization.yaml[kustomization.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$kustomize-build/kustomization.yaml[]
@@ -399,7 +398,7 @@ have different environments or clusters you're deploying to.
 
 Take a look at this `Application` definition:
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgdk-app.yaml[bgdk-app.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/documentation/modules/ROOT/examples/bgdk-app.yaml[bgdk-app.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgdk-app.yaml[]
@@ -414,7 +413,7 @@ Click link:https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomizat
 
 Now take a look at this `Kustomization` defintion:
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgdk/kustomization.yaml[kustomization.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/documentation/modules/ROOT/examples/bgdk/kustomization.yaml[kustomization.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgdk/kustomization.yaml[]

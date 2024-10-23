@@ -148,7 +148,7 @@ link:https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/
 CR (CustomResource)^] in order to have Argo CD apply these manifests in your
 cluster.
 
-Let's review the `Application` manifest used to deploy this application (found link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/content/modules/ROOT/examples/bgd-app.yaml[here,window="_blank"])
+Let's review the `Application` manifest used to deploy this application (found link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-app.yaml[here,window="_blank"])
 and break this down a bit:
 
 [.console-input]
@@ -157,7 +157,7 @@ and break this down a bit:
 cat ./bgd-app.yaml
 ----
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/content/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window="_blank"]
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window="_blank"]
 [source,yaml,subs="+macros,attributes+"]
 ----
 apiVersion: argoproj.io/v1alpha1
@@ -238,7 +238,7 @@ NAME                             DESIRED   CURRENT   READY   AGE
 replicaset.apps/bgd-74cf584546   1         1         1       12m
 
 NAME                           HOST/PORT                                                       PATH   SERVICES   PORT   TERMINATION   WILDCARD
-route.route.openshift.io/bgd   bgd-user3-bgd.apps.cluster-7pjzx.7pjzx.sandbox141.opentlc.com          bgd        8080                 None
+route.route.openshift.io/bgd   bgd-{user}-bgd.apps.cluster-7pjzx.7pjzx.sandbox141.opentlc.com          bgd        8080                 None
 ----
 
 
