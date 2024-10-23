@@ -82,23 +82,17 @@ All of the example content will be located in:
 
 `~/openshift-gitops-workshop/documentation/modules/ROOT/examples`
 
-[IMPORTANT]
-====
-The web terminal only supports ephemeral storage. If you shut it down, or if it
-times out, any local filesystem changes made will be lost. This means you would
-need to clone the repository again. The web terminal is intended for
-troubleshooting and simple interaction, and not as a long-lived remote execution
-environment. For that, something like
-https://developers.redhat.com/products/openshift-dev-spaces/overview[OpenShift
-DevSpaces] is a better choice.
-====
-
 === Review the Application Manifests
 
 For this first lab, the application manifests are located link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd[here,window='_blank'] and include a Deployment, Service, and Route.
-If you want to review these in your terminal, the files can be found here:
+We will review these in your terminal, to simplify viewing the files change the path:
 
-`~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd`
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples
+----
 
 
 [IMPORTANT]
@@ -109,6 +103,12 @@ shortly using Argo CD.
 
 A *Deployment*:
 
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+ls ./bgd/bgd-deployment.yaml
+----
+
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgd/bgd-deployment.yaml[]
@@ -116,12 +116,24 @@ include::ROOT:example$bgd/bgd-deployment.yaml[]
 
 A *Service*:
 
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+ls ./bgd/bgd-svc.yaml
+----
+
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgd/bgd-svc.yaml[]
 ----
 
 A *Route*:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+ls ./bgd/bgd-route.yaml
+----
 
 [source,yaml,subs="+macros,attributes+"]
 ----
