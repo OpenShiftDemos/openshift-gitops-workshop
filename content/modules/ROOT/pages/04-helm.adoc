@@ -34,7 +34,7 @@ This should display the version, it should look something like this.
 [.console-output]
 [source,bash,subs="attributes+,+macros"]
 ----
-{v3.9.0+3.el8+ge09b16a}
+v3.12.1+11.el8+g8cc4ba6
 ----
 
 Helm as a package manager can be used to install a Helm chart into a kubernetes cluster
@@ -68,6 +68,12 @@ cd ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-helm-chart
 Next if you run the `ls` command you should see two files: `Chart.yaml` and `values.yaml`, as well
 as a directory called templates. Let's have a look at these in more detail.
 
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cat ./chart.yaml
+----
+
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-helm-chart/Chart.yaml[Chart.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
@@ -75,6 +81,12 @@ include::ROOT:example$bgd-helm-chart/Chart.yaml[]
 ----
 
 This file is the link:https://helm.sh/docs/topics/charts/#the-chartyaml-file[chart definition] which specifies name, version and other characteristics of the chart.
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cat ./values.yaml
+----
 
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-helm-chart/values.yaml[values.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
