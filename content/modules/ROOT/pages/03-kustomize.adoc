@@ -31,7 +31,6 @@ setup. Verify that it has been installed.
 kustomize version
 ----
 
-
 This should display the version, it should look something like this.
 
 [.console-output]
@@ -52,7 +51,7 @@ We will be focusing on two Kustomize sub-commands: the `build` command and the
 
 The `build` command takes the YAML source (via a path or URL) and creates a new
 YAML that can be piped into `oc create`. We will work with an example in the
-`documentation/modules/ROOT/examples/kustomize-build` directory within the
+`content/modules/ROOT/examples/kustomize-build` directory within the
 repository you cloned.
 
 [.console-input]
@@ -62,6 +61,12 @@ cd ~/openshift-gitops-workshop/content/modules/ROOT/examples/kustomize-build
 ----
 
 Here you should see two files, a `welcome.yaml` file and a `kustomization.yaml` file, let's have a look at them.
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cat ./welcome.yaml
+----
 
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/kustomize-build/welcome.yaml[welcome.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
@@ -73,6 +78,12 @@ This file shows nothing special. Just a standard Kubernetes `Deployment` manifes
 
 Now what if, for example, we wanted to add a `label` to this manifest without
 editing it? This is where the `kustomization.yaml` file comes in.
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cat ./kustomization.yaml
+----
 
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/kustomize-build/kustomization.yaml[kustomization.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
@@ -225,12 +236,6 @@ spec:
           type: RuntimeDefault
 ----
 
-[NOTE]
-====
-You may have to close the `kustomization.yaml` tab and re-open it to
-see the changes.
-====
-
 You can now see how you can take existing YAML and modify it for
 your specific environment without the need to copy or edit the original.
 
@@ -280,7 +285,7 @@ Now you will apply your `kustomize`-d `Deployment` manifest into one of your pro
 
 [NOTE]
 ====
-Ensure that you are in the `~/openshift-gitops-workshop/documentation/modules/ROOT/examples/kustomize-build` directory
+Ensure that you are in the `~/openshift-gitops-workshop/content/modules/ROOT/examples/kustomize-build` directory
 ====
 
 [.console-input]
@@ -324,17 +329,14 @@ You can also see the deployment was created with the additional labels
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get deployment welcome-php -o jsonpath='{.metadata.labels}' -n {user}-bgdk | jq -r
+oc get deployment welcome-php -o jsonpath='{.metadata.labels}{"\n"}' -n {user}-bgdk
 ----
 
 Resulting in
 [.console-output]
 [source,json,subs="attributes+,+macros"]
 ----
-{
-  "app": "welcome-php",
-  "testkey": "testvalue"
-}
+{"app": "welcome-php","testkey": "testvalue"}
 ----
 
 Finally, check that the image was updated based on the customization we made
@@ -386,7 +388,7 @@ Before proceeding, move back into the examples home directory:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples
+cd ~/openshift-gitops-workshop/content/modules/ROOT/examples
 ----
 
 [#kustomized_application]
@@ -398,14 +400,14 @@ have different environments or clusters you're deploying to.
 
 Take a look at this `Application` definition:
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/documentation/modules/ROOT/examples/bgdk-app.yaml[bgdk-app.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgdk-app.yaml[bgdk-app.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgdk-app.yaml[]
 ----
 
 As you will see below, this `Application` definition refers to the same **base** resources you used in
-Chapter 2. It references a directory path (`documentation/modules/ROOT/examples/bgdk`)
+Chapter 2. It references a directory path (`content/modules/ROOT/examples/bgdk`)
 which contains a new `kustomization.yaml` file specific to this application. This concept is called an **overlay**.
 Where a **base** set of manifests are **overlay**-d with your customizations.
 
@@ -413,13 +415,13 @@ Click link:https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomizat
 
 Now take a look at this `Kustomization` defintion:
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/documentation/modules/ROOT/examples/bgdk/kustomization.yaml[kustomization.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgdk/kustomization.yaml[kustomization.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgdk/kustomization.yaml[]
 ----
 
-This `kustomization.yaml` takes the base application located at `documentation/modules/ROOT/examples/bgd-base`
+This `kustomization.yaml` takes the base application located at `content/modules/ROOT/examples/bgd-base`
 and patches the `Deployment` manifest so that you get yellow dots instead of blue ones.
 
 Now deploy this application:
@@ -427,7 +429,7 @@ Now deploy this application:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgdk-app.yaml | oc apply -n {user}-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgdk-app.yaml | oc apply -n {user}-argocd -f -
 ----
 
 [#argocd_web_console]
