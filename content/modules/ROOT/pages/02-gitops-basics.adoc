@@ -75,7 +75,7 @@ make very small changes to some of the files for the examples:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-git clone -b {gitops-revision} --single-branch https://github.com/OpenShiftDemos/openshift-gitops-workshop ~/openshift-gitops-workshop
+git clone -b {gitops_revision} --single-branch https://github.com/OpenShiftDemos/openshift-gitops-workshop ~/openshift-gitops-workshop
 ----
 
 All of the example content will be located in:
