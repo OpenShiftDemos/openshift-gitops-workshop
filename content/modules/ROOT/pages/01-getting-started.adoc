@@ -69,6 +69,18 @@ WARNING: Using insecure TLS client config. Setting this option is not supported!
 
 Login successful.
 
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+  * {user}-argocd
+    {user}-bgd
+    {user}-bgdh
+    {user}-bgdk
+    {user}-todo
+
+Using project "user1-argocd".
+Welcome! See 'oc help' to get started.
+----
+
 [TIP]
 ====
 In order to copy and paste content into the terminal, you can use
