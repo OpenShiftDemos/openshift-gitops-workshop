@@ -47,7 +47,7 @@ and password that you used to login in with OpenShift.
 
 image::argo-cd-login.png[ArgoCDLogin, 600]
 
-After you enter your credentials you will see the following prompting you to authorize acess,
+After you enter your credentials you will see the following prompting you to authorize access,
 click the "Allow selected permissions" button.
 
 image::argo-cd-allow-access.png[ArgoCDAuthorize, 600]
@@ -80,18 +80,18 @@ git clone -b {gitops_revision} --single-branch https://github.com/OpenShiftDemos
 
 All of the example content will be located in:
 
-`~/openshift-gitops-workshop/documentation/modules/ROOT/examples`
+`~/openshift-gitops-workshop/content/modules/ROOT/examples`
 
 === Review the Application Manifests
 
-For this first lab, the application manifests are located link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd[here,window='_blank'] and include a Deployment, Service, and Route.
+For this first lab, the application manifests are located link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/content/modules/ROOT/examples/bgd[here,window='_blank'] and include a Deployment, Service, and Route.
 We will review these in your terminal, to simplify viewing the files change the path:
 
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples
+cd ~/openshift-gitops-workshop/content/modules/ROOT/examples
 ----
 
 
@@ -106,7 +106,7 @@ A *Deployment*:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-ls ./bgd/bgd-deployment.yaml
+cat ./bgd/bgd-deployment.yaml
 ----
 
 [source,yaml,subs="+macros,attributes+"]
@@ -119,7 +119,7 @@ A *Service*:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-ls ./bgd/bgd-svc.yaml
+cat ./bgd/bgd-svc.yaml
 ----
 
 [source,yaml,subs="+macros,attributes+"]
@@ -132,7 +132,7 @@ A *Route*:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-ls ./bgd/bgd-route.yaml
+cat ./bgd/bgd-route.yaml
 ----
 
 [source,yaml,subs="+macros,attributes+"]
@@ -148,10 +148,16 @@ link:https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/
 CR (CustomResource)^] in order to have Argo CD apply these manifests in your
 cluster.
 
-Let's review the `Application` manifest used to deploy this application (found link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml[here,window="_blank"])
+Let's review the `Application` manifest used to deploy this application (found link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/content/modules/ROOT/examples/bgd-app.yaml[here,window="_blank"])
 and break this down a bit:
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window="_blank"]
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cat ./bgd-app.yaml
+----
+
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/content/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window="_blank"]
 [source,yaml,subs="+macros,attributes+"]
 ----
 apiVersion: argoproj.io/v1alpha1
@@ -192,7 +198,7 @@ using the command below:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app.yaml | oc apply -n {user}-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-app.yaml | oc apply -n {user}-argocd -f -
 ----
 
 The newly created Application appears as a tile with the title `bgd-app` in the
