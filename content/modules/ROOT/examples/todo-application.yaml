@@ -4,7 +4,7 @@ metadata:
   name: todo-app
 spec:
   destination:
-    namespace: user$USERNUM-todo
+    namespace: $USER-todo
     server: https://kubernetes.default.svc
   project: default
   source:

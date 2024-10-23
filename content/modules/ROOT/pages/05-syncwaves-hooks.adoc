@@ -2,7 +2,7 @@
 include::_attributes.adoc[]
 
 https://argoproj.github.io/argo-cd/user-guide/sync-waves/[Sync waves,window='_blank']
-are used in Argo CD to order how manifests are applied to the cluster. 
+are used in Argo CD to order how manifests are applied to the cluster.
 
 https://argoproj.github.io/argo-cd/user-guide/resource_hooks/[Resource
 hooks,window='_blank'] break up the delivery of these manifests into different
@@ -27,7 +27,7 @@ image::todo-app.png[]
 
 A sync wave is a way to order how Argo CD applies the manifests that are stored
 in git. All manifests have a wave of zero by default, but you can set these by
-using the `argocd.argoproj.io/sync-wave` annotation. 
+using the `argocd.argoproj.io/sync-wave` annotation.
 
 Example:
 
@@ -209,7 +209,7 @@ Create this application:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/todo-application.yaml | oc apply -n user%USERNUM%-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/todo-application.yaml | oc apply -n {user}-argocd -f -
 ----
 
 [.console-output]
@@ -234,7 +234,7 @@ the namespace:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get pods -n user%USERNUM%-todo
+oc get pods -n {user}-todo
 ----
 
 You should see that the Job is finished, but still there.

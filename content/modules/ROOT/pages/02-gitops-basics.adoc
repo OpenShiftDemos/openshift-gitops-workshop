@@ -3,7 +3,7 @@ include::_attributes.adoc[]
 :profile: gitops
 
 An Argo CD instance dedicated for you has been deployed into the OpenShift
-Project `user%USERNUM%-argocd`. This is one of the benefits of the
+Project `{user}-argocd`. This is one of the benefits of the
 Operator-based mechanism that OpenShift uses: it's easy for users to deploy
 software and solutions.
 
@@ -12,7 +12,7 @@ software and solutions.
 
 In the OpenShift web console, with the _Developer_ perspective active, click the
 _Topology_ link in the left navigation and make sure that the
-`user%USERNUM%-argocd` Project is selected at the top. You will see the Argo CD
+`{user}-argocd` Project is selected at the top. You will see the Argo CD
 deployment in the topology view:
 
 image::argocd-topology.png[]
@@ -39,7 +39,7 @@ Also, you can get the Argo CD Route using the `oc` CLI:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route -n user%USERNUM%-argocd user%USERNUM%-argo-server -o jsonpath='{.spec.host}{"\n"}'
+oc get route -n {user}-argocd {user}-argo-server -o jsonpath='{.spec.host}{"\n"}'
 ----
 
 However you decide to access the Argo CD console, log in with the same username
@@ -148,7 +148,7 @@ metadata:
   name: bgd-app
 spec:
   destination:
-    namespace: user$USERNUM-bgd
+    namespace: {user}-bgd
     server: https://kubernetes.default.svc <1>
   project: default <2>
   source: <3>
@@ -180,7 +180,7 @@ using the command below:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app.yaml | oc apply -n user%USERNUM%-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app.yaml | oc apply -n {user}-argocd -f -
 ----
 
 The newly created Application appears as a tile with the title `bgd-app` in the
@@ -199,7 +199,7 @@ resources were created:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get all -n user%USERNUM%-bgd
+oc get all -n {user}-bgd
 ----
 
 The output should list several things:
@@ -231,12 +231,12 @@ Wait for the rollout of the new pods to happen in the deployment:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc rollout status deploy/bgd -n user%USERNUM%-bgd
+oc rollout status deploy/bgd -n {user}-bgd
 ----
 
 If it is successful, you can now visit the deployed application in the browser.
 
-From the OpenShift web console, select *user%USERNUM%-bgd* Project from
+From the OpenShift web console, select *{user}-bgd* Project from
 drop-down menu, and use the _Topology_ view to find the link as you did with
 the Argo CD console.
 
@@ -247,7 +247,7 @@ Alternatively, get the app Route from the CLI:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd -n user%USERNUM%-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd -n {user}-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
 ----
 
 WARNING: This route is only available via HTTP. If you try to visit via HTTPS,
@@ -267,7 +267,7 @@ blue to green:
 [source,bash,subs="attributes+,+macros"]
 
 ----
-oc -n user%USERNUM%-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
+oc -n {user}-bgd patch deploy/bgd --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"green"}]'
 ----
 
 Wait for the rollout of the new pods to happen in the deployment:
@@ -275,7 +275,7 @@ Wait for the rollout of the new pods to happen in the deployment:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc rollout status deploy/bgd -n user%USERNUM%-bgd
+oc rollout status deploy/bgd -n {user}-bgd
 ----
 
 Refresh the browser tab where your application is running. You should see green
@@ -323,5 +323,5 @@ Or, as in our case, after the fact by running the following command:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc patch application/bgd-app -n user%USERNUM%-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
+oc patch application/bgd-app -n {user}-argocd --type=merge -p='{"spec":{"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}'
 ----

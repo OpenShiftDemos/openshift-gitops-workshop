@@ -207,17 +207,17 @@ You should see the following output:
 include::ROOT:example$bgd-app-helm.yaml[]
 ----
 
-This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "%USERNUM%-bgdh" namespace.
+This YAML configuration defines an Argo CD Application named "bgd-helm" that deploys a Helm chart from a specific Git repository to the "{user}-bgdh" namespace.
 
 ==== Step 2: Deploy/Observe the Argo CD Application
 
 
-Apply the configuration in the file to create the Argo CD Application in the namespace user%USERNUM%-argocd. This application will deploy the Helm chart for the BGD app:
+Apply the configuration in the file to create the Argo CD Application in the namespace {user}-argocd. This application will deploy the Helm chart for the BGD app:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml -n user%USERNUM%-argocd
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml | oc apply -n {user}-argocd -f -
 ----
 
 In the ArgoCD interface you should see the successful deployment of the "bgd-helm" application.
@@ -241,7 +241,7 @@ You can see the link by using this command:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd-helm -n user%USERNUM%-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
 ----
 
 image::yellowoutput.png[]
@@ -308,7 +308,7 @@ Now, apply the custom values file to the initial application using Argo CD:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml -n user%USERNUM%-argocd
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml | oc apply -n {user}-argocd -f -
 ----
 
 ==== Step 4: Verify the Changes
@@ -331,7 +331,7 @@ You can see the link by using this command:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd-helm -n user%USERNUM%-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
 ----
 
 image::bgd-green.png[]
@@ -368,7 +368,7 @@ Apply this parameterised configuration to Argo CD:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc apply -f ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml -n user%USERNUM%-argocd
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml | oc apply -n {user}-argocd -f -
 ----
 
 Return to the ArgoCD interface and navigate to the 'App Details' section. Click on 'Parameters.' You will notice that the custom values file, which was present in the previous example, has been successfully removed from the ArgoCD Application.
@@ -386,7 +386,7 @@ Access the route again, and you should now see the application in purple. Use th
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd-helm -n user%USERNUM%-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
 ----
 
 image::bgd-purple.png[]

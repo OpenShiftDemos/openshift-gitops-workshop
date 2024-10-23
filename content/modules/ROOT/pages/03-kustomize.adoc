@@ -287,7 +287,7 @@ Ensure that you are in the `~/openshift-gitops-workshop/documentation/modules/RO
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc apply -n user%USERNUM%-bgdk -k .
+oc apply -n {user}-bgdk -k .
 ----
 
 You should see the following letting you know the deployment was successful
@@ -308,7 +308,7 @@ Now that the deployment is created, you should see the pods running in the names
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get pods -n user%USERNUM%-bgdk
+oc get pods -n {user}-bgdk
 ----
 
 The console should return something along the lines of
@@ -325,7 +325,7 @@ You can also see the deployment was created with the additional labels
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get deployment welcome-php -o jsonpath='{.metadata.labels}' -n user%USERNUM%-bgdk | jq -r
+oc get deployment welcome-php -o jsonpath='{.metadata.labels}' -n {user}-bgdk | jq -r
 ----
 
 Resulting in
@@ -343,7 +343,7 @@ Finally, check that the image was updated based on the customization we made
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get deploy welcome-php -n user%USERNUM%-bgdk -o jsonpath='{.spec.template.spec.containers[].image}{"\n"}'
+oc get deploy welcome-php -n {user}-bgdk -o jsonpath='{.spec.template.spec.containers[].image}{"\n"}'
 ----
 
 The output should return
@@ -360,7 +360,7 @@ You can delete the applied resources with `oc delete` and kustomize, too
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc delete -n user%USERNUM%-bgdk -k .
+oc delete -n {user}-bgdk -k .
 ----
 
 Once you run this command, check that you see the following to confirm deletion
@@ -410,7 +410,7 @@ Chapter 2. It references a directory path (`documentation/modules/ROOT/examples/
 which contains a new `kustomization.yaml` file specific to this application. This concept is called an **overlay**.
 Where a **base** set of manifests are **overlay**-d with your customizations.
 
-Click link:https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/#bases-and-overlays[here,window='_blank'] to learn more about Kustomize bases and overlays, 
+Click link:https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/#bases-and-overlays[here,window='_blank'] to learn more about Kustomize bases and overlays,
 
 Now take a look at this `Kustomization` defintion:
 
@@ -428,7 +428,7 @@ Now deploy this application:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USERNUM/%USERNUM%/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgdk-app.yaml | oc apply -n user%USERNUM%-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgdk-app.yaml | oc apply -n {user}-argocd -f -
 ----
 
 [#argocd_web_console]
@@ -446,13 +446,13 @@ This should now show you two apps on the Argo CD UI.
 
 image::two-apps.png[Two Apps]
 
-Open the Route for this application. It's in the `user%USERNUM%-bgdk` Project.
+Open the Route for this application. It's in the `{user}-bgdk` Project.
 Remember you can get this from the topology view, or from the CLI:
 
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route -n user%USERNUM%-bgdk bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route -n {user}-bgdk bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
 ----
 
 You should see yellow balls flying around. This is the same application you used

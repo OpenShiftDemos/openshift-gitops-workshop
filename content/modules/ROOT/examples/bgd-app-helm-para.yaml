@@ -4,7 +4,7 @@ metadata:
   name: bgd-helm
 spec:
   destination:
-    namespace: user%USERNUM%-bgdh
+    namespace: $USER-bgdh
     server: 'https://kubernetes.default.svc'
   source:
     path: documentation/modules/ROOT/examples/bgd-helm-chart
