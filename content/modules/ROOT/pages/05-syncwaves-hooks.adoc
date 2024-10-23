@@ -209,7 +209,7 @@ Create this application:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/todo-application.yaml | oc apply -n {user}-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/content/modules/ROOT/examples/todo-application.yaml | oc apply -n {user}-argocd -f -
 ----
 
 [.console-output]

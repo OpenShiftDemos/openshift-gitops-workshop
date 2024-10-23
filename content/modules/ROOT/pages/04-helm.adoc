@@ -62,13 +62,13 @@ repository you cloned.
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-helm-chart
+cd ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-helm-chart
 ----
 
 Next if you run the `ls` command you should see two files: `Chart.yaml` and `values.yaml`, as well
 as a directory called templates. Let's have a look at these in more detail.
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-helm-chart/Chart.yaml[Chart.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-helm-chart/Chart.yaml[Chart.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgd-helm-chart/Chart.yaml[]
@@ -76,7 +76,7 @@ include::ROOT:example$bgd-helm-chart/Chart.yaml[]
 
 This file is the link:https://helm.sh/docs/topics/charts/#the-chartyaml-file[chart definition] which specifies name, version and other characteristics of the chart.
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/master/documentation/modules/ROOT/examples/bgd-helm-chart/values.yaml[values.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-helm-chart/values.yaml[values.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgd-helm-chart/values.yaml[]
@@ -102,7 +102,7 @@ Execute the following command to render the chart template from your local direc
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-helm template bgd ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-helm-chart
+helm template bgd ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-helm-chart
 ----
 
 ==== Step 2: View the Output
@@ -195,13 +195,13 @@ To view the YAML configuration file for the Argo CD Application, execute the fol
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml
+cat ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-app-helm.yaml
 ----
 
 You should see the following output:
 
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm.yaml[bgd-app-helm.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/content/modules/ROOT/examples/bgd-app-helm.yaml[bgd-app-helm.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgd-app-helm.yaml[]
@@ -217,7 +217,7 @@ Apply the configuration in the file to create the Argo CD Application in the nam
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm.yaml | oc apply -n {user}-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-app-helm.yaml | oc apply -n {user}-argocd -f -
 ----
 
 In the ArgoCD interface you should see the successful deployment of the "bgd-helm" application.
@@ -260,7 +260,7 @@ Begin by examining a YAML file named "bgd-app-helm-custom.yaml." This file close
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml
+cat ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-app-helm-custom.yaml
 ----
 
 You will notice a section in this YAML file that defines the name and path of the custom values file responsible for adjusting the Helm chart's default settings:
@@ -284,7 +284,7 @@ Examine the custom values file that is being referenced:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-helm-chart/custom_values_1/values.yaml
+cat ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-helm-chart/custom_values_1/values.yaml
 ----
 
 You should see that it transforms the color of the animated balls from yellow to green, among other settings:
@@ -308,7 +308,7 @@ Now, apply the custom values file to the initial application using Argo CD:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-custom.yaml | oc apply -n {user}-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-app-helm-custom.yaml | oc apply -n {user}-argocd -f -
 ----
 
 ==== Step 4: Verify the Changes
@@ -348,10 +348,10 @@ Begin by examining the YAML file named "bgd-app-helm-para.yaml." This file, simi
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cat ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml
+cat ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-app-helm-para.yaml
 ----
 
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/main/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml[bgd-app-helm-para.yaml,window='_blank']
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-app-helm-para.yaml[bgd-app-helm-para.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
 include::ROOT:example$bgd-app-helm-para.yaml[]
@@ -368,7 +368,7 @@ Apply this parameterised configuration to Argo CD:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-sed 's/$USER/{user}/' ~/openshift-gitops-workshop/documentation/modules/ROOT/examples/bgd-app-helm-para.yaml | oc apply -n {user}-argocd -f -
+sed 's/$USER/{user}/' ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgd-app-helm-para.yaml | oc apply -n {user}-argocd -f -
 ----
 
 Return to the ArgoCD interface and navigate to the 'App Details' section. Click on 'Parameters.' You will notice that the custom values file, which was present in the previous example, has been successfully removed from the ArgoCD Application.
