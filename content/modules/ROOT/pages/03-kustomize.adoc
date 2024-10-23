@@ -400,6 +400,12 @@ have different environments or clusters you're deploying to.
 
 Take a look at this `Application` definition:
 
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cat ./bgdk-app.yaml
+----
+
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgdk-app.yaml[bgdk-app.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
 ----
@@ -413,7 +419,13 @@ Where a **base** set of manifests are **overlay**-d with your customizations.
 
 Click link:https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/#bases-and-overlays[here,window='_blank'] to learn more about Kustomize bases and overlays,
 
-Now take a look at this `Kustomization` defintion:
+Now take a look at this `Kustomization` definition:
+
+[.console-input]
+[source,bash,subs="attributes+,+macros"]
+----
+cat ./kustomization.yaml
+----
 
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgdk/kustomization.yaml[kustomization.yaml,window='_blank']
 [source,yaml,subs="+macros,attributes+"]
