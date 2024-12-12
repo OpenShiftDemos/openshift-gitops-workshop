@@ -16,7 +16,7 @@ asciidoc:
       text: OpenShift GitOps
     - url: https://argo-cd.readthedocs.io/en/stable/
       text: Argo CD
-    console_url: URL_PLACEHOLDER
+    console_url: openshift_console_url
     login_command: LOGIN_COMMAND_PLACEHOLDER
     gitops_revision: REVISION_PLACEHOLDER
     openshift_cluster_ingress_domain: OPENSHIFT_CLUSTER_INGRESS_DOMAIN_PLACEHOLDER
