@@ -10,7 +10,7 @@ The first thing to do is log in to your OpenShift cluster with the following
 information:
 
 *OpenShift Console*
-link:{console_url}[{console_url},window='_blank']
+link:{openshift_console_url}[{openshift_console_url},window='_blank']
 
 *Username*
 
