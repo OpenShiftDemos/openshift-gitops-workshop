@@ -160,23 +160,7 @@ cat ./bgd-app.yaml
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window="_blank"]
 [source,yaml,subs="+macros,attributes+"]
 ----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: bgd-app
-spec:
-  destination:
-    namespace: {user}-bgd
-    server: https://kubernetes.default.svc <1>
-  project: default <2>
-  source: <3>
-    path: documentation/modules/ROOT/examples/bgd
-    repoURL: https://github.com/OpenShiftDemos/openshift-gitops-workshop
-    targetRevision: master
-  syncPolicy: <4>
-    automated:
-      prune: true
-      selfHeal: false
+include::ROOT:example$bgd-app.yaml[]
 ----
 <1> The destination server is API endpoint for the cluster where Argo CD is
   running -- in this case, using the locally-resolveable URL for the cluster
