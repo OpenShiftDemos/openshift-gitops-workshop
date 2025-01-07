@@ -154,6 +154,12 @@ and break this down a bit:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
+cat ./bgd-app.yaml
+----
+
+.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window="_blank"]
+[source,yaml,subs="+macros,attributes+"]
+----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -171,12 +177,6 @@ spec:
     automated:
       prune: true
       selfHeal: false
-----
-
-.link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-app.yaml[bgd-app.yaml,window="_blank"]
-[source,yaml,subs="+macros,attributes+"]
-----
-include::ROOT:example$bgd-app.yaml[]
 ----
 <1> The destination server is API endpoint for the cluster where Argo CD is
   running -- in this case, using the locally-resolveable URL for the cluster
