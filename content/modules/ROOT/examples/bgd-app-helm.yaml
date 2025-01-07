@@ -7,9 +7,9 @@ spec:
     namespace: $USER-bgdh
     server: 'https://kubernetes.default.svc'
   source:
-    path: documentation/modules/ROOT/examples/bgd-helm-chart
+    path: content/modules/ROOT/examples/bgd-helm-chart
     repoURL: 'https://github.com/OpenShiftDemos/openshift-gitops-workshop'
-    targetRevision: master
+    targetRevision: main
   sources: []
   project: default
   syncPolicy:
