@@ -9,13 +9,6 @@ start_page: ROOT:index.adoc
 asciidoc:
   attributes:
     page-pagination: true
-    page-links:
-    - url: https://redhat.com
-      text: Red Hat
-    - url: https://docs.openshift.com/gitops
-      text: OpenShift GitOps
-    - url: https://argo-cd.readthedocs.io/en/stable/
-      text: Argo CD
     console_url: URL_PLACEHOLDER
     login_command: LOGIN_COMMAND_PLACEHOLDER
     gitops_revision: REVISION_PLACEHOLDER
