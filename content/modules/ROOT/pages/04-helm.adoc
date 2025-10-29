@@ -71,7 +71,7 @@ as a directory called templates. Let's have a look at these in more detail.
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cat ./chart.yaml
+cat ./Chart.yaml
 ----
 
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgd-helm-chart/Chart.yaml[Chart.yaml,window='_blank']
