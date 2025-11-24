@@ -264,11 +264,8 @@ Alternatively, get the app Route from the CLI:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd -n {user}-bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd -n {user}-bgd -o jsonpath='{"https://"}{.spec.host}{"\n"}'
 ----
-
-WARNING: This route is only available via HTTP. If you try to visit via HTTPS,
-you will get an _Application not available_ error. Do you know why that is?
 
 Your application should look like this.
 

@@ -191,6 +191,9 @@ spec:
     kind: Service
     name: bgd
     weight: 100
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
 ----
 
 [#helm-charts-deploy-applications]
@@ -253,7 +256,7 @@ You can see the link by using this command:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"https://"}{.spec.host}{"\n"}'
 ----
 
 image::yellowoutput.png[]
@@ -343,7 +346,7 @@ You can see the link by using this command:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"https://"}{.spec.host}{"\n"}'
 ----
 
 image::bgd-green.png[]
@@ -398,7 +401,7 @@ Access the route again, and you should now see the application in purple. Use th
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route bgd-helm -n {user}-bgdh -o jsonpath='{"https://"}{.spec.host}{"\n"}'
 ----
 
 image::bgd-purple.png[]

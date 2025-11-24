@@ -254,7 +254,7 @@ use the following CLI snippet to get the exact URL you need:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route -n user%USERNUM%-todo todo -o jsonpath='{"http://"}{.spec.host}{"/todo.html\n"}'
+oc get route -n {user}-todo todo -o jsonpath='{"https://"}{.spec.host}{"/todo.html\n"}'
 ----
 
 > WARNING: You need to use `/todo.html` in the URL to access the application. It

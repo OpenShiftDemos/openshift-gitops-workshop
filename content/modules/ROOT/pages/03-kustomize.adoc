@@ -465,7 +465,7 @@ Remember you can get this from the topology view, or from the CLI:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-oc get route -n {user}-bgdk bgd -o jsonpath='{"http://"}{.spec.host}{"\n"}'
+oc get route -n {user}-bgdk bgd -o jsonpath='{"https://"}{.spec.host}{"\n"}'
 ----
 
 You should see yellow balls flying around. This is the same application you used
