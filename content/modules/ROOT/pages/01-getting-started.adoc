@@ -33,11 +33,6 @@ login screen where you can login using the provided username and password.
 
 image::openshift-login.png[]
 
-Once logged in, make sure that you choose the _Developer_ perspective using the
-switcher in the upper-left:
-
-image::openshift-perspective-switcher.png[]
-
 [#open-web-terminal]
 == Workshop Web Terminal
 

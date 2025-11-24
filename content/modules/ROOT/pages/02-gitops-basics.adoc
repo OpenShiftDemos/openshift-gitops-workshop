@@ -10,13 +10,12 @@ software and solutions.
 [#review-argocd]
 == Review the Argo CD Deployment
 
-In the OpenShift web console, with the _Developer_ perspective active, click the
-_Topology_ link in the left navigation and make sure that the
+In the OpenShift web console click the _Workloads_ menu in the left navigation to
+open it up and then click the _Topology_ link.  Make sure that the
 `{user}-argocd` Project is selected at the top. You will see the Argo CD
 deployment in the topology view:
 
 image::argocd-topology.png[]
-
 
 [#connect-argocd]
 == Connecting to Argo CD
@@ -254,7 +253,7 @@ oc rollout status deploy/bgd -n {user}-bgd
 
 If it is successful, you can now visit the deployed application in the browser.
 
-From the OpenShift web console, select *{user}-bgd* Project from
+From the OpenShift web console, select *{user}-bgd* Project from the
 drop-down menu, and use the _Topology_ view to find the link as you did with
 the Argo CD console.
 
