@@ -12,6 +12,6 @@ spec:
     name: bgd
     weight: 100
   tls:
-    termination: Edge
+    termination: edge
     insecureEdgeTerminationPolicy: Redirect
 

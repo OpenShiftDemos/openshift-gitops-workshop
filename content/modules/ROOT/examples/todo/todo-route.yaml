@@ -14,5 +14,5 @@ spec:
     name: todo-gitops
     weight: 100
   tls:
-    termination: Edge
+    termination: edge
     insecureEdgeTerminationPolicy: Redirect
