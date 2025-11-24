@@ -11,3 +11,7 @@ spec:
     kind: Service
     name: bgd
     weight: 100
+  tls:
+    termination: Edge
+    insecureEdgeTerminationPolicy: Redirect
+

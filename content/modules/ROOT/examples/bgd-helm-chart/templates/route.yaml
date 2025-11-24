@@ -11,3 +11,6 @@ spec:
     kind: Service
     name: {{ .Release.Name }}
     weight: 100
+  tls:
+    termination: Edge
+    insecureEdgeTerminationPolicy: Redirect
