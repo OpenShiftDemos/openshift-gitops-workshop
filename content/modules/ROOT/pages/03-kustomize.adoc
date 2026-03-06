@@ -388,7 +388,7 @@ Before proceeding, move back into the examples home directory:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cd ~/openshift-gitops-workshop/content/modules/ROOT/examples
+cd ~/openshift-gitops-workshop/content/modules/ROOT/examples/bgdk/
 ----
 
 [#kustomized_application]
@@ -403,7 +403,7 @@ Take a look at this `Application` definition:
 [.console-input]
 [source,bash,subs="attributes+,+macros"]
 ----
-cat ./bgdk-app.yaml
+cat ../bgdk-app.yaml
 ----
 
 .link:https://github.com/OpenShiftDemos/openshift-gitops-workshop/blob/{gitops_revision}/content/modules/ROOT/examples/bgdk-app.yaml[bgdk-app.yaml,window='_blank']
